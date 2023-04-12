@@ -1,5 +1,5 @@
 # Init
-print("Hello World")
+print("Hello Today I'm Gonna Teach You")
 import pygame
 import pygame.time
 pygame.init()
