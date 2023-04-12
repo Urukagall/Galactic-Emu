@@ -12,6 +12,7 @@ backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.RESIZABLE)
 pygame.display.set_caption("Emeu war")
 
+test_surface = pygame.Surface((100,200))
 
 # Main Loop
 running = True
