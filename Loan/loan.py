@@ -1,77 +1,53 @@
-# # Init
-# print("Hello Today I'm Gonna Teach You")
-# import pygame
-# import pygame.time
-# pygame.init()
-# clock = pygame.time.Clock()
-
-# # Create Window
-# displayHeight = 1080
-# displayWidth = 1920
-# backgroundColor = (200,200,200)
-# screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.FULLSCREEN)
-
-
-# # Import Img
-# img_player1 = pygame.image.load("img/emeu.jpg")
-
-# # Main Loop
-# running = True
-# while (running):
-#     # run the game at a constant 60fps
-#     clock.tick(60)
-#     #Did the user clicked the close button ?
-#     for events in pygame.event.get():
-#         if events.type == pygame.QUIT:
-#             running=False
-#         elif events.type == pygame.KEYDOWN:
-#             if events.key == pygame.K_ESCAPE:
-#                 running=False
-
-
-#     pressed = pygame.key.get_pressed()
-
-#     if pressed[pygame.K_z]:
-#         player1yVelocity = -playersSpeed
-
-#     #Draw 
-#     screen.fill(backgroundColor)
-#     pygame.display.update()
-# pygame.quit()
-
-
-import pygame 
+# Init
+print("Hello Today I'm Gonna Teach You")
+import pygame
 import math
-
+import pygame.time
 pygame.init()
-
 clock = pygame.time.Clock()
-FPS = 60 
 
-SCREEN_WIDTH = 1500 
-SCREEN_HEIGHT = 600
-
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+# Create Window
+displayHeight = 1080
+displayWidth = 1920
+backgroundColor = (200,200,200)
+screen = pygame.display.set_mode((displayWidth, displayHeight))
 pygame.display.set_caption("Endless Scroll")
 
-bg = pygame.image.load("img/emeu.jpg").convert()
+
+# Import Player1
+player1x = 0
+player1y = 0
+player1yVelocity = 0
+player1xVelocity = 0
+player1size = 100
+playersSpeed = 10
+img_player1 = pygame.image.load("img/emeu.jpg").convert()
+img_player1 = pygame.transform.scale(img_player1, (100, 100))
+
+#
+bg = pygame.image.load("img/back.png").convert()
+bg = pygame.transform.scale(bg, (1920, 1080))
 bg_width = bg.get_width()
-bg_rect = bg.get_rect()
 
 scroll = 0 
-tiles = math.ceil(SCREEN_WIDTH / bg_width) + 1
+tiles = math.ceil(displayWidth / bg_width) + 1
 
-
-run = True 
-while run:
-
-    clock.tick(FPS)
-
+# Main Loop
+running = True
+while running:
+    # run the game at a constant 60fps
+    clock.tick(60)
+    #Did the user clicked the close button ?
+    for events in pygame.event.get():
+        if events.type == pygame.QUIT:
+            running=False
+        elif events.type == pygame.KEYDOWN:
+            if events.key == pygame.K_ESCAPE:
+                running=False
+    
     #draw scrolling background 
     for i in range(0, tiles):
       screen.blit(bg,(i * bg_width + scroll, 0))
-      bg_rect.x = i * bg_width + scroll
-      pygame.draw.rect(screen, (255, 0, 0), bg_rect, 1)
 
     #scroll background
     scroll -= 5
@@ -80,11 +56,41 @@ while run:
     if abs (scroll) > bg_width:
         scroll = 0
 
-    #envent handler 
-    for event in pygame.event.get(): 
-      if event.type == pygame.QUIT: 
-            run = False 
 
-pygame.display.update()
+    pressed = pygame.key.get_pressed()
+    #PLAYER 1 Y
+    if pressed[pygame.K_z]:
+        player1yVelocity = -playersSpeed
+    elif pressed[pygame.K_s]:
+        player1yVelocity = playersSpeed
+    else :
+        player1yVelocity = 0
+    # PLAYER 1 X
+    if pressed[pygame.K_d]:
+        player1xVelocity = playersSpeed
+    elif pressed[pygame.K_q]:
+        player1xVelocity = -playersSpeed
+    else :
+        player1xVelocity = 0
 
+    #Apply player 1 movement
+    player1x = player1x + player1xVelocity
+    player1y = player1y + player1yVelocity
+
+    # BOUNDING BOX
+    # Player 1
+    if player1x > displayWidth - player1size:
+        player1x = displayWidth - player1size
+    elif player1x < 0 :
+        player1x = 0
+    if player1y > displayHeight - player1size:
+        player1y = displayHeight - player1size
+    elif player1y < 0 :
+        player1y = 0
+
+    #Draw 
+    #P1
+    screen.blit(img_player1,(player1x, player1y))
+
+    pygame.display.update()
 pygame.quit()
