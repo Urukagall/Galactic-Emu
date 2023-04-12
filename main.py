@@ -1,5 +1,5 @@
 # Init
-print("Hello World")
+print("Hello Today I'm Gonna Teach You")
 import pygame
 import pygame.time
 pygame.init()
@@ -11,6 +11,9 @@ displayWidth = 1920
 backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.FULLSCREEN)
 
+
+# Import Img
+img_player1 = pygame.image.load("img/emeu.jpg")
 
 # Main Loop
 running = True
@@ -24,6 +27,12 @@ while (running):
         elif events.type == pygame.KEYDOWN:
             if events.key == pygame.K_ESCAPE:
                 running=False
+
+
+    pressed = pygame.key.get_pressed()
+
+    if pressed[pygame.K_z]:
+        player1yVelocity = -playersSpeed
 
     #Draw 
     screen.fill(backgroundColor)
