@@ -10,7 +10,7 @@ displayHeight = 720
 displayWidth = 1080
 backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.RESIZABLE)
-pygame.display.set_caption("Emeu war")
+pygame.display.set_caption("Emeu war yay")
 
 test_surface = pygame.Surface((100,200))
 test_surface.fill('Red')
