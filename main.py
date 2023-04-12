@@ -1,5 +1,5 @@
 # Init
-print("Ratio World")
+print("Hello World")
 import pygame
 import pygame.time
 pygame.init()
