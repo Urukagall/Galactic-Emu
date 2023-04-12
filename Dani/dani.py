@@ -1,7 +1,6 @@
 # Init
 print("Hello Today I'm Gonna Teach You")
 import pygame
-import math
 import pygame.time
 pygame.init()
 clock = pygame.time.Clock()
@@ -11,7 +10,6 @@ displayHeight = 1080
 displayWidth = 1920
 backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight))
-pygame.display.set_caption("Endless Scroll")
 
 
 # Import Player1
@@ -21,16 +19,8 @@ player1yVelocity = 0
 player1xVelocity = 0
 player1size = 100
 playersSpeed = 10
-img_player1 = pygame.image.load("img/emeu.jpg").convert()
+img_player1 = pygame.image.load("img/emeu.jpg")
 img_player1 = pygame.transform.scale(img_player1, (100, 100))
-
-#
-bg = pygame.image.load("img/back.png").convert()
-bg = pygame.transform.scale(bg, (1920, 1080))
-bg_width = bg.get_width()
-
-scroll = 0 
-tiles = math.ceil(displayWidth / bg_width) + 1
 
 # Main Loop
 running = True
@@ -45,18 +35,6 @@ while running:
             if events.key == pygame.K_ESCAPE:
                 running=False
     
-    #draw scrolling background 
-    for i in range(0, tiles):
-      screen.blit(bg,(i * bg_width + scroll, 0))
-
-    #scroll background
-    scroll -= 5
-
-    #reset scroll
-    if abs (scroll) > bg_width:
-        scroll = 0
-
-
     pressed = pygame.key.get_pressed()
     #PLAYER 1 Y
     if pressed[pygame.K_z]:
@@ -89,6 +67,7 @@ while running:
         player1y = 0
 
     #Draw 
+    screen.fill(backgroundColor)
     #P1
     screen.blit(img_player1,(player1x, player1y))
 
