@@ -10,6 +10,7 @@ displayHeight = 720
 displayWidth = 1080
 backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.RESIZABLE)
+pygame.display.set_caption("Emeu war")
 
 
 # Main Loop
