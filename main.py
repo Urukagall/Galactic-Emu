@@ -1,5 +1,5 @@
 # Init
-print("Hello World")
+print("yoda")
 import pygame
 import pygame.time
 pygame.init()
