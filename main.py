@@ -13,6 +13,7 @@ screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.RESIZABLE
 pygame.display.set_caption("Emeu war")
 
 test_surface = pygame.Surface((100,200))
+test_surface.fill('Red')
 
 # Main Loop
 running = True
@@ -29,5 +30,9 @@ while (running):
 
     #Draw 
     screen.fill(backgroundColor)
+    screen.blit(test_surface, (0,0))
+    
+    
     pygame.display.update()
 pygame.quit()
+exit()
