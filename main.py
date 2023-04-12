@@ -10,7 +10,13 @@ displayHeight = 1080
 displayWidth = 1920
 backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.FULLSCREEN)
+<<<<<<< Updated upstream
+=======
+pygame.display.set_caption("Emeu war")
+>>>>>>> Stashed changes
 
+
+test_image = pygame.image.load('img/emeu.jpg')
 
 # Main Loop
 running = True
@@ -27,5 +33,11 @@ while (running):
 
     #Draw 
     screen.fill(backgroundColor)
+<<<<<<< Updated upstream
+=======
+    screen.blit(test_surface, (200,100))
+    screen.blit(test_image, (500,500))
+    
+>>>>>>> Stashed changes
     pygame.display.update()
 pygame.quit()
