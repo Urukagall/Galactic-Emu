@@ -24,6 +24,7 @@ playersSpeed = 10
 img_player1 = pygame.image.load("img/emeu.jpg").convert()
 img_player1 = pygame.transform.scale(img_player1, (100, 100))
 
+#
 bg = pygame.image.load("img/back.png").convert()
 bg = pygame.transform.scale(bg, (1920, 1080))
 bg_width = bg.get_width()
