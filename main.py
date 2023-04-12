@@ -30,7 +30,7 @@ while (running):
 
     #Draw 
     screen.fill(backgroundColor)
-    screen.blit(test_surface, (0,0))
+    screen.blit(test_surface, (200,100))
     
     
     pygame.display.update()
