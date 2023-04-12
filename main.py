@@ -1,15 +1,15 @@
 # Init
-print("Hello World")
 import pygame
 import pygame.time
+from sys import exit
 pygame.init()
 clock = pygame.time.Clock()
 
 # Create Window
-displayHeight = 1080
-displayWidth = 1920
+displayHeight = 720
+displayWidth = 1080
 backgroundColor = (200,200,200)
-screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((displayWidth, displayHeight), pygame.RESIZABLE)
 
 
 # Main Loop
