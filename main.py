@@ -3,8 +3,9 @@ print("Hello Today I'm Gonna Teach You")
 import pygame
 import math
 import pygame.time
-from Class/projectile import Projectile
-from Class/player import Player
+from Class.projectile import Projectile
+from Class.player import Player
+
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -14,6 +15,7 @@ displayWidth = 1920
 backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight))
 pygame.display.set_caption("Endless Scroll")
+
 
 
 #Create Player
@@ -29,7 +31,7 @@ img_player = pygame.transform.scale(img_player, (100, 100))
 #Import background model
 backGround = pygame.image.load("img/back.png").convert()
 backGround = pygame.transform.scale(backGround, (1920, 1080))
-backGround_width = bg.get_width()
+backGround_width = backGround.get_width()
 
 #Import missile model
 missile = pygame.image.load("img/missile.png")
@@ -38,11 +40,14 @@ missile_width = missile.get_width()
 
 #Make scrolling background effect
 scroll = 0 
-tiles = math.ceil(displayWidth / bg_width) + 1
+tiles = math.ceil(displayWidth / backGround_width) + 1
 
 #Bullets & CD
 bullets = []
 start_time = 0
+
+
+player = Player(10, 5, 100, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (100, 100)), displayWidth, displayHeight)
 
 # Main Loop
 running = True
@@ -59,51 +64,37 @@ while running:
     
     #Draw the scrolling background 
     for i in range(0, tiles):
-      screen.blit(bg,(i * bg_width + scroll, 0))
+      screen.blit(backGround,(i * backGround_width + scroll, 0))
 
     #Scroll background speed
     scroll -= 5
 
     #reset scroll
-    if abs (scroll) > bg_width:
+    if abs (scroll) > backGround_width:
         scroll = 0
 
 
     pressed = pygame.key.get_pressed()
-    #PLAYER Y
-    if pressed[pygame.K_z]:
-        playeryVelocity = -playersSpeed
-    elif pressed[pygame.K_s]:
-        playeryVelocity = playersSpeed
-    else :
-        playeryVelocity = 0
-    # PLAYER X
-    if pressed[pygame.K_d]:
-        playerxVelocity = playersSpeed
-    elif pressed[pygame.K_q]:
-        playerxVelocity = -playersSpeed
-    else :
-        playerxVelocity = 0
 
-    #Apply player movement
-    playerx = playerx + playerxVelocity
-    playery = playery + playeryVelocity
-
-    # BOUNDING BOX
-    # Player
-    if playerx > displayWidth - playersize:
-        playerx = displayWidth - playersize
-    elif playerx < 0 :
-        playerx = 0
-    if playery > displayHeight - playersize:
-        playery = displayHeight - playersize
-    elif playery < 0 :
-        playery = 0
-        
     if pressed[pygame.K_LSHIFT]:
         player.speed = player.slowSpeed
     else: 
         player.speed = player.basicSpeed
+
+    #PLAYER 1 Y
+    if pressed[pygame.K_z]:
+        player.move(0,-1)
+    elif pressed[pygame.K_s]:
+        player.move(0,1)
+    else :
+        playerYVelocity = 0
+    # PLAYER 1 X
+    if pressed[pygame.K_d]:
+        player.move(1,0)
+    elif pressed[pygame.K_q]:
+        player.move(-1,0)
+    else :
+        playerXVelocity = 0
 
     #Change each bullet location depending on velocity
     for bullet in bullets:
@@ -112,11 +103,11 @@ while running:
     #Add a bullet to the bullets list on press
     if pressed[pygame.K_p]:
         if pygame.time.get_ticks() - start_time >= 500:
-            bullets.append(Projectile(player1x, player1y, missile_width, missile))
+            bullets.append(Projectile(player.X, player.Y, missile_width, missile))
             start_time = pygame.time.get_ticks()
         
     #Draw player model on screen
-    screen.blit(img_player,(playerx, playery))
+    screen.blit(player.img, (player.X, player.Y))
     
     #Draw each missile model on screen
     for bullet in bullets:
