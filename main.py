@@ -27,10 +27,10 @@ img_player1 = pygame.transform.scale(img_player1, (100, 100))
 #
 bg = pygame.image.load("img/back.png").convert()
 bg = pygame.transform.scale(bg, (1920, 1080))
-bg_width = bg.get_width()
+bg_height = bg.get_height()
 
 scroll = 0 
-tiles = math.ceil(displayWidth / bg_width) + 1
+tiles = math.ceil(displayHeight / bg_height) + 1
 
 # Main Loop
 running = True
@@ -47,14 +47,15 @@ while running:
     
     #draw scrolling background 
     for i in range(0, tiles):
-      screen.blit(bg,(i * bg_width + scroll, 0))
+      screen.blit(bg,(0, i * bg_height + scroll))
 
     #scroll background
     scroll -= 5
 
     #reset scroll
-    if abs (scroll) > bg_width:
+    if abs (scroll) > bg_height:
         scroll = 0
+
 
 
     pressed = pygame.key.get_pressed()
