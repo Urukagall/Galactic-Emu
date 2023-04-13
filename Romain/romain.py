@@ -73,6 +73,16 @@ while running:
     else :
         player1xVelocity = 0
 
+    #Slow
+    slow = 0;
+    if slow == 0 and pressed[pygame.K_LSHIFT]:
+        playersSpeed = 5;
+        slow = 1;
+    else:
+        playersSpeed = 10;
+        slow = 0;
+
+
     #Apply player 1 movement
     player1x = player1x + player1xVelocity
     player1y = player1y + player1yVelocity
