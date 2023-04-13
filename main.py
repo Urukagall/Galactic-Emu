@@ -18,8 +18,10 @@ pygame.display.set_caption("Endless Scroll")
 class Player:
     X = 0
     Y = 0
-    def __init__(self, speed, size, img):
-        self.speed = speed
+    def __init__(self, basicSpeed, slowSpeed, size, img):
+        self.basicSpeed = basicSpeed
+        self.slowSpeed = slowSpeed
+        self.speed = basicSpeed
         self.size = size
         self.img = pygame.transform.scale(img, (self.size, self.size))
 
@@ -31,7 +33,7 @@ class Player:
             self.X = self.X + veloX * self.speed
             self.Y = self.Y + veloY * self.speed
         
-        #BOUNDING BOX
+        #Stop player from going out of the screen
         if self.X > displayWidth - self.size:
             self.X = displayWidth - self.size
         if self.X < 0:
@@ -42,7 +44,7 @@ class Player:
             self.Y = 0
             
 #Creating the player
-player = Player(10, 100, pygame.image.load("img/emeu.jpg").convert())
+player = Player(10, 5, 100, pygame.image.load("img/emeu.jpg").convert())
 
 bg = pygame.image.load("img/back.png").convert()
 bg = pygame.transform.scale(bg, (1920, 1080))
@@ -78,6 +80,12 @@ while running:
         scroll = 0
 
     pressed = pygame.key.get_pressed()
+
+    if pressed[pygame.K_LSHIFT]:
+        player.speed = player.slowSpeed
+    else: 
+        player.speed = player.basicSpeed
+
     #PLAYER 1 Y
     if pressed[pygame.K_z]:
         player.move(0,-1)
