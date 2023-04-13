@@ -2,7 +2,7 @@ import math
 class Player:
     X = 0
     Y = 0
-    def __init__(self, basicSpeed, slowSpeed, size, img, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash):
+    def __init__(self, basicSpeed, slowSpeed, size, img, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, health):
         self.basicSpeed = basicSpeed
         self.slowSpeed = slowSpeed
         self.speed = basicSpeed
@@ -13,6 +13,7 @@ class Player:
         self.dashSpeed = dashSpeed
         self.cooldownDash = cooldownDash
         self.timeDash = timeDash
+        self.health = health
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
@@ -31,3 +32,6 @@ class Player:
             self.Y = self.displayHeight - self.size
         if self.Y < 0:
             self.Y = 0
+    
+    def takeDmg(self, dmg):
+        self.health -= dmg
