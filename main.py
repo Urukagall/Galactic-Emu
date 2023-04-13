@@ -32,10 +32,6 @@ missile = pygame.image.load("img/missile.png")
 missile = pygame.transform.scale(missile, (100, 100))
 missile_width = missile.get_width()
 
-#Make scrolling background effect
-scroll = 0 
-tiles = math.ceil(displayHeight / backGround_height) + 1
-
 #Bullets & CD
 bullets = []
 start_time = 0
@@ -44,7 +40,7 @@ start_time = 0
 img_player = pygame.image.load("img/emeu.jpg").convert()
 img_player = pygame.transform.scale(img_player, (100, 100))
 
-player = Player(10, 5, 100, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (100, 100)), displayWidth, displayHeight, 30, 60, 15)
+player = Player(10, 5, 100, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (100, 100)), displayWidth, displayHeight, 30, 60, 15, 100)
 
 enemy1 = Enemy(800, 800)
 enemy2 = Enemy(1200, 200)
@@ -119,12 +115,18 @@ while running:
         rect = pygame.draw.rect(screen, (255, 255, 255), (enemy.x, enemy.y, enemy.width, enemy.height))
 
         for bullet in bullets:
-            if rect.collidepoint(bullet.x,bullet.y) or rect.collidepoint(bullet.x + 100,bullet.y):
+            bullet_rect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
+            if rect.colliderect(bullet_rect):
                 enemy.takeDmg(10)
                 bullets.pop(bullets.index(bullet))
 
             if(enemy.health <= 0):
                 enemyList.pop(enemyList.index(enemy))
+        
+        player_rect = pygame.Rect(player.X, player.Y, 100, 100)
+        if rect.colliderect(player_rect):
+            player.takeDmg(10)
+            enemyList.pop(enemyList.index(enemy))
 
     #Add a bullet to the bullets list on press
     if pressed[pygame.K_p]:
