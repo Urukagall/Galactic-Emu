@@ -6,6 +6,17 @@ import pygame.time
 pygame.init()
 clock = pygame.time.Clock()
 
+class Enemy:
+    def __init__(self, x, y):
+        self.health = 50
+        self.x = x
+        self.y = y
+        self.width = 150
+        self.height = 150
+
+    def takeDmg(self, dmg):
+        self.health -= dmg
+
 # Create Window
 displayHeight = 1080
 displayWidth = 1920
@@ -31,6 +42,12 @@ bg_width = bg.get_width()
 
 scroll = 0 
 tiles = math.ceil(displayWidth / bg_width) + 1
+
+
+enemy1 = Enemy(800, 800)
+enemy2 = Enemy(1200, 200)
+enemy3 = Enemy(500, 500)
+enemyList = [enemy1, enemy2, enemy3]
 
 # Main Loop
 running = True
@@ -74,14 +91,24 @@ while running:
         player1xVelocity = 0
 
     #Slow
-    slow = 0;
+    slow = 0
     if slow == 0 and pressed[pygame.K_LSHIFT]:
-        playersSpeed = 5;
-        slow = 1;
+        playersSpeed = 5
+        slow = 1
     else:
-        playersSpeed = 10;
-        slow = 0;
+        playersSpeed = 10
+        slow = 0
 
+    for enemy in enemyList:
+        point = pygame.mouse.get_pos()
+        rect = pygame.draw.rect(screen, (255, 255, 255), (enemy.x, enemy.y, enemy.width, enemy.height))
+        collide = rect.collidepoint(point)
+        if collide:
+            enemy.takeDmg(10)
+            print(enemy.health)
+
+        if(enemy.health <= 0):
+            enemyList.pop(enemyList.index(enemy))
 
     #Apply player 1 movement
     player1x = player1x + player1xVelocity
