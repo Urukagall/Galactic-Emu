@@ -1,10 +1,16 @@
 class Enemy:
-    def __init__(self, x, y):
-        self.health = 50
+    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight):
+        self.health = health
+        self.speed = speed
         self.x = x
         self.y = y
-        self.width = 150
-        self.height = 150
+        self.size = size
+        self.displayWidth = displayWidth
+        self.displayHeight = displayHeight
+
+    def move(self, velox, veloy):
+        self.x = self.x + velox * self.speed
+        self.y = self.y + veloy * self.speed
 
     def takeDmg(self, dmg):
         self.health -= dmg

@@ -1,8 +1,8 @@
 import math
 class Player:
-    X = 0
-    Y = 0
     def __init__(self, basicSpeed, slowSpeed, size, img, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, health):
+        self.X = 0
+        self.Y = 0
         self.basicSpeed = basicSpeed
         self.slowSpeed = slowSpeed
         self.speed = basicSpeed
