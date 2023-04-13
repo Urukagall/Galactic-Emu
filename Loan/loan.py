@@ -47,7 +47,7 @@ while running:
     
     #draw scrolling background 
     for i in range(0, tiles):
-      screen.blit(bg,(0, i * bg_height + scroll))
+      screen.blit(bg,(0,(-1 * i) * bg_height - scroll))
 
     #scroll background
     scroll -= 5
