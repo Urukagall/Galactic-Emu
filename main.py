@@ -172,7 +172,7 @@ while running:
 
         #Collision bullet & enemy
         for bullet in projectileList:
-            if bullet.player == True:
+            if bullet.isPlayer == True:
                 bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
                 if rect.colliderect(bulletRect):
                     enemy.takeDmg(bullet.damage)
@@ -200,7 +200,7 @@ while running:
     if pressed[pygame.K_x]:
         if pygame.time.get_ticks() - missileCooldown >= 500:
             #projectileList.append(Projectile(player.X, player.Y, missileWidth, missile, 10, 10, True, displayWidth, displayHeight))
-            Projectile(player.X, player.Y, missileWidth, missile, (0,-100), 10, True, displayWidth, displayHeight, projectileList, player=True)
+            Projectile(player.X, player.Y, missileWidth, missile, (0,-35), 10, True, displayWidth, displayHeight, projectileList, player=True)
             missileCooldown = pygame.time.get_ticks()
 
     #Score grows automatically
