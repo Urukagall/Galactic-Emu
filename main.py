@@ -175,7 +175,7 @@ while running:
     
     #Draw each missile model on screen
     for bullet in bullets:
-        if bullet.y > 0 & bullet.y < 1920 :
+        if bullet.y > 0 and bullet.y < 1920 :
             screen.blit(bullet.image, (bullet.x, bullet.y))
         else:
             bullets.pop(bullets.index(bullet))
