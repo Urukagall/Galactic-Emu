@@ -109,18 +109,20 @@ while running:
 
     #PLAYER Y movement
     if pressed[pygame.K_z]:
-        player.move(0,-1)
+        velY = -1
     elif pressed[pygame.K_s]:
-        player.move(0,1)
+        velY = 1
     else :
-        playerYVelocity = 0
+        velY = 0
     # PLAYER X movement
     if pressed[pygame.K_d]:
-        player.move(1,0)
+        velX = 1
     elif pressed[pygame.K_q]:
-        player.move(-1,0)
+        velX = -1
     else :
-        playerXVelocity = 0
+        velX = 0
+        
+    player.move(velX, velY)
 
     # Change each bullet location depending on velocity
     for bullet in bullets:
