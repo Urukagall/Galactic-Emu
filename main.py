@@ -33,14 +33,13 @@ missile = pygame.transform.scale(missile, (50, 50))
 missile_width = missile.get_width()
 
 #Import boulles 
-classicBullet =  pygame.image.load("img/bullet.png")
-classicBullet = pygame.transform.scale(classicBullet, (50, 50))
-classicBulletWidth = classicBullet.get_width()
+bullet =  pygame.image.load("img/bullet.png")
+bullet = pygame.transform.scale(bullet, (50, 50))
+bullet_width = bullet.get_width()
 
 #Bullets & CD
 bullets = []
-missileCooldown = 0
-bulletCoolDown = 0
+start_time = 0
 score_time = 0
 
 #Create Player
@@ -61,6 +60,9 @@ enemyList = [enemy1, enemy2, enemy3]
 timerDash = [0 , 0]
 
 score = Score()
+#score = 0
+#score_increment = 10
+
 # Main Loop
 running = True
 while running:
@@ -151,16 +153,15 @@ while running:
             enemyList.pop(enemyList.index(enemy))
 
     #Add a bullet to the bullets list on press
-
     if pressed[pygame.K_p]:
-         if pygame.time.get_ticks() - bulletCoolDown >= 250:
-            bullets.append(Projectile(player.X, player.Y, classicBulletWidth, classicBullet))
-            bulletCoolDown = pygame.time.get_ticks()
-    if pressed[pygame.K_o]:
-        if pygame.time.get_ticks() - missileCooldown >= 500:
+        if pygame.time.get_ticks() - start_time >= 500:
             bullets.append(Projectile(player.X, player.Y, missile_width, missile))
-            missileCooldown = pygame.time.get_ticks()
-
+            start_time = pygame.time.get_ticks()
+    elif pressed[pygame.K_o]:
+        if pygame.time.get_ticks() - start_time >= 500:
+            bullets.append(Projectile(player.X, player.Y, bullet_width, bullet))
+            start_time = pygame.time.get_ticks()
+        
 
     #Score grows automatically
     if pygame.time.get_ticks() - score_time >= 3000:
@@ -181,3 +182,4 @@ while running:
     screen.blit(score_text, (10, 10))
     pygame.display.update()
 pygame.quit()
+
