@@ -1,21 +1,18 @@
 import math
-import pygame
 class Player:
-    def __init__(self, basicSpeed, slowSpeed, size, img, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, health):
-        self.X = 100
-        self.Y = 100
+    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, health):
+        self.X = 0
+        self.Y = 0
         self.basicSpeed = basicSpeed
         self.slowSpeed = slowSpeed
         self.speed = basicSpeed
         self.size = size
-        self.img = img
         self.displayWidth = displayWidth
         self.displayHeight = displayHeight
         self.dashSpeed = dashSpeed
         self.cooldownDash = cooldownDash
         self.timeDash = timeDash
         self.health = health
-        self.img = pygame.transform.scale(self.img, (self.size, self.size))
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
