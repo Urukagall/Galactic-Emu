@@ -17,8 +17,8 @@ class Player:
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
-            self.X = self.X + math.sqrt(1/2) * self.speed
-            self.Y = self.Y + math.sqrt(1/2) * self.speed
+            self.X = self.X + math.sqrt(1/2) * self.speed * veloX
+            self.Y = self.Y + math.sqrt(1/2) * self.speed * veloY
         else:
             self.X = self.X + veloX * self.speed
             self.Y = self.Y + veloY * self.speed
