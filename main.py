@@ -32,6 +32,11 @@ missile = pygame.image.load("img/missile.png")
 missile = pygame.transform.scale(missile, (50, 50))
 missile_width = missile.get_width()
 
+#Import boulles 
+bullet =  pygame.image.load("img/bullet.png")
+bullet = pygame.transform.scale(bullet, (50, 50))
+bullet_width = bullet.get_width()
+
 #Bullets & CD
 bullets = []
 start_time = 0
@@ -154,6 +159,11 @@ while running:
         if pygame.time.get_ticks() - start_time >= 500:
             bullets.append(Projectile(player.X, player.Y, missile_width, missile))
             start_time = pygame.time.get_ticks()
+    elif pressed[pygame.K_o]:
+        if pygame.time.get_ticks() - start_time >= 500:
+            bullets.append(Projectile(player.X, player.Y, bullet_width, bullet))
+            start_time = pygame.time.get_ticks()
+        
 
     #Score grows automatically
     if pygame.time.get_ticks() - score_time >= 3000:
@@ -174,3 +184,4 @@ while running:
     screen.blit(score_text, (10, 10))
     pygame.display.update()
 pygame.quit()
+
