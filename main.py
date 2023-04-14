@@ -40,11 +40,15 @@ start_time = 0
 img_player = pygame.image.load("img/emeu.jpg").convert()
 img_player = pygame.transform.scale(img_player, (100, 100))
 
+#Create Enemy
+img_enemy = pygame.image.load("img/enemy.png").convert()
+img_enemy = pygame.transform.scale(img_enemy, (100, 100))
+
 player = Player(10, 5, 100, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (100, 100)), displayWidth, displayHeight, 30, 60, 15, 100)
 
-enemy1 = Enemy(800, 800)
-enemy2 = Enemy(1200, 200)
-enemy3 = Enemy(500, 500)
+enemy1 = Enemy(50, 2, 300, 0, 100, displayWidth, displayHeight)
+enemy2 = Enemy(50, 2, 1200, 0, 100, displayWidth, displayHeight)
+enemy3 = Enemy(50, 2, 500, 0, 100, displayWidth, displayHeight)
 enemyList = [enemy1, enemy2, enemy3]
 
 timerDash = [0 , 0]
@@ -73,6 +77,7 @@ while running:
     if abs (scroll) > backGround_height:
         scroll = 0
 
+    # Slow movement and dash
 
     pressed = pygame.key.get_pressed()
 
@@ -91,14 +96,14 @@ while running:
     elif timerDash[0] == 0 and timerDash[1] > 0:
         timerDash[1] -= 1
 
-    #PLAYER Y
+    #PLAYER Y movement
     if pressed[pygame.K_z]:
         player.move(0,-1)
     elif pressed[pygame.K_s]:
         player.move(0,1)
     else :
         playerYVelocity = 0
-    # PLAYER X
+    # PLAYER X movement
     if pressed[pygame.K_d]:
         player.move(1,0)
     elif pressed[pygame.K_q]:
@@ -112,7 +117,11 @@ while running:
     
     # Enemy
     for enemy in enemyList:
-        rect = pygame.draw.rect(screen, (255, 255, 255), (enemy.x, enemy.y, enemy.width, enemy.height))
+        enemy.move(0, 1)
+        rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
+        screen.blit(img_enemy, (enemy.x, enemy.y))
+        if enemy.y > enemy.displayHeight:
+            enemyList.pop(enemyList.index(enemy))
 
         for bullet in bullets:
             bullet_rect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
@@ -139,7 +148,7 @@ while running:
     
     #Draw each missile model on screen
     for bullet in bullets:
-        if bullet.y > 0 & bullet.y < 1920:
+        if bullet.y > 0 & bullet.y < 1920 :
             screen.blit(bullet.image, (bullet.x, bullet.y))
         else:
             bullets.pop(bullets.index(bullet))
