@@ -3,19 +3,13 @@ print("Hello Today I'm Gonna Teach You")
 import pygame
 import math
 import pygame.time
+from Class.projectile import Projectile
+from Class.player import Player
+from Class.enemy import Enemy
+#from Class.score import Score
+
 pygame.init()
 clock = pygame.time.Clock()
-
-class Enemy:
-    def __init__(self, x, y):
-        self.health = 50
-        self.x = x
-        self.y = y
-        self.width = 150
-        self.height = 150
-
-    def takeDmg(self, dmg):
-        self.health -= dmg
 
 # Create Window
 displayHeight = 1080
@@ -25,36 +19,47 @@ screen = pygame.display.set_mode((displayWidth, displayHeight))
 pygame.display.set_caption("Endless Scroll")
 
 
-# Import Player1
-player1x = 0
-player1y = 0
-player1yVelocity = 0
-player1xVelocity = 0
-player1size = 100
-playersSpeed = 10
-img_player1 = pygame.image.load("img/emeu.jpg").convert()
-img_player1 = pygame.transform.scale(img_player1, (100, 100))
+#Import background model
 
-#
-bg = pygame.image.load("img/back.png").convert()
-bg = pygame.transform.scale(bg, (1920, 1080))
-bg_width = bg.get_width()
+backGround = pygame.image.load("img/back.png").convert()
+backGround = pygame.transform.scale(backGround, (1920, 1080))
+backGround_height = backGround.get_height()
 
 scroll = 0 
-tiles = math.ceil(displayWidth / bg_width) + 1
+tiles = math.ceil(displayHeight / backGround_height) + 1
 
+#Import missile model
+missile = pygame.image.load("img/missile.png")
+missile = pygame.transform.scale(missile, (100, 100))
+missile_width = missile.get_width()
+
+#Bullets & CD
+bullets = []
+start_time = 0
+
+#Create Player
+img_player = pygame.image.load("img/emeu.jpg").convert()
+img_player = pygame.transform.scale(img_player, (100, 100))
+
+player = Player(10, 5, 100, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (100, 100)), displayWidth, displayHeight, 30, 60, 15, 100)
 
 enemy1 = Enemy(800, 800)
 enemy2 = Enemy(1200, 200)
 enemy3 = Enemy(500, 500)
 enemyList = [enemy1, enemy2, enemy3]
+#score = Score()
+score = 0
+score_increment = 10
+
+timerDash = [0 , 0]
 
 # Main Loop
 running = True
 while running:
+    font = pygame.font.Font(None, 36)
     # run the game at a constant 60fps
     clock.tick(60)
-    #Did the user clicked the close button ?
+    #Close window on Escape press
     for events in pygame.event.get():
         if events.type == pygame.QUIT:
             running=False
@@ -62,72 +67,97 @@ while running:
             if events.key == pygame.K_ESCAPE:
                 running=False
     
-    #draw scrolling background 
+     #draw scrolling background 
     for i in range(0, tiles):
-      screen.blit(bg,(i * bg_width + scroll, 0))
+      screen.blit(backGround,(0,(-1 * i) * backGround_height - scroll))
 
     #scroll background
     scroll -= 5
 
     #reset scroll
-    if abs (scroll) > bg_width:
+    if abs (scroll) > backGround_height:
         scroll = 0
 
 
     pressed = pygame.key.get_pressed()
-    #PLAYER 1 Y
+
+    if pressed[pygame.K_LSHIFT]:
+        player.speed = player.slowSpeed
+    elif pressed[pygame.K_SPACE] and timerDash[1] == 0:
+        timerDash[1] = player.cooldownDash
+        timerDash[0] = player.timeDash
+        player.speed = player.dashSpeed
+    elif timerDash[0] == 0: 
+        player.speed = player.basicSpeed
+
+
+    if timerDash[0] > 0:
+        timerDash[0] -= 1
+    elif timerDash[0] == 0 and timerDash[1] > 0:
+        timerDash[1] -= 1
+
+    #PLAYER Y
     if pressed[pygame.K_z]:
-        player1yVelocity = -playersSpeed
+        player.move(0,-1)
     elif pressed[pygame.K_s]:
-        player1yVelocity = playersSpeed
+        player.move(0,1)
     else :
-        player1yVelocity = 0
-    # PLAYER 1 X
+        playerYVelocity = 0
+    # PLAYER X
     if pressed[pygame.K_d]:
-        player1xVelocity = playersSpeed
+        player.move(1,0)
     elif pressed[pygame.K_q]:
-        player1xVelocity = -playersSpeed
+        player.move(-1,0)
     else :
-        player1xVelocity = 0
+        playerXVelocity = 0
 
-    #Slow
-    slow = 0
-    if slow == 0 and pressed[pygame.K_LSHIFT]:
-        playersSpeed = 5
-        slow = 1
-    else:
-        playersSpeed = 10
-        slow = 0
-
+    # Change each bullet location depending on velocity
+    for bullet in bullets:
+        bullet.y -= bullet.velocity
+    
+    # Enemy
     for enemy in enemyList:
-        point = pygame.mouse.get_pos()
         rect = pygame.draw.rect(screen, (255, 255, 255), (enemy.x, enemy.y, enemy.width, enemy.height))
-        collide = rect.collidepoint(point)
-        if collide:
-            enemy.takeDmg(10)
-            print(enemy.health)
 
-        if(enemy.health <= 0):
+        for bullet in bullets:
+            bullet_rect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
+            if rect.colliderect(bullet_rect):
+                enemy.takeDmg(10)
+                #score.score_increment(100)
+                score += score_increment
+                bullets.pop(bullets.index(bullet))
+
+            if(enemy.health <= 0):
+                #score.score_increment(200)
+                score += score_increment + 100
+                enemyList.pop(enemyList.index(enemy))
+        
+        player_rect = pygame.Rect(player.X, player.Y, 100, 100)
+        if rect.colliderect(player_rect):
+            player.takeDmg(10)
+            #score.score_increment(50)
+            score += score_increment
             enemyList.pop(enemyList.index(enemy))
 
-    #Apply player 1 movement
-    player1x = player1x + player1xVelocity
-    player1y = player1y + player1yVelocity
-
-    # BOUNDING BOX
-    # Player 1
-    if player1x > displayWidth - player1size:
-        player1x = displayWidth - player1size
-    elif player1x < 0 :
-        player1x = 0
-    if player1y > displayHeight - player1size:
-        player1y = displayHeight - player1size
-    elif player1y < 0 :
-        player1y = 0
-
-    #Draw 
-    #P1
-    screen.blit(img_player1,(player1x, player1y))
+    #Add a bullet to the bullets list on press
+    if pressed[pygame.K_p]:
+        if pygame.time.get_ticks() - start_time >= 500:
+            bullets.append(Projectile(player.X, player.Y, missile_width, missile))
+            start_time = pygame.time.get_ticks()
+        
+    #Draw player model on screen
+    screen.blit(player.img, (player.X, player.Y))
+    
+    #Draw each missile model on screen
+    for bullet in bullets:
+        if bullet.y > 0 & bullet.y < 1920:
+            screen.blit(bullet.image, (bullet.x, bullet.y))
+        else:
+            bullets.pop(bullets.index(bullet))
+            
+    #Draw the score on the screen
+    score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+    screen.blit(score_text, (10, 10))
 
     pygame.display.update()
 pygame.quit()
