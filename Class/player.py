@@ -35,3 +35,5 @@ class Player:
     
     def takeDmg(self, dmg):
         self.health -= dmg
+
+    
