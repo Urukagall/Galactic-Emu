@@ -6,6 +6,7 @@ import pygame.time
 from Class.projectile import Projectile
 from Class.player import Player
 from Class.enemy import Enemy
+from Class.score import Score
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -16,7 +17,6 @@ displayWidth = 1920
 backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight))
 pygame.display.set_caption("Endless Scroll")
-
 
 #Import background model
 
@@ -29,33 +29,34 @@ tiles = math.ceil(displayHeight / backGround_height) + 1
 
 #Import missile model
 missile = pygame.image.load("img/missile.png")
-missile = pygame.transform.scale(missile, (100, 100))
+missile = pygame.transform.scale(missile, (50, 50))
 missile_width = missile.get_width()
 
 #Bullets & CD
 bullets = []
 start_time = 0
+score_time = 0
 
 #Create Player
 img_player = pygame.image.load("img/emeu.jpg").convert()
-img_player = pygame.transform.scale(img_player, (100, 100))
+img_player = pygame.transform.scale(img_player, (50, 50))
 
 #Create Enemy
 img_enemy = pygame.image.load("img/enemy.png").convert()
-img_enemy = pygame.transform.scale(img_enemy, (100, 100))
+img_enemy = pygame.transform.scale(img_enemy, (50, 50))
 
-player = Player(10, 5, 100, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (100, 100)), displayWidth, displayHeight, 30, 60, 15, 100)
+player = Player(10, 5, 50, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (50, 50)), displayWidth, displayHeight, 30, 60, 15, 100)
 
-enemy1 = Enemy(50, 2, 300, 0, 100, displayWidth, displayHeight)
-enemy2 = Enemy(50, 2, 1200, 0, 100, displayWidth, displayHeight)
-enemy3 = Enemy(50, 2, 500, 0, 100, displayWidth, displayHeight)
+enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100)
+enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100)
+enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100)
 enemyList = [enemy1, enemy2, enemy3]
 
 timerDash = [0 , 0]
 
-#score = Score()
-score = 0
-score_increment = 10
+score = Score()
+#score = 0
+#score_increment = 10
 
 # Main Loop
 running = True
@@ -132,17 +133,18 @@ while running:
             bullet_rect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
             if rect.colliderect(bullet_rect):
                 enemy.takeDmg(10)
-                score += score_increment
+                score.score_increment(10)
                 bullets.pop(bullets.index(bullet))
 
             if(enemy.health <= 0):
-                score += score_increment + 100
+                score.score_increment(enemy.score)
                 enemyList.pop(enemyList.index(enemy))
+                break
         
         player_rect = pygame.Rect(player.X, player.Y, 100, 100)
         if rect.colliderect(player_rect):
             player.takeDmg(10)
-            score += score_increment
+            score.score_increment(10)
             enemyList.pop(enemyList.index(enemy))
 
     #Add a bullet to the bullets list on press
@@ -150,6 +152,11 @@ while running:
         if pygame.time.get_ticks() - start_time >= 500:
             bullets.append(Projectile(player.X, player.Y, missile_width, missile))
             start_time = pygame.time.get_ticks()
+
+    #Score grows automatically
+    if pygame.time.get_ticks() - score_time >= 3000:
+        score.score_increment(30)
+        score_time = pygame.time.get_ticks()
         
     #Draw player model on screen
     screen.blit(player.img, (player.X, player.Y))
@@ -161,7 +168,7 @@ while running:
         else:
             bullets.pop(bullets.index(bullet))
 
-    score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+    score_text = font.render(f'Score: {score.score}', True, (255, 255, 255))
     screen.blit(score_text, (10, 10))
     pygame.display.update()
 pygame.quit()
