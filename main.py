@@ -53,9 +53,14 @@ enemyList = [enemy1, enemy2, enemy3]
 
 timerDash = [0 , 0]
 
+#score = Score()
+score = 0
+score_increment = 10
+
 # Main Loop
 running = True
 while running:
+    font = pygame.font.Font(None, 36)
     # run the game at a constant 60fps
     clock.tick(60)
     #Close window on Escape press
@@ -127,14 +132,17 @@ while running:
             bullet_rect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
             if rect.colliderect(bullet_rect):
                 enemy.takeDmg(10)
+                score += score_increment
                 bullets.pop(bullets.index(bullet))
 
             if(enemy.health <= 0):
+                score += score_increment + 100
                 enemyList.pop(enemyList.index(enemy))
         
         player_rect = pygame.Rect(player.X, player.Y, 100, 100)
         if rect.colliderect(player_rect):
             player.takeDmg(10)
+            score += score_increment
             enemyList.pop(enemyList.index(enemy))
 
     #Add a bullet to the bullets list on press
@@ -153,5 +161,7 @@ while running:
         else:
             bullets.pop(bullets.index(bullet))
 
+    score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+    screen.blit(score_text, (10, 10))
     pygame.display.update()
 pygame.quit()
