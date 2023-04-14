@@ -1,12 +1,13 @@
 import math
-class Player():
-    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, health):
+class Player:
+    def __init__(self, basicSpeed, slowSpeed, size, img, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, health):
         self.X = 0
         self.Y = 0
         self.basicSpeed = basicSpeed
         self.slowSpeed = slowSpeed
         self.speed = basicSpeed
         self.size = size
+        self.img = img
         self.displayWidth = displayWidth
         self.displayHeight = displayHeight
         self.dashSpeed = dashSpeed
