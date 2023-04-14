@@ -47,9 +47,9 @@ img_enemy = pygame.transform.scale(img_enemy, (50, 50))
 
 player = Player(10, 5, 50, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (50, 50)), displayWidth, displayHeight, 30, 60, 15, 100)
 
-enemy1 = Enemy(50, 2, 300, 0, 100, displayWidth, displayHeight, 100)
-enemy2 = Enemy(50, 2, 1200, 0, 100, displayWidth, displayHeight, 100)
-enemy3 = Enemy(50, 2, 500, 0, 100, displayWidth, displayHeight, 100)
+enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100)
+enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100)
+enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100)
 enemyList = [enemy1, enemy2, enemy3]
 
 timerDash = [0 , 0]
