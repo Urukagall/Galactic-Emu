@@ -45,7 +45,7 @@ img_player = pygame.transform.scale(img_player, (50, 50))
 img_enemy = pygame.image.load("img/enemy.png").convert()
 img_enemy = pygame.transform.scale(img_enemy, (50, 50))
 
-player = Player(10, 5, 50, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (50, 50)), displayWidth, displayHeight, 30, 60, 15, 100)
+player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 100)
 
 enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100)
 enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100)
@@ -161,11 +161,11 @@ while running:
         score_time = pygame.time.get_ticks()
         
     #Draw player model on screen
-    screen.blit(player.img, (player.X, player.Y))
+    screen.blit(img_player, (player.X, player.Y))
     
     #Draw each missile model on screen
     for bullet in bullets:
-        if bullet.y > 0 & bullet.y < 1920 :
+        if bullet.y > 0 and bullet.y < 1920 :
             screen.blit(bullet.image, (bullet.x, bullet.y))
         else:
             bullets.pop(bullets.index(bullet))
