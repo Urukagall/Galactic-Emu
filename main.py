@@ -17,7 +17,6 @@ backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight))
 pygame.display.set_caption("Endless Scroll")
 
-
 #Import background model
 
 backGround = pygame.image.load("img/back.png").convert()
@@ -29,7 +28,7 @@ tiles = math.ceil(displayHeight / backGround_height) + 1
 
 #Import missile model
 missile = pygame.image.load("img/missile.png")
-missile = pygame.transform.scale(missile, (100, 100))
+missile = pygame.transform.scale(missile, (50, 50))
 missile_width = missile.get_width()
 
 #Bullets & CD
@@ -38,17 +37,17 @@ start_time = 0
 
 #Create Player
 img_player = pygame.image.load("img/emeu.jpg").convert()
-img_player = pygame.transform.scale(img_player, (100, 100))
+img_player = pygame.transform.scale(img_player, (50, 50))
 
 #Create Enemy
 img_enemy = pygame.image.load("img/enemy.png").convert()
-img_enemy = pygame.transform.scale(img_enemy, (100, 100))
+img_enemy = pygame.transform.scale(img_enemy, (50, 50))
 
-player = Player(10, 5, 100, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (100, 100)), displayWidth, displayHeight, 30, 60, 15, 100)
+player = Player(10, 5, 50, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (50, 50)), displayWidth, displayHeight, 30, 60, 15, 100)
 
-enemy1 = Enemy(50, 2, 300, 0, 100, displayWidth, displayHeight)
-enemy2 = Enemy(50, 2, 1200, 0, 100, displayWidth, displayHeight)
-enemy3 = Enemy(50, 2, 500, 0, 100, displayWidth, displayHeight)
+enemy1 = Enemy(50, 1, 300, 0, 50, displayWidth, displayHeight)
+enemy2 = Enemy(50, 1, 1200, 0, 50, displayWidth, displayHeight)
+enemy3 = Enemy(50, 1, 500, 0, 50, displayWidth, displayHeight)
 enemyList = [enemy1, enemy2, enemy3]
 
 timerDash = [0 , 0]
@@ -138,6 +137,7 @@ while running:
             if(enemy.health <= 0):
                 score += score_increment + 100
                 enemyList.pop(enemyList.index(enemy))
+                break
         
         player_rect = pygame.Rect(player.X, player.Y, 100, 100)
         if rect.colliderect(player_rect):
