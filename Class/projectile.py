@@ -2,7 +2,7 @@ import math
 
 class Projectile():
     def __init__(self, x, y, width, image, velocity, damage, isHoming, displayWidth, displayHeight, projectileList, player=False):
-        self.player = player
+        self.isPlayer = player
         self.x = x
         self.y = y
         self.width = width
@@ -15,6 +15,15 @@ class Projectile():
         projectileList.append(self)
         
     def update(self):
+        if(self.isHoming):
+            if(self.isPlayer):
+                #Le missile doit trouver l'enemi le + proche
+                pass
+            else:
+                #le missile doit aller vers le joueur
+                pass
+            pass
+
         self.x = self.x + self.velocity[0]
         self.y = self.y + self.velocity[1]
 
