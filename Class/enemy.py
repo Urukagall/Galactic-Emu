@@ -1,5 +1,5 @@
 class Enemy:
-    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score):
+    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image):
         self.health = health
         self.speed = speed
         self.x = x
@@ -8,6 +8,7 @@ class Enemy:
         self.displayWidth = displayWidth
         self.displayHeight = displayHeight
         self.score = score
+        self.image = image
 
     def move(self, velox, veloy):
         self.x = self.x + velox * self.speed
