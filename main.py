@@ -56,10 +56,11 @@ player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 100)
 imgEnemy = pygame.image.load("img/enemy.png").convert()
 imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 
-enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgEnemy)
-enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy)
-enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy)
+enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2)
+enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2)
+enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2)
 enemyList = [enemy1, enemy2, enemy3]
+
 
 #Initiate dash coordinates
 timerDash = [0 , 0]
@@ -104,24 +105,23 @@ while running:
         player.speed = player.dashSpeed
     elif timerDash[0] == 0: 
         player.speed = player.basicSpeed
-    
-    
+
     if timerDash[0] > 0:
         timerDash[0] -= 1
     elif timerDash[0] == 0 and timerDash[1] > 0:
         timerDash[1] -= 1
 
      #PLAYER Y movement
-    if pressed[pygame.K_z]:
+    if pressed[pygame.K_UP]:
         velY = -1
-    elif pressed[pygame.K_s]:
+    elif pressed[pygame.K_DOWN]:
         velY = 1
     else :
         velY = 0
     # PLAYER X movement
-    if pressed[pygame.K_d]:
+    if pressed[pygame.K_RIGHT]:
         velX = 1
-    elif pressed[pygame.K_q]:
+    elif pressed[pygame.K_LEFT]:
         velX = -1
     else :
         velX = 0
@@ -135,6 +135,8 @@ while running:
     #Enemy
     for enemy in enemyList:
         rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
+        enemy.shoot()
+        
         screen.blit(enemy.image, (enemy.x, enemy.y))
         if enemy.y > enemy.displayHeight:
             enemy.health = 0
@@ -160,11 +162,11 @@ while running:
             enemyList.pop(enemyList.index(enemy))
 
     #Add a bullet to the bullets list on press
-    if pressed[pygame.K_p]:
+    if pressed[pygame.K_z]:
          if pygame.time.get_ticks() - bulletCoolDown >= 250:
             bullets.append(Projectile(player.X, player.Y, classicBulletWidth, classicBullet))
             bulletCoolDown = pygame.time.get_ticks()
-    if pressed[pygame.K_o]:
+    if pressed[pygame.K_x]:
         if pygame.time.get_ticks() - missileCooldown >= 500:
             bullets.append(Projectile(player.X, player.Y, missileWidth, missile))
             missileCooldown = pygame.time.get_ticks()
@@ -179,7 +181,7 @@ while running:
     
     #Draw each missile model on screen
     for bullet in bullets:
-        if bullet.y > 0 & bullet.y < 1920 :
+        if bullet.y > 0 and bullet.y < 1920 :
             screen.blit(bullet.image, (bullet.x, bullet.y))
         else:
             bullets.pop(bullets.index(bullet))
