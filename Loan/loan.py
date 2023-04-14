@@ -1,13 +1,18 @@
-# Init
-print("Hello Today I'm Gonna Teach You")
+#Import librairies
 import pygame
 import math
 import pygame.time
+
+#Import Classes
 from Class.projectile import Projectile
 from Class.player import Player
 from Class.enemy import Enemy
 from Class.score import Score
 
+#Import Patterns
+
+
+#Init the pygame & clock
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -19,48 +24,54 @@ screen = pygame.display.set_mode((displayWidth, displayHeight))
 pygame.display.set_caption("Endless Scroll")
 
 #Import background model
-
 backGround = pygame.image.load("img/back.png").convert()
 backGround = pygame.transform.scale(backGround, (1920, 1080))
-backGround_height = backGround.get_height()
+backGroundHeight = backGround.get_height()
 
+#Pre-requisite for the screen scrolling
 scroll = 0 
-tiles = math.ceil(displayHeight / backGround_height) + 1
+tiles = math.ceil(displayHeight / backGroundHeight) + 1
 
 #Import missile model
 missile = pygame.image.load("img/missile.png")
 missile = pygame.transform.scale(missile, (50, 50))
-missile_width = missile.get_width()
+missileWidth = missile.get_width()
 
 #Import boulles 
 classicBullet =  pygame.image.load("img/bullet.png")
 classicBullet = pygame.transform.scale(classicBullet, (50, 50))
 classicBulletWidth = classicBullet.get_width()
 
+#Import Ulti  
+ulti =  pygame.image.load("img/grosse_boule.png")
+ulti = pygame.transform.scale(ulti, (100, 100))
+ultiWidth = ulti.get_width()
+
 #Bullets & CD
 bullets = []
-missileCooldown = 0
+missileCoolDown = 0
 bulletCoolDown = 0
-score_time = 0
+ultiCoolDown = 0
+scoreTime = 0
 
 #Create Player
-img_player = pygame.image.load("img/emeu.jpg").convert()
-img_player = pygame.transform.scale(img_player, (50, 50))
-
-#Create Enemy
-img_enemy = pygame.image.load("img/enemy.png").convert()
-img_enemy = pygame.transform.scale(img_enemy, (50, 50))
-
 player = Player(10, 5, 50, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (50, 50)), displayWidth, displayHeight, 30, 60, 15, 100)
 
-enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100)
-enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100)
-enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100)
+#Create Enemy
+imgEnemy = pygame.image.load("img/enemy.png").convert()
+imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
+
+enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgEnemy)
+enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy)
+enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy)
 enemyList = [enemy1, enemy2, enemy3]
 
+#Initiate dash coordinates
 timerDash = [0 , 0]
 
+#Initiate score
 score = Score()
+
 # Main Loop
 running = True
 while running:
@@ -77,13 +88,13 @@ while running:
     
      #draw scrolling background 
     for i in range(0, tiles):
-      screen.blit(backGround,(0,(-1 * i) * backGround_height - scroll))
+      screen.blit(backGround,(0,(-1 * i) * backGroundHeight - scroll))
 
     #scroll background
     scroll -= 5
 
     #reset scroll
-    if abs (scroll) > backGround_height:
+    if abs (scroll) > backGroundHeight:
         scroll = 0
 
     # Slow movement and dash
@@ -98,9 +109,7 @@ while running:
         player.speed = player.dashSpeed
     elif timerDash[0] == 0: 
         player.speed = player.basicSpeed
-
-
-    if timerDash[0] > 0:
+    elif timerDash[0] > 0:
         timerDash[0] -= 1
     elif timerDash[0] == 0 and timerDash[1] > 0:
         timerDash[1] -= 1
@@ -112,6 +121,7 @@ while running:
         player.move(0,1)
     else :
         playerYVelocity = 0
+
     # PLAYER X movement
     if pressed[pygame.K_d]:
         player.move(1,0)
@@ -124,17 +134,19 @@ while running:
     for bullet in bullets:
         bullet.y -= bullet.velocity
     
-    # Enemy
+    #Enemy
     for enemy in enemyList:
-        enemy.move(0, 1)
+        
         rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
-        screen.blit(img_enemy, (enemy.x, enemy.y))
+        screen.blit(enemy.image, (enemy.x, enemy.y))
         if enemy.y > enemy.displayHeight:
+            enemy.health = 0
             enemyList.pop(enemyList.index(enemy))
 
+        #Collision bullet & enemy
         for bullet in bullets:
-            bullet_rect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
-            if rect.colliderect(bullet_rect):
+            bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
+            if rect.colliderect(bulletRect):
                 enemy.takeDmg(10)
                 score.score_increment(10)
                 bullets.pop(bullets.index(bullet))
@@ -144,28 +156,30 @@ while running:
                 enemyList.pop(enemyList.index(enemy))
                 break
         
-        player_rect = pygame.Rect(player.X, player.Y, 100, 100)
-        if rect.colliderect(player_rect):
+        playerRect = pygame.Rect(player.X, player.Y, 100, 100)
+        if rect.colliderect(playerRect):
             player.takeDmg(10)
             score.score_increment(10)
             enemyList.pop(enemyList.index(enemy))
 
     #Add a bullet to the bullets list on press
-
     if pressed[pygame.K_p]:
-         if pygame.time.get_ticks() - bulletCoolDown >= 250:
+         if pygame.time.get_ticks() - bulletCoolDown >= 150:
             bullets.append(Projectile(player.X, player.Y, classicBulletWidth, classicBullet))
             bulletCoolDown = pygame.time.get_ticks()
     if pressed[pygame.K_o]:
-        if pygame.time.get_ticks() - missileCooldown >= 500:
-            bullets.append(Projectile(player.X, player.Y, missile_width, missile))
-            missileCooldown = pygame.time.get_ticks()
-
+        if pygame.time.get_ticks() - missileCoolDown >= 500:
+            bullets.append(Projectile(player.X, player.Y, missileWidth, missile))
+            missileCoolDown = pygame.time.get_ticks()
+    if pressed[pygame.K_i]:
+        if pygame.time.get_ticks() - ultiCoolDown >= 1000:
+            bullets.append(Projectile(player.X, player.Y, ultiWidth, ulti))
+            ultiCooldown = pygame.time.get_ticks()
 
     #Score grows automatically
-    if pygame.time.get_ticks() - score_time >= 3000:
+    if pygame.time.get_ticks() - scoreTime >= 3000:
         score.score_increment(30)
-        score_time = pygame.time.get_ticks()
+        scoreTime = pygame.time.get_ticks()
         
     #Draw player model on screen
     screen.blit(player.img, (player.X, player.Y))
@@ -177,7 +191,8 @@ while running:
         else:
             bullets.pop(bullets.index(bullet))
 
-    score_text = font.render(f'Score: {score.score}', True, (255, 255, 255))
-    screen.blit(score_text, (10, 10))
+    scoreText = font.render(f'Score: {score.score}', True, (255, 255, 255))
+    screen.blit(scoreText, (10, 10))
     pygame.display.update()
+
 pygame.quit()
