@@ -26,10 +26,11 @@ class BulletHandler():
     def update(self):
         print("Update")
         #Import missile model
-        missile = pygame.image.load("img/missile.png")
-        missile = pygame.transform.scale(missile, (50, 50))
-        missileWidth = missile.get_width()
+        classicBullet = pygame.image.load("img/bullet.png")
+        classicBullet = pygame.transform.scale(classicBullet, (50, 50))
+        classicBulletWidth = classicBullet.get_width()
         for array in self.arrayList:
-            bullet = Projectile(array[0], array[1],missileWidth,missile)
+            # j'ai mis d'autre argument parceque j'ai changer les bullet et il faudra changer le 1920 et 1080 après
+            bullet = Projectile(array[0], array[1],classicBulletWidth, classicBullet, 10, 5, False, 1920, 1080)
         
 

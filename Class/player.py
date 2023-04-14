@@ -1,5 +1,5 @@
 import math
-class Player:
+class Player():
     def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, health):
         self.X = 0
         self.Y = 0
