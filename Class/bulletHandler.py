@@ -12,7 +12,7 @@ class BulletHandler():
     X = 0
     Y = 0
 
-    def __init__(self, firingSpeed, arrayNumber, angleBetweenArrays, projectileList, img, isPlayer = False):
+    def __init__(self, firingSpeed, arrayNumber, angleBetweenArrays, projectileList, img, isHoming = False, isPlayer = False):
         self.firingSpeed = firingSpeed
         self.arrayNumber = arrayNumber
         self.angleBetweenArrays = angleBetweenArrays
@@ -20,6 +20,7 @@ class BulletHandler():
         self.projectileList = projectileList
         self.img = img
         self.isPlayer = isPlayer
+        self.isHoming = isHoming
 
     
     def update(self):
@@ -27,10 +28,10 @@ class BulletHandler():
         bulletWidth = self.img.get_width()
         #create bullet
         if self.isPlayer:
-            velocity = (0, -50)
+            velocity = pygame.math.Vector2(0,-50)
         else:
-            velocity = (0, 10)
-        bullet = Projectile(self.X, self.Y+10, bulletWidth, self.img, velocity, 5, self.isPlayer, 1920, 1080, self.projectileList)
+            velocity = pygame.math.Vector2(0,10)
+        bullet = Projectile(self.X, self.Y+10, bulletWidth, self.img, velocity, 5, self.isHoming, 1920, 1080, self.projectileList, self.isPlayer)
 
     def move(self, targetX, targetY):
         '''Updates the position of the bullet handler'''
