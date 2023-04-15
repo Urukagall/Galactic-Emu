@@ -52,6 +52,7 @@ imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
 player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList)
 
+
 #Create Enemy
 imgEnemy = pygame.image.load("img/enemy.png").convert()
 imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
@@ -94,7 +95,6 @@ while running:
         scroll = 0
 
     # Slow movement and dash
-
     pressed = pygame.key.get_pressed()
 
     if pressed[pygame.K_LSHIFT]:
@@ -127,6 +127,7 @@ while running:
         velX = 0
         
     player.move(velX, velY)
+    playerRect = pygame.Rect(player.X, player.Y, player.size/2, player.size/2)
 
     for bullet in projectileList:
         if bullet.update(enemyList) == True:
@@ -163,8 +164,6 @@ while running:
                     score.score_increment(enemy.score)
                     enemyList.pop(enemyList.index(enemy))
                     break
-        
-        playerRect = pygame.Rect(player.X, player.Y, 100, 100)
         if rect.colliderect(playerRect):
             player.takeDmg(10)
             score.score_increment(10)
