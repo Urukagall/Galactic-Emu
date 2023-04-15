@@ -32,17 +32,15 @@ class Projectile():
             self.y += self.velocity[1]
 
         '''The bullet is destroyed when exiting the screen'''
+        #del(self) doesnt actually delete the instance for some reason
         if self.x < 0 - self.width:
-            # del(self)
             return True
         elif self.x > self.displayWidth + self.width:
-            # del(self)
             return True
         if self.y < 0 - self.width:
-            # del(self)
             return True
         elif self.y > self.displayHeight + self.width:
-            del(self)
+            return True
 
     def chase(self):
         if(self.isPlayer):

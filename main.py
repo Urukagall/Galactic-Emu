@@ -50,7 +50,7 @@ scoreTime = 0
 imgPlayer = pygame.image.load("img/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
-player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 100, projectileList)
+player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList)
 
 #Create Enemy
 imgEnemy = pygame.image.load("img/enemy.png").convert()
@@ -128,35 +128,16 @@ while running:
         
     player.move(velX, velY)
 
-    # Change each bullet location depending on velocity
-    '''for bullet in projectileList:
-        if bullet.isHoming == True:
-            if len(enemyList) == 0:
-                bullet.update()
-                screen.blit(bullet.image, (bullet.x, bullet.y))
-            else:
-                dx = enemyList[0].x - bullet.x
-                dy = enemyList[0].y - bullet.y
-
-                distance = math.sqrt((dx ** 2) + (dy ** 2))
-
-                # Déplacer le missile vers la cible avec une vitesse constante
-                bullet.move((dx / distance), (dy / distance))
-                
-                # Calculer l'angle de rotation nécessaire pour pointer vers l'ennemi
-                angle_radians = math.atan2(dy, dx)
-                angle_degrees = math.degrees(angle_radians)
-
-                # Faire pivoter l'image du missile de l'angle calculé
-                rotated_image = pygame.transform.rotate(bullet.image, -angle_degrees - 90)
-
-                # Afficher l'image tournée
-                screen.blit(rotated_image, (bullet.x, bullet.y))
-        else:
-            bullet.update()'''
     for bullet in projectileList:
         bullet.update(enemyList)
         screen.blit(bullet.image, (bullet.x, bullet.y))
+        #Collision bullet & enemy
+        for bullet in projectileList:
+            if bullet.isPlayer == False:
+                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
+                if playerRect.colliderect(bulletRect):
+                    player.getHit()
+                    projectileList.pop(projectileList.index(bullet))
 
     #Enemy
     for enemy in enemyList:
@@ -187,6 +168,7 @@ while running:
             player.takeDmg(10)
             score.score_increment(10)
             enemyList.pop(enemyList.index(enemy))
+
 
     #Add a bullet to the projectileList list on press
     if pressed[pygame.K_z]:
@@ -220,6 +202,8 @@ while running:
 
     scoreText = font.render(f'Score: {score.score}', True, (255, 255, 255))
     screen.blit(scoreText, (10, 10))
+    livesText = font.render(f'Lives: {player.lives}', True, (255, 255, 255))
+    screen.blit(livesText, (10, 30))
     pygame.display.update()
 
 pygame.quit()

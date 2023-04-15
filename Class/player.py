@@ -2,7 +2,7 @@ import math
 import pygame
 from Class.bulletHandler import BulletHandler
 class Player():
-    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, health, projectileList):
+    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList):
         self.X = 0
         self.Y = 0
         self.basicSpeed = basicSpeed
@@ -14,7 +14,7 @@ class Player():
         self.dashSpeed = dashSpeed
         self.cooldownDash = cooldownDash
         self.timeDash = timeDash
-        self.health = health
+        self.lives = lives
 
         self.projectileList = projectileList
         self.arrayNumber = 3
@@ -53,9 +53,13 @@ class Player():
         self.bulletHandler.move(self.X, self.Y)
         self.missileHandler.move(self.X, self.Y)
     
-    def takeDmg(self, dmg):
-        self.health -= dmg
-    
+    def getHit(self):
+        if self.lives > 0:
+            self.lives -= 1
+        else:
+            print("You lost")
+        
+
     def shoot(self):
         self.bulletHandler.update()
 
