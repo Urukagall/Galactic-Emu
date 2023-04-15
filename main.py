@@ -129,7 +129,8 @@ while running:
     player.move(velX, velY)
 
     for bullet in projectileList:
-        bullet.update(enemyList)
+        if bullet.update(enemyList) == True:
+            projectileList.pop(projectileList.index(bullet))
         screen.blit(bullet.image, (bullet.x, bullet.y))
         #Collision bullet & enemy
         for bullet in projectileList:
@@ -190,14 +191,6 @@ while running:
         
     #Draw player model on screen
     screen.blit(imgPlayer, (player.X, player.Y))
-    
-    #Draw each missile model on screen
-    '''for bullet in projectileList:
-        if bullet.y > 0 - bullet.width and bullet.y < displayHeight and bullet.x > 0 - bullet.width and bullet.x < displayWidth:  
-            if bullet.isHoming == False:
-                screen.blit(bullet.image, (bullet.x, bullet.y))
-        else:
-            projectileList.pop(projectileList.index(bullet))'''
     
 
     scoreText = font.render(f'Score: {score.score}', True, (255, 255, 255))
