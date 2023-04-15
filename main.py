@@ -175,8 +175,7 @@ while running:
                 if rect.colliderect(bulletRect):
                     enemy.takeDmg(bullet.damage)
                     score.score_increment(10)
-                    del(bullet)
-                    #projectileList.pop(projectileList.index(bullet))
+                    projectileList.pop(projectileList.index(bullet))
 
                 if(enemy.health <= 0):
                     score.score_increment(enemy.score)
@@ -194,14 +193,13 @@ while running:
         if player.cooldown <= 0:
             player.shoot()
             player.cooldown = player.timeBetweenShots
-        else:
-            player.cooldown -= 1
     if pressed[pygame.K_x]:
         if player.missileCooldown <= 0:
             player.shootHoming()
             player.missileCooldown = player.timeBetweenMissiles
-        else:
-            player.missileCooldown -= 1
+    
+    player.cooldown -= 1
+    player.missileCooldown -= 1
 
     #Score grows automatically
     if pygame.time.get_ticks() - scoreTime >= 3000:
