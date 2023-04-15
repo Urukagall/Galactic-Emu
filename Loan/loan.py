@@ -172,10 +172,9 @@ while running:
             bullets.append(Projectile(player.X, player.Y, missileWidth, missile))
             missileCoolDown = pygame.time.get_ticks()
     if pressed[pygame.K_i]:
-        if pygame.time.get_ticks() - ultiCoolDown >= 20000:
+        if pygame.time.get_ticks() - ultiCoolDown >= 1000:
             bullets.append(Projectile(player.X, player.Y, ultiWidth, ulti))
-            ultiCoolDown = pygame.time.get_ticks()
-        
+            ultiCooldown = pygame.time.get_ticks()
 
     #Score grows automatically
     if pygame.time.get_ticks() - scoreTime >= 3000:

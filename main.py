@@ -40,16 +40,10 @@ classicBullet =  pygame.image.load("img/bullet.png")
 classicBullet = pygame.transform.scale(classicBullet, (50, 50))
 classicBulletWidth = classicBullet.get_width()
 
-#Import Ulti  
-ulti =  pygame.image.load("img/grosse_boule.png")
-ulti = pygame.transform.scale(ulti, (100, 100))
-ultiWidth = ulti.get_width()
-
 #projectileList & CD
 projectileList = []
 missileCooldown = 0
 bulletCoolDown = 0
-ultiCoolDown = 0
 scoreTime = 0
 
 #Create Player
@@ -161,9 +155,7 @@ while running:
         else:
             bullet.update()'''
     for bullet in projectileList:
-        isScreen = bullet.update(enemyList)
-        if isScreen:
-            projectileList.pop(projectileList.index(bullet))
+        bullet.update()
         screen.blit(bullet.image, (bullet.x, bullet.y))
 
     #Enemy
@@ -183,8 +175,8 @@ while running:
                 if rect.colliderect(bulletRect):
                     enemy.takeDmg(bullet.damage)
                     score.score_increment(10)
-                    # del(bullet)
-                    projectileList.pop(projectileList.index(bullet))
+                    del(bullet)
+                    #projectileList.pop(projectileList.index(bullet))
 
                 if(enemy.health <= 0):
                     score.score_increment(enemy.score)
