@@ -47,10 +47,10 @@ bulletCoolDown = 0
 scoreTime = 0
 
 #Create Player
-imgPlayer = pygame.image.load("img/emeu.jpg").convert()
+imgPlayer = pygame.image.load("img/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
-player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 100)
+player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 100, projectileList)
 
 #Create Enemy
 imgEnemy = pygame.image.load("img/enemy.png").convert()
@@ -158,11 +158,9 @@ while running:
         bullet.update()
         screen.blit(bullet.image, (bullet.x, bullet.y))
 
-    for enemy in enemyList:
-        enemy.update()
-    
     #Enemy
     for enemy in enemyList:
+        enemy.update()
         rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
         
         screen.blit(enemy.image, (enemy.x, enemy.y))
@@ -193,10 +191,11 @@ while running:
 
     #Add a bullet to the projectileList list on press
     if pressed[pygame.K_z]:
-         if pygame.time.get_ticks() - bulletCoolDown >= 250:
-            #projectileList.append(Projectile(player.X, player.Y, classicBulletWidth, classicBullet, 10, 5, False, displayWidth, displayHeight))
-            Projectile(player.X, player.Y, classicBulletWidth, classicBullet, (0,-100), 5, False, displayWidth, displayHeight, projectileList, player=True)
-            bulletCoolDown = pygame.time.get_ticks()
+         player.update()
+         '''if pygame.time.get_ticks() - bulletCoolDown >= 250:
+            #Projectile(player.X, player.Y, classicBulletWidth, classicBullet, (0,-100), 5, False, displayWidth, displayHeight, projectileList, player=True)
+            
+            bulletCoolDown = pygame.time.get_ticks()'''
     if pressed[pygame.K_x]:
         if pygame.time.get_ticks() - missileCooldown >= 500:
             #projectileList.append(Projectile(player.X, player.Y, missileWidth, missile, 10, 10, True, displayWidth, displayHeight))

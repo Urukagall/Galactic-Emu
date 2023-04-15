@@ -1,4 +1,5 @@
 from Class.bulletHandler import BulletHandler
+import pygame
 
 class Enemy():
     def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, firingSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots):
@@ -13,7 +14,10 @@ class Enemy():
         self.image = image
         self.timeBetweenShots = timeBetweenShots
         self.cooldown = self.timeBetweenShots
-        self.bulletHandler = BulletHandler(firingSpeed, arrayNumber, angleBetweenArrays, projectileList)
+
+        self.bulletImg = pygame.image.load("img/grosse_boule.png")
+        self.bulletImg = pygame.transform.scale(self.bulletImg, (50, 50))
+        self.bulletHandler = BulletHandler(firingSpeed, arrayNumber, angleBetweenArrays, projectileList, self.bulletImg)
         self.bulletHandler.move(self.x, self.y)
 
     def move(self, veloX, veloY):
@@ -26,7 +30,7 @@ class Enemy():
     
     def update(self):
         #shoot
-        if self.cooldown == 0:
+        if self.cooldown <= 0:
             self.bulletHandler.update()
             self.cooldown = self.timeBetweenShots*60
         else:
