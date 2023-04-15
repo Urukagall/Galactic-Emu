@@ -40,10 +40,16 @@ classicBullet =  pygame.image.load("img/bullet.png")
 classicBullet = pygame.transform.scale(classicBullet, (50, 50))
 classicBulletWidth = classicBullet.get_width()
 
+#Import Ulti  
+ulti =  pygame.image.load("img/grosse_boule.png")
+ulti = pygame.transform.scale(ulti, (100, 100))
+ultiWidth = ulti.get_width()
+
 #projectileList & CD
 projectileList = []
 missileCooldown = 0
 bulletCoolDown = 0
+ultiCoolDown = 0
 scoreTime = 0
 
 #Create Player
@@ -155,7 +161,9 @@ while running:
         else:
             bullet.update()'''
     for bullet in projectileList:
-        bullet.update()
+        isScreen = bullet.update(enemyList)
+        if isScreen:
+            projectileList.pop(projectileList.index(bullet))
         screen.blit(bullet.image, (bullet.x, bullet.y))
 
     #Enemy
@@ -175,8 +183,8 @@ while running:
                 if rect.colliderect(bulletRect):
                     enemy.takeDmg(bullet.damage)
                     score.score_increment(10)
-                    del(bullet)
-                    #projectileList.pop(projectileList.index(bullet))
+                    # del(bullet)
+                    projectileList.pop(projectileList.index(bullet))
 
                 if(enemy.health <= 0):
                     score.score_increment(enemy.score)
@@ -201,6 +209,10 @@ while running:
             #projectileList.append(Projectile(player.X, player.Y, missileWidth, missile, 10, 10, True, displayWidth, displayHeight))
             Projectile(player.X, player.Y, missileWidth, missile, (0,-35), 10, True, displayWidth, displayHeight, projectileList, player=True)
             missileCooldown = pygame.time.get_ticks()
+    if pressed[pygame.K_i]:
+        if pygame.time.get_ticks() - ultiCoolDown >= 20000:
+            Projectile(player.X, player.Y, ultiWidth, ulti, (0,-35), 100, False, displayWidth, displayHeight, projectileList, player=True)
+            ultiCoolDown = pygame.time.get_ticks()
 
     #Score grows automatically
     if pygame.time.get_ticks() - scoreTime >= 3000:
