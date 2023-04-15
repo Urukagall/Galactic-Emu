@@ -172,7 +172,7 @@ while running:
 
 
     #Add a bullet to the projectileList list on press
-    if pressed[pygame.K_z]:
+    if pressed[pygame.K_w]:
         if player.cooldown <= 0:
             player.shoot()
             player.cooldown = player.timeBetweenShots
