@@ -193,7 +193,7 @@ while running:
             player.missileCooldown = player.timeBetweenMissiles
     if pressed[pygame.K_c]:
         if player.ultimateCooldown <= 0:
-            player.shootUltimate()
+            player.shootHoming()
             player.ultimateCooldown = player.timeBetweenUltimates
     
     player.cooldown -= 1
