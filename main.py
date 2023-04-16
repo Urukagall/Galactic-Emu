@@ -48,6 +48,8 @@ ultimateShoot = pygame.image.load("img/grosse_boule.png")
 ultimateShoot = pygame.transform.scale(ultimateShoot, (100, 100))
 ultimateShootWidth = ultimateShoot.get_width()
 
+ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
+
 #projectileList & CD
 projectileList = []
 missileCooldown = 0
@@ -208,6 +210,8 @@ while running:
             player.missileCooldown = player.timeBetweenMissiles
     if pressed[pygame.K_c]:
         if player.ultimateCooldown <= 0:
+            #play sfx
+            ultimateSound.play()
             player.shootUltimate(particleList)
             player.ultimateCooldown = player.timeBetweenUltimates
             for enemy in enemyList:
