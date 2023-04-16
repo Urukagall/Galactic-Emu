@@ -28,8 +28,10 @@ class Enemy():
         self.y = self.y + veloY * self.speed
         self.bulletHandler.move(self.x, self.y)
 
-    def takeDmg(self, dmg):
+    def takeDmg(self, dmg, enemyList):
         self.health -= dmg
+        if(self.health <= 0):
+            enemyList.pop(enemyList.index(self))
     
     def update(self):
         #shoot

@@ -177,13 +177,13 @@ while running:
             if bullet.isPlayer == True:
                 bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.size, bullet.size)
                 if rect.colliderect(bulletRect):
-                    enemy.takeDmg(bullet.damage)
+                    enemy.takeDmg(bullet.damage, enemyList)
                     score.score_increment(10)
                     projectileList.pop(projectileList.index(bullet))
 
                 if(enemy.health <= 0):
                     score.score_increment(enemy.score)
-                    enemyList.pop(enemyList.index(enemy))
+                    #enemyList.pop(enemyList.index(enemy))
                     break
         if rect.colliderect(playerRect):
             player.getHit()
@@ -191,7 +191,7 @@ while running:
             enemyList.pop(enemyList.index(enemy))
 
     for particle in particleList:
-        if(particle.draw(screen)):
+        if(particle.draw(screen, projectileList)):
             particleList.pop(particleList.index(particle))
             shaking = False
         else:
@@ -210,6 +210,8 @@ while running:
         if player.ultimateCooldown <= 0:
             player.shootUltimate(particleList)
             player.ultimateCooldown = player.timeBetweenUltimates
+            for enemy in enemyList:
+                enemy.takeDmg(player.ultimateDmg, enemyList)
     
     player.cooldown -= 1
     player.missileCooldown -= 1

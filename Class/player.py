@@ -30,6 +30,7 @@ class Player():
         self.missileCooldown = self.timeBetweenMissiles
         self.timeBetweenUltimates = 60
         self.ultimateCooldown = self.timeBetweenUltimates
+        self.ultimateDmg = 50
 
         self.bulletImg = pygame.image.load("img/bullet.png")
         self.bulletImg = pygame.transform.scale(self.bulletImg, (50, 50))
@@ -79,4 +80,3 @@ class Player():
         particleColor = pygame.Color(255,255,255)
         particleCoordinates = pygame.math.Vector2(self.displayWidth/2, self.displayHeight/2)
         particle = Particle(particleCoordinates, ultimateSize, particleColor, particleList)
-        self.projectileList.clear()
