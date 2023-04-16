@@ -198,6 +198,10 @@ while running:
             shaking = False
         else:
             shaking = True
+        
+        if(particle.doDamage):
+            for enemy in enemyList:
+                enemy.takeDmg(player.ultimateDmg, enemyList)
 
     #Add a bullet to the projectileList list on press
     if pressed[pygame.K_w]:
@@ -214,8 +218,6 @@ while running:
             ultimateSound.play()
             player.shootUltimate(particleList)
             player.ultimateCooldown = player.timeBetweenUltimates
-            for enemy in enemyList:
-                enemy.takeDmg(player.ultimateDmg, enemyList)
     
     player.cooldown -= 1
     player.missileCooldown -= 1
