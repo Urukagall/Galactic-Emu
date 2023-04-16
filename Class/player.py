@@ -28,7 +28,7 @@ class Player():
         self.cooldown = self.timeBetweenShots
         self.timeBetweenMissiles = 0.3
         self.missileCooldown = self.timeBetweenMissiles
-        self.timeBetweenUltimates = 600
+        self.timeBetweenUltimates = 60
         self.ultimateCooldown = self.timeBetweenUltimates
 
         self.bulletImg = pygame.image.load("img/bullet.png")
@@ -74,9 +74,10 @@ class Player():
     def shootHoming(self):
         self.missileHandler.update()
     
-    def shootUltimate(self):
+    def shootUltimate(self, particleList):
         print("Shot ultimate")
         ultimateSize = 100
+        particleColor = pygame.Color(255,255,255)
         particleCoordinates = pygame.math.Vector2(self.displayWidth/2, self.displayHeight/2)
-        particle = Particle(particleCoordinates, ultimateSize, (255,255,255))
+        particle = Particle(particleCoordinates, ultimateSize, particleColor, particleList)
         self.projectileList.clear()

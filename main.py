@@ -181,6 +181,9 @@ while running:
             score.score_increment(10)
             enemyList.pop(enemyList.index(enemy))
 
+    for particle in particleList:
+        if(particle.draw(screen)):
+            particleList.pop(particleList.index(particle))
 
     #Add a bullet to the projectileList list on press
     if pressed[pygame.K_w]:
@@ -193,7 +196,7 @@ while running:
             player.missileCooldown = player.timeBetweenMissiles
     if pressed[pygame.K_c]:
         if player.ultimateCooldown <= 0:
-            player.shootHoming()
+            player.shootUltimate(particleList)
             player.ultimateCooldown = player.timeBetweenUltimates
     
     player.cooldown -= 1
