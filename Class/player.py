@@ -79,3 +79,4 @@ class Player():
         ultimateSize = 100
         particleCoordinates = pygame.math.Vector2(self.displayWidth/2, self.displayHeight/2)
         particle = Particle(particleCoordinates, ultimateSize, (255,255,255))
+        self.projectileList.clear()
