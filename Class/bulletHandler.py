@@ -1,7 +1,6 @@
 import math
 import pygame
 from Class.projectile import Projectile
-
 class BulletHandler():
     maxSpinSpeed=0
     radius=100

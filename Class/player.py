@@ -24,14 +24,19 @@ class Player():
         self.cooldown = self.timeBetweenShots
         self.timeBetweenMissiles = 10
         self.missileCooldown = self.timeBetweenMissiles
+        self.timeBetweenUltimates = 20000
+        self.ultimateCooldown = self.timeBetweenUltimates
 
         self.bulletImg = pygame.image.load("img/bullet.png")
         self.bulletImg = pygame.transform.scale(self.bulletImg, (50, 50))
         self.missileImg = pygame.image.load("img/missile.png")
         self.missileImg = pygame.transform.scale(self.missileImg, (50, 50))
+        self.ultimateImg = pygame.image.load("img/grosse_boule.png")
+        self.ultimateImg = pygame.transform.scale(self.ultimateImg, (50, 50))
 
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
         self.missileHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
+        self.ultimateHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.ultimateImg, isHoming=False, isPlayer=True)
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:

@@ -9,6 +9,8 @@ from Class.player import Player
 from Class.enemy import Enemy
 from Class.score import Score
 
+#Import Patterns
+from Pattern.enemiesPattern import *
 
 #Init the pygame & clock
 pygame.init()
@@ -35,15 +37,21 @@ missile = pygame.image.load("img/missile.png")
 missile = pygame.transform.scale(missile, (50, 50))
 missileWidth = missile.get_width()
 
-#Import boulles 
+#Import bullets 
 classicBullet =  pygame.image.load("img/bullet.png")
 classicBullet = pygame.transform.scale(classicBullet, (50, 50))
 classicBulletWidth = classicBullet.get_width()
+
+#Import ultimate
+ultimateShoot = pygame.image.load("img/grosse_boule.png")
+ultimateShoot = pygame.transform.scale(ultimateShoot, (100, 100))
+ultimateShootWidth = ultimateShoot.get_width()
 
 #projectileList & CD
 projectileList = []
 missileCooldown = 0
 bulletCoolDown = 0
+ultimateCooldown = 0
 scoreTime = 0
 
 #Create Player
@@ -57,9 +65,9 @@ player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectil
 imgEnemy = pygame.image.load("img/enemy.png").convert()
 imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 
-enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1)
-enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1)
-enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1)
+enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1, "left")
+enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1, "left")
+enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1, "left")
 enemyList = [enemy1, enemy2, enemy3]
 
 
@@ -118,6 +126,7 @@ while running:
         velY = 1
     else :
         velY = 0
+
     # PLAYER X movement
     if pressed[pygame.K_RIGHT]:
         velX = 1
@@ -183,6 +192,12 @@ while running:
     player.cooldown -= 1
     player.missileCooldown -= 1
 
+    #Shoot your ultimate
+    if pressed[pygame.K_i]:
+        if pygame.time.get_ticks() - ultimateCooldown >= 20000:
+            player.shoot()
+            player.ultimateCooldown = player.timeBetweenUltimates
+
     #Score grows automatically
     if pygame.time.get_ticks() - scoreTime >= 3000:
         score.score_increment(30)
@@ -191,7 +206,7 @@ while running:
     #Draw player model on screen
     screen.blit(imgPlayer, (player.X, player.Y))
     
-
+    #Write player's score & remaining lives
     scoreText = font.render(f'Score: {score.score}', True, (255, 255, 255))
     screen.blit(scoreText, (10, 10))
     livesText = font.render(f'Lives: {player.lives}', True, (255, 255, 255))

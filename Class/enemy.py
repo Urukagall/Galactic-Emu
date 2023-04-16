@@ -1,8 +1,9 @@
 from Class.bulletHandler import BulletHandler
+from Pattern.enemiesPattern import firstPattern
 import pygame
 
 class Enemy():
-    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, firingSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots):
+    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, firingSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing):
         self.health = health
         self.speed = speed
         self.x = x
@@ -14,6 +15,8 @@ class Enemy():
         self.image = image
         self.timeBetweenShots = timeBetweenShots
         self.cooldown = self.timeBetweenShots
+        self.facing = facing
+        self.patternStep = 0
 
         self.bulletImg = pygame.image.load("img/grosse_boule.png")
         self.bulletImg = pygame.transform.scale(self.bulletImg, (50, 50))
@@ -30,6 +33,7 @@ class Enemy():
     
     def update(self):
         #shoot
+        firstPattern(self)
         if self.cooldown <= 0:
             self.bulletHandler.update()
             self.cooldown = self.timeBetweenShots*60
