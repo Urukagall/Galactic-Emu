@@ -54,6 +54,8 @@ bulletCoolDown = 0
 ultimateCooldown = 0
 scoreTime = 0
 
+particleList = []
+
 #Create Player
 imgPlayer = pygame.image.load("img/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
@@ -145,10 +147,11 @@ while running:
         #Collision bullet & enemy
         for bullet in projectileList:
             if bullet.isPlayer == False:
-                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
+                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.size, bullet.size)
                 if playerRect.colliderect(bulletRect):
                     player.getHit()
                     projectileList.pop(projectileList.index(bullet))
+    
 
     #Enemy
     for enemy in enemyList:
@@ -163,7 +166,7 @@ while running:
         #Collision bullet & enemy
         for bullet in projectileList:
             if bullet.isPlayer == True:
-                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
+                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.size, bullet.size)
                 if rect.colliderect(bulletRect):
                     enemy.takeDmg(bullet.damage)
                     score.score_increment(10)
@@ -174,7 +177,7 @@ while running:
                     enemyList.pop(enemyList.index(enemy))
                     break
         if rect.colliderect(playerRect):
-            player.takeDmg(10)
+            player.getHit()
             score.score_increment(10)
             enemyList.pop(enemyList.index(enemy))
 
@@ -188,15 +191,16 @@ while running:
         if player.missileCooldown <= 0:
             player.shootHoming()
             player.missileCooldown = player.timeBetweenMissiles
+    if pressed[pygame.K_c]:
+        if player.ultimateCooldown <= 0:
+            player.shootUltimate()
+            player.ultimateCooldown = player.timeBetweenUltimates
     
     player.cooldown -= 1
     player.missileCooldown -= 1
+    player.ultimateCooldown -= 1
 
-    #Shoot your ultimate
-    if pressed[pygame.K_i]:
-        if pygame.time.get_ticks() - ultimateCooldown >= 20000:
-            player.shoot()
-            player.ultimateCooldown = player.timeBetweenUltimates
+    
 
     #Score grows automatically
     if pygame.time.get_ticks() - scoreTime >= 3000:
@@ -211,6 +215,8 @@ while running:
     screen.blit(scoreText, (10, 10))
     livesText = font.render(f'Lives: {player.lives}', True, (255, 255, 255))
     screen.blit(livesText, (10, 30))
+    ultimateText = font.render(f'Ultimate in: {math.ceil(player.ultimateCooldown/60)}', True, (255, 255, 255))
+    screen.blit(ultimateText, (10, 50))
     pygame.display.update()
 
 pygame.quit()

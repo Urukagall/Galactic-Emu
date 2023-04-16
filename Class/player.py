@@ -1,6 +1,8 @@
 import math
 import pygame
 from Class.bulletHandler import BulletHandler
+from Class.particle import Particle
+
 class Player():
     def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList):
         self.X = 0
@@ -16,27 +18,28 @@ class Player():
         self.timeDash = timeDash
         self.lives = lives
 
+
         self.projectileList = projectileList
         self.arrayNumber = 3
         self.bulletSpeed = 50
         self.angleBetweenArrays = 10
+        #60 = 1sec
         self.timeBetweenShots = 0.3
         self.cooldown = self.timeBetweenShots
-        self.timeBetweenMissiles = 10
+        self.timeBetweenMissiles = 0.3
         self.missileCooldown = self.timeBetweenMissiles
-        self.timeBetweenUltimates = 20000
+        self.timeBetweenUltimates = 600
         self.ultimateCooldown = self.timeBetweenUltimates
 
         self.bulletImg = pygame.image.load("img/bullet.png")
         self.bulletImg = pygame.transform.scale(self.bulletImg, (50, 50))
         self.missileImg = pygame.image.load("img/missile.png")
         self.missileImg = pygame.transform.scale(self.missileImg, (50, 50))
-        self.ultimateImg = pygame.image.load("img/grosse_boule.png")
+        self.ultimateImg = pygame.image.load("img/emeu.jpg")
         self.ultimateImg = pygame.transform.scale(self.ultimateImg, (50, 50))
 
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
         self.missileHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
-        self.ultimateHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.ultimateImg, isHoming=False, isPlayer=True)
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
@@ -70,3 +73,9 @@ class Player():
 
     def shootHoming(self):
         self.missileHandler.update()
+    
+    def shootUltimate(self):
+        print("Shot ultimate")
+        ultimateSize = 100
+        particleCoordinates = pygame.math.Vector2(self.displayWidth/2, self.displayHeight/2)
+        particle = Particle(particleCoordinates, ultimateSize, (255,255,255))

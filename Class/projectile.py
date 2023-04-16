@@ -9,7 +9,7 @@ class Projectile():
         self.velocity = velocity
         self.damage = damage
 
-        self.width = width
+        self.size = width
         self.image = image
         self.displayWidth = displayWidth
         self.displayHeight = displayHeight
@@ -21,7 +21,6 @@ class Projectile():
         self.rotationSpeed = 10
 
         projectileList.append(self)
-        self.pos = pygame.math.Vector2(self.x, self.y)
         
         
     def update(self, enemyList):
@@ -34,16 +33,16 @@ class Projectile():
 
         '''The bullet is destroyed when exiting the screen'''
         #del(self) doesnt actually delete the instance for some reason
-        if self.x < 0 - self.width:
+        if self.x < 0 - self.size:
             del(self)
             return True
-        elif self.x > self.displayWidth + self.width:
+        elif self.x > self.displayWidth + self.size:
             del(self)
             return True
-        if self.y < 0 - self.width:
+        if self.y < 0 - self.size:
             del(self)
             return True
-        elif self.y > self.displayHeight + self.width:
+        elif self.y > self.displayHeight + self.size:
             del(self)
             return True
 
@@ -71,10 +70,3 @@ class Projectile():
 
         else:
             pass
-
-    def rotateToTarget(self, target):
-        targetPos = pygame.math.Vector2(target.x, target.y)
-        
-        direction = (targetPos - self.pos)
-        angleTo = self.pos.angle_to(targetPos)
-        self.pos.rotate(angleTo * min(self.rotationSpeed, abs(angleTo)))
