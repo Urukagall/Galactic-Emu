@@ -75,7 +75,6 @@ class Player():
         self.missileHandler.update()
     
     def shootUltimate(self, particleList):
-        print("Shot ultimate")
         ultimateSize = 100
         particleColor = pygame.Color(255,255,255)
         particleCoordinates = pygame.math.Vector2(self.displayWidth/2, self.displayHeight/2)

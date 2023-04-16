@@ -2,6 +2,7 @@
 import pygame
 import math
 import pygame.time
+import random
 
 #Import Classes
 from Class.projectile import Projectile
@@ -21,15 +22,15 @@ displayHeight = 1080
 displayWidth = 1920
 backgroundColor = (200,200,200)
 screen = pygame.display.set_mode((displayWidth, displayHeight))
-pygame.display.set_caption("Endless Scroll")
+pygame.display.set_caption("Bullet Hell")
 
 #Import background model
 backGround = pygame.image.load("img/back.png").convert()
-backGround = pygame.transform.scale(backGround, (1920, 1080))
+backGround = pygame.transform.scale(backGround, (displayWidth, displayWidth))
 backGroundHeight = backGround.get_height()
 
 #Pre-requisite for the screen scrolling
-scroll = 0 
+trueScroll = 0 
 tiles = math.ceil(displayHeight / backGroundHeight) + 1
 
 #Import missile model
@@ -55,6 +56,8 @@ ultimateCooldown = 0
 scoreTime = 0
 
 particleList = []
+shaking = False
+screenShake = 40
 
 #Create Player
 imgPlayer = pygame.image.load("img/player.png")
@@ -82,9 +85,11 @@ score = Score()
 # Main Loop
 running = True
 while running:
-    font = pygame.font.Font(None, 36)
     # run the game at a constant 60fps
     clock.tick(60)
+
+    font = pygame.font.Font(None, 36)
+    
     #Close window on Escape press
     for events in pygame.event.get():
         if events.type == pygame.QUIT:
@@ -93,16 +98,20 @@ while running:
             if events.key == pygame.K_ESCAPE:
                 running=False
     
-     #draw scrolling background 
+     #draw scrolling background
+    
+    scroll = int(trueScroll)
+
+    #screen shake
+    if shaking:
+        scroll += random.randint(0, screenShake) - screenShake/2
+
     for i in range(0, tiles):
-      screen.blit(backGround,(0,(-1 * i) * backGroundHeight - scroll))
-
-    #scroll background
-    scroll -= 5
-
+        screen.blit(backGround, (0, i * displayWidth + scroll))
+    trueScroll -= 1
     #reset scroll
-    if abs (scroll) > backGroundHeight:
-        scroll = 0
+    if abs(trueScroll) > displayWidth:
+        trueScroll = 0
 
     # Slow movement and dash
     pressed = pygame.key.get_pressed()
@@ -184,6 +193,9 @@ while running:
     for particle in particleList:
         if(particle.draw(screen)):
             particleList.pop(particleList.index(particle))
+            shaking = False
+        else:
+            shaking = True
 
     #Add a bullet to the projectileList list on press
     if pressed[pygame.K_w]:
