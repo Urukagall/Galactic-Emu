@@ -1,6 +1,6 @@
 from Class.bulletHandler import BulletHandler
 from Pattern.enemiesPattern import firstPattern
-import pygame
+import pygame, math
 
 class Enemy():
     def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, firingSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing):
@@ -33,11 +33,20 @@ class Enemy():
         if(self.health <= 0):
             enemyList.pop(enemyList.index(self))
     
-    def update(self):
-        #shoot
+    def update(self, player=None):
+        #move
         firstPattern(self)
         if self.cooldown <= 0:
-            self.bulletHandler.update()
+            #shoot
+            direction = (0, 1)
+            if player:
+                radians = math.atan2(player.Y - self.y, player.X - self.x)
+
+                destX = math.cos(radians)
+                destY = math.sin(radians)
+                direction = (destX, destY)
+            
+            self.bulletHandler.update(direction)
             self.cooldown = self.timeBetweenShots*60
         else:
             self.cooldown -= 1

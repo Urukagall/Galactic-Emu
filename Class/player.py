@@ -70,10 +70,12 @@ class Player():
         
 
     def shoot(self):
-        self.bulletHandler.update()
+        direction = (0,-1)
+        self.bulletHandler.update(direction)
 
     def shootHoming(self):
-        self.missileHandler.update()
+        direction = (0,-1)
+        self.missileHandler.update(direction)
     
     def shootUltimate(self, particleList):
         ultimateSize = 100

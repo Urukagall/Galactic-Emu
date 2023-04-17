@@ -166,7 +166,7 @@ while running:
 
     #Enemy
     for enemy in enemyList:
-        enemy.update()
+        enemy.update(player)
         rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
         
         screen.blit(enemy.image, (enemy.x, enemy.y))
