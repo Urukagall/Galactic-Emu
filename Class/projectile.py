@@ -11,6 +11,7 @@ class Projectile():
 
         self.size = width
         self.image = image
+        self.angle = 0
         self.displayWidth = displayWidth
         self.displayHeight = displayHeight
 
@@ -28,6 +29,7 @@ class Projectile():
         if(self.isHoming):
             self.chase()
         else:
+            self.angle = 0
             self.x += self.velocity[0] * self.speed
             self.y += self.velocity[1] * self.speed
 
@@ -66,7 +68,8 @@ class Projectile():
             angle_degrees = math.degrees(angle_radians)
             # Faire pivoter l'image du missile de l'angle calculé
             '''Casse tout !!!'''
-            rotated_image = pygame.transform.rotate(self.image, -angle_degrees - 90)
-
+            self.angle = -angle_degrees - 90
+            # rotated_image = pygame.transform.rotate(self.image, -angle_degrees - 90)
+            
         else:
             pass

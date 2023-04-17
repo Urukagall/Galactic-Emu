@@ -26,12 +26,14 @@ pygame.display.set_caption("Bullet Hell")
 
 #Import background model
 backGround = pygame.image.load("img/back.png").convert()
-backGround = pygame.transform.scale(backGround, (displayWidth, displayWidth))
+backGround = pygame.transform.scale(backGround, (100, 100))
 backGroundHeight = backGround.get_height()
+backGroundWidth = backGround.get_width()
 
 #Pre-requisite for the screen scrolling
 trueScroll = 0 
-tiles = math.ceil(displayHeight / backGroundHeight) + 1
+tilesHeight = math.ceil(displayHeight / backGroundHeight) + 1
+tilesWidth = math.ceil(displayWidth / backGroundWidth) + 1
 
 #Import missile model
 missile = pygame.image.load("img/missile.png")
@@ -49,6 +51,12 @@ ultimateShoot = pygame.transform.scale(ultimateShoot, (100, 100))
 ultimateShootWidth = ultimateShoot.get_width()
 
 ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
+ultimateSound.set_volume(0.2)
+
+# Import Music
+
+bulletHellSound = pygame.mixer.Sound("sound/Bullet_Hell.mp3")
+bulletHellSound.set_volume(0.2)
 
 #projectileList & CD
 projectileList = []
@@ -86,6 +94,12 @@ score = Score()
 
 # Main Loop
 running = True
+
+# Music du jeuen boucle (Faudra le mettre autre part)
+
+
+
+
 while running:
     # run the game at a constant 60fps
     clock.tick(60)
@@ -100,7 +114,12 @@ while running:
             if events.key == pygame.K_ESCAPE:
                 running=False
     
-     #draw scrolling background
+    # Play music in Loop
+    
+    if bulletHellSound.get_num_channels() == 0:
+        bulletHellSound.play()
+    
+    #draw scrolling background
     
     scroll = int(trueScroll)
 
@@ -108,11 +127,13 @@ while running:
     if shaking:
         scroll += random.randint(0, screenShake) - screenShake/2
 
-    for i in range(0, tiles):
-        screen.blit(backGround, (0, i * displayWidth + scroll))
-    trueScroll -= 1
-    #reset scroll
-    if abs(trueScroll) > displayWidth:
+    for i in range(0, tilesHeight):
+        for j in range(0, tilesWidth):
+            screen.blit(backGround, (j*backGround.get_width(), i*backGround.get_height() - trueScroll))
+    
+    trueScroll += 1
+    # reset scroll
+    if trueScroll >= backGround.get_height():
         trueScroll = 0
 
     # Slow movement and dash
@@ -132,7 +153,7 @@ while running:
     elif timerDash[0] == 0 and timerDash[1] > 0:
         timerDash[1] -= 1
 
-     #PLAYER Y movement
+    #PLAYER Y movement
     if pressed[pygame.K_UP]:
         velY = -1
     elif pressed[pygame.K_DOWN]:
@@ -154,7 +175,8 @@ while running:
     for bullet in projectileList:
         if bullet.update(enemyList) == True:
             projectileList.pop(projectileList.index(bullet))
-        screen.blit(bullet.image, (bullet.x, bullet.y))
+        rotated_image = pygame.transform.rotate(bullet.image, bullet.angle)
+        screen.blit(rotated_image, (bullet.x, bullet.y))
         #Collision bullet & enemy
         for bullet in projectileList:
             if bullet.isPlayer == False:
