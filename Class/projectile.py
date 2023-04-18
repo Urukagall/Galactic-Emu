@@ -1,8 +1,8 @@
 import pygame
 import math
 import pygame
-class Projectile():
-    def __init__(self, x, y, width, image, velocity, damage, isHoming, displayWidth, displayHeight, projectileList, speed, player=False, rotation=0):
+class Projectile(pygame.sprite.Sprite):
+    def __init__(self, x, y, size, image, velocity, damage, isHoming, displayWidth, displayHeight, projectileList, speed, player=False, rotation=0):
         self.isPlayer = player
         self.x = x
         self.y = y
@@ -13,7 +13,7 @@ class Projectile():
         self.damage = damage
         self.isHoming = isHoming
 
-        self.size = width
+        self.size = size
         self.image = image
         self.angle = 0
         self.displayWidth = displayWidth

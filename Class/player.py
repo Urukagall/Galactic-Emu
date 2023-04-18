@@ -3,8 +3,8 @@ import pygame
 from Class.bulletHandler import BulletHandler
 from Class.particle import Particle
 
-class Player():
-    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList):
+class Player(pygame.sprite.Sprite):
+    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile):
         self.X = 0
         self.Y = 0
         self.basicSpeed = basicSpeed
@@ -18,6 +18,8 @@ class Player():
         self.timeDash = timeDash
         self.lives = lives
         self.money = 0
+        self.bulletImg = imgBullet
+        self.missileImg = imgMissile
 
 
         self.projectileList = projectileList
@@ -34,11 +36,6 @@ class Player():
         self.timeBetweenUltimates = 60
         self.ultimateCooldown = self.timeBetweenUltimates
         self.ultimateDmg = 50
-
-        self.bulletImg = pygame.image.load("img/bullet.png")
-        self.bulletImg = pygame.transform.scale(self.bulletImg, (50, 50))
-        self.missileImg = pygame.image.load("img/missile.png")
-        self.missileImg = pygame.transform.scale(self.missileImg, (50, 50))
 
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
         self.missileHandler = BulletHandler(self.bulletSpeed, self.missileArrayNumber, self.angleBetweenMissileArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
@@ -60,8 +57,9 @@ class Player():
             self.Y = self.displayHeight - self.size
         if self.Y < 0:
             self.Y = 0
-        self.bulletHandler.move(self.X, self.Y)
-        self.missileHandler.move(self.X, self.Y)
+        #move the bulletHandlers to the center of the player sprite
+        self.bulletHandler.move(self.X+self.size/4, self.Y+self.size/4)
+        self.missileHandler.move(self.X+self.size/4, self.Y+self.size/4)
     
     def getHit(self):
         if self.lives > 0:

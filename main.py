@@ -38,13 +38,12 @@ tilesWidth = math.ceil(displayWidth / backGroundWidth) + 1
 
 #Import missile model
 missile = pygame.image.load("img/missile.png")
-missile = pygame.transform.scale(missile, (50, 50))
+missile = pygame.transform.scale(missile, (missile.get_width(), missile.get_height()))
 missileWidth = missile.get_width()
 
 #Import bullets 
 classicBullet =  pygame.image.load("img/bullet.png")
-classicBullet = pygame.transform.scale(classicBullet, (50, 50))
-classicBulletWidth = classicBullet.get_width()
+classicBullet = pygame.transform.scale(classicBullet, (classicBullet.get_width()*2, classicBullet.get_height()*2))
 bigBall = pygame.image.load("img/grosse_boule.png")
 bigBall = pygame.transform.scale(bigBall, (50, 50))
 
@@ -76,7 +75,7 @@ screenShake = 40
 imgPlayer = pygame.image.load("img/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
-player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList)
+player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, classicBullet, missile)
 
 
 #Create Enemy
@@ -203,10 +202,11 @@ while running:
         #Collision bullet & enemy
         for bullet in projectileList:
             if bullet.isPlayer == False:
-                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.size, bullet.size)
+                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.image.get_width(), bullet.image.get_height())
                 if playerRect.colliderect(bulletRect):
                     player.getHit()
                     projectileList.pop(projectileList.index(bullet))
+                
     
 
     #Enemy
