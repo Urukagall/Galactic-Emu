@@ -14,9 +14,12 @@ from Class.button import Button
 
 #Import Patterns
 from Pattern.enemiesPattern import *
+<<<<<<< Updated upstream
 
 #Import Button 
 from Bouton.button import Button
+=======
+>>>>>>> Stashed changes
 
 #Init the pygame & clock
 pygame.init()
@@ -34,14 +37,22 @@ pygame.display.set_caption("Bullet Hell")
 
 #Import background model
 backGround = pygame.image.load("img/back.png").convert()
+<<<<<<< Updated upstream
 backGround = pygame.transform.scale(backGround, (100, 100))
+=======
+backGround = pygame.transform.scale(backGround, (displayWidth, displayWidth))
+>>>>>>> Stashed changes
 backGroundHeight = backGround.get_height()
 backGroundWidth = backGround.get_width()
 
 #Pre-requisite for the screen scrolling
 trueScroll = 0 
+<<<<<<< Updated upstream
 tilesHeight = math.ceil(displayHeight / backGroundHeight) + 1
 tilesWidth = math.ceil(displayWidth / backGroundWidth) + 1
+=======
+tiles = math.ceil(displayHeight / backGroundHeight) + 1
+>>>>>>> Stashed changes
 
 #Import missile model
 missile = pygame.image.load("img/missile.png")
@@ -60,12 +71,15 @@ ultimateShoot = pygame.transform.scale(ultimateShoot, (100, 100))
 ultimateShootWidth = ultimateShoot.get_width()
 
 ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
+<<<<<<< Updated upstream
 ultimateSound.set_volume(0.2)
 
 # Import Music
 
 bulletHellSound = pygame.mixer.Sound("sound/Bullet_Hell.mp3")
 bulletHellSound.set_volume(0.2)
+=======
+>>>>>>> Stashed changes
 
 #projectileList & CD
 projectileList = []
@@ -82,8 +96,12 @@ screenShake = 40
 imgPlayer = pygame.image.load("img/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
+<<<<<<< Updated upstream
 player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, classicBullet, missile)
 
+=======
+player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList)
+>>>>>>> Stashed changes
 
 
 #Create Enemy
@@ -93,6 +111,7 @@ imgRailgun = pygame.transform.scale(imgRailgun, (50, 50))
 imgEnemy = pygame.image.load("img/bozo.png")
 imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 
+<<<<<<< Updated upstream
 enemy1 = Enemy(True, 50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBall, 4, 10, 5, projectileList, 1, "left")
 enemy2 = Enemy(True,50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy3 = Enemy(True,50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
@@ -110,6 +129,13 @@ button = Button(button_surface, 500, 500, "Change Weapon price:30", True, 30, Bu
 button2 = Button(button_surface, 900, 700, "Do nothing", False, 0, Button.ChangeWeapon, None)
 
 buttonList = [button, button2]
+=======
+enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1, "left")
+enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1, "left")
+enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 4, math.pi/2, projectileList, 1, "left")
+enemyList = [enemy1, enemy2, enemy3]
+>>>>>>> Stashed changes
+
 
 #Initiate dash coordinates
 timerDash = [0 , 0]
@@ -136,6 +162,10 @@ while running:
     # run the game at a constant 60fps
     clock.tick(60)
 
+<<<<<<< Updated upstream
+=======
+    font = pygame.font.Font(None, 36)
+>>>>>>> Stashed changes
     
     #Close window on Escape press
     for events in pygame.event.get():
@@ -151,10 +181,14 @@ while running:
             button.changeColor(pygame.mouse.get_pos())
     # Play music in Loop
     
+<<<<<<< Updated upstream
     if bulletHellSound.get_num_channels() == 0:
         bulletHellSound.play()
     
     #draw scrolling background
+=======
+     #draw scrolling background
+>>>>>>> Stashed changes
     
     scroll = int(trueScroll)
 
@@ -162,6 +196,7 @@ while running:
     if shaking:
         scroll += random.randint(0, screenShake) - screenShake/2
 
+<<<<<<< Updated upstream
     for i in range(0, tilesHeight):
         for j in range(0, tilesWidth):
             screen.blit(backGround, (j*backGround.get_width(), i*backGround.get_height() - trueScroll))
@@ -169,6 +204,13 @@ while running:
     trueScroll += 1
     # reset scroll
     if trueScroll >= backGround.get_height():
+=======
+    for i in range(0, tiles):
+        screen.blit(backGround, (0, i * displayWidth + scroll))
+    trueScroll -= 1
+    #reset scroll
+    if abs(trueScroll) > displayWidth:
+>>>>>>> Stashed changes
         trueScroll = 0
 
     # Slow movement and dash
@@ -188,7 +230,11 @@ while running:
     elif timerDash[0] == 0 and timerDash[1] > 0:
         timerDash[1] -= 1
 
+<<<<<<< Updated upstream
     #PLAYER Y movement
+=======
+     #PLAYER Y movement
+>>>>>>> Stashed changes
     if pressed[pygame.K_UP]:
         velY = -1
     elif pressed[pygame.K_DOWN]:
@@ -205,13 +251,18 @@ while running:
         velX = 0
         
     player.move(velX, velY)
+<<<<<<< Updated upstream
     playerHitbox = pygame.Rect(0,0, player.size/4, player.size/4)
     # center the hitbox on the ship's cockpit
     playerRect = pygame.Rect(player.X+player.size/2 - playerHitbox.width/2, player.Y+player.size/2, playerHitbox.width, playerHitbox.height)
+=======
+    playerRect = pygame.Rect(player.X, player.Y, player.size/2, player.size/2)
+>>>>>>> Stashed changes
 
     for bullet in projectileList:
         if bullet.update(enemyList) == True:
             projectileList.pop(projectileList.index(bullet))
+<<<<<<< Updated upstream
         #rotated_image = pygame.transform.rotate(bullet.image, bullet.angle)
         bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.image.get_width(), bullet.image.get_height())
         rotated_image, bulletRect = rotate(bullet.image, bulletRect, bullet.angle)
@@ -221,6 +272,16 @@ while running:
             if playerRect.colliderect(bulletRect):
                 player.getHit()
                 projectileList.pop(projectileList.index(bullet))
+=======
+        screen.blit(bullet.image, (bullet.x, bullet.y))
+        #Collision bullet & enemy
+        for bullet in projectileList:
+            if bullet.isPlayer == False:
+                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.size, bullet.size)
+                if playerRect.colliderect(bulletRect):
+                    player.getHit()
+                    projectileList.pop(projectileList.index(bullet))
+>>>>>>> Stashed changes
     
 
     #Enemy
@@ -243,8 +304,13 @@ while running:
                     projectileList.pop(projectileList.index(bullet))
 
                 if(enemy.health <= 0):
+<<<<<<< Updated upstream
                     player.money += 10
                     score.score_increment(enemy.score)
+=======
+                    score.score_increment(enemy.score)
+                    #enemyList.pop(enemyList.index(enemy))
+>>>>>>> Stashed changes
                     break
         if rect.colliderect(playerRect):
             player.getHit()
@@ -266,12 +332,21 @@ while running:
     if pressed[pygame.K_w]:
         if player.cooldown <= 0:
             player.shoot()
+<<<<<<< Updated upstream
             if player.speed != player.slowSpeed:
                 if player.missileCooldown <= 0:
                     player.shootHoming()
                     player.missileCooldown = player.timeBetweenMissiles
             player.cooldown = player.timeBetweenShots
     if pressed[pygame.K_x]:
+=======
+            player.cooldown = player.timeBetweenShots
+    if pressed[pygame.K_x]:
+        if player.missileCooldown <= 0:
+            player.shootHoming()
+            player.missileCooldown = player.timeBetweenMissiles
+    if pressed[pygame.K_c]:
+>>>>>>> Stashed changes
         if player.ultimateCooldown <= 0:
             #play sfx
             ultimateSound.play()
@@ -292,13 +367,18 @@ while running:
     #Draw player model on screen
     screen.blit(imgPlayer, (player.X, player.Y))
     
+<<<<<<< Updated upstream
     #Write player's score & remaining lives 
+=======
+    #Write player's score & remaining lives
+>>>>>>> Stashed changes
     scoreText = font.render(f'Score: {score.score}', True, (255, 255, 255))
     screen.blit(scoreText, (10, 10))
     livesText = font.render(f'Lives: {player.lives}', True, (255, 255, 255))
     screen.blit(livesText, (10, 30))
     ultimateText = font.render(f'Ultimate in: {math.ceil(player.ultimateCooldown/60)}', True, (255, 255, 255))
     screen.blit(ultimateText, (10, 50))
+<<<<<<< Updated upstream
     ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
     screen.blit(ultimateText, (10, 70))
 
@@ -309,6 +389,8 @@ while running:
     if pressed[pygame.K_LSHIFT]:
         pygame.draw.rect(screen, (0,255,0), playerRect)
 
+=======
+>>>>>>> Stashed changes
     pygame.display.update()
 
 
