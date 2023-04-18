@@ -98,7 +98,10 @@ enemyList = [enemy1, enemy2, enemy3, enemy4]
 button_surface = pygame.image.load("img/button.png")
 button_surface = pygame.transform.scale(button_surface, (200, 75))
 
-button = Button(button_surface, 500, 500, "Buy truc", True, 30)
+button = Button(button_surface, 500, 500, "Change Weapon price:30", True, 30, Button.ChangeWeapon, imgEnemy)
+button2 = Button(button_surface, 900, 700, "Do nothing", False, 0, Button.ChangeWeapon, None)
+
+buttonList = [button, button2]
 
 #Initiate dash coordinates
 timerDash = [0 , 0]
@@ -127,8 +130,10 @@ while running:
             if events.key == pygame.K_ESCAPE:
                 running=False
         if events.type == pygame.MOUSEBUTTONDOWN:
-            button.checkForInput(pygame.mouse.get_pos(), player)
-        button.changeColor(pygame.mouse.get_pos())
+            for button in buttonList:
+                button.checkForInput(pygame.mouse.get_pos(), player)
+        for button in buttonList:
+            button.changeColor(pygame.mouse.get_pos())
     # Play music in Loop
     
     if bulletHellSound.get_num_channels() == 0:
@@ -280,8 +285,10 @@ while running:
     ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
     screen.blit(ultimateText, (10, 70))
     
-    screen.blit(button.image, button.rect)
-    screen.blit(button.text, button.text_rect)
+    for button in buttonList:
+        screen.blit(button.image, button.rect)
+        screen.blit(button.text, button.text_rect)
+    
     pygame.display.update()
 
 pygame.quit()
