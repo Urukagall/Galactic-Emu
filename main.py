@@ -78,6 +78,7 @@ imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, classicBullet, missile)
 
 
+
 #Create Enemy
 #Load different images
 imgRailgun = pygame.image.load("img/railgun.png")
@@ -91,7 +92,7 @@ enemy3 = Enemy(True,50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnem
 enemy4 = Enemy(True, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
 enemy5 = Enemy(False, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 1, bigBall)
 #enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
-enemyList = [enemy5]
+enemyList = [enemy4]
 
 # Create Button
 
@@ -116,6 +117,13 @@ running = True
 
 font = pygame.font.Font(None, 36)
 
+def rotate(image, rect, angle):
+    """Rotate the image while keeping its center."""
+    # Rotate the original image without modifying it.
+    new_image = pygame.transform.rotate(image, angle)
+    # Get a new rect with the center of the old rect.
+    rect = new_image.get_rect(center=rect.center)
+    return new_image, rect
 
 while running:
     # run the game at a constant 60fps
@@ -197,16 +205,15 @@ while running:
     for bullet in projectileList:
         if bullet.update(enemyList) == True:
             projectileList.pop(projectileList.index(bullet))
-        rotated_image = pygame.transform.rotate(bullet.image, bullet.angle)
+        #rotated_image = pygame.transform.rotate(bullet.image, bullet.angle)
+        bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.image.get_width(), bullet.image.get_height())
+        rotated_image, bulletRect = rotate(bullet.image, bulletRect, bullet.angle)
         screen.blit(rotated_image, (bullet.x, bullet.y))
-        #Collision bullet & enemy
-        for bullet in projectileList:
-            if bullet.isPlayer == False:
-                bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.image.get_width(), bullet.image.get_height())
-                if playerRect.colliderect(bulletRect):
-                    player.getHit()
-                    projectileList.pop(projectileList.index(bullet))
-                
+        if bullet.isPlayer == False:
+            pygame.draw.rect(screen, (255,0,0), bulletRect)
+            if playerRect.colliderect(bulletRect):
+                player.getHit()
+                projectileList.pop(projectileList.index(bullet))
     
 
     #Enemy

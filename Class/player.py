@@ -3,7 +3,7 @@ import pygame
 from Class.bulletHandler import BulletHandler
 from Class.particle import Particle
 
-class Player(pygame.sprite.Sprite):
+class Player():
     def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile):
         self.X = 0
         self.Y = 0

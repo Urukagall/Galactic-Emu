@@ -1,8 +1,9 @@
 import pygame
 import math
 import pygame
-class Projectile(pygame.sprite.Sprite):
+class Projectile():
     def __init__(self, x, y, size, image, velocity, damage, isHoming, displayWidth, displayHeight, projectileList, speed, player=False, rotation=0):
+
         self.isPlayer = player
         self.x = x
         self.y = y
