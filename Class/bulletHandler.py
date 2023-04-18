@@ -36,7 +36,7 @@ class BulletHandler():
             #create bullet
             directionAngle = math.atan2(direction[1], direction[0])
 
-            radians = math.radians(array * (self.angleBetweenArrays+ self.rotation)) + directionAngle
+            radians = math.radians(array * self.angleBetweenArrays) + directionAngle
             destX = math.cos(radians)
             destY = math.sin(radians)
             arrayDirection = (destX, destY)
