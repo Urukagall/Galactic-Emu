@@ -90,7 +90,7 @@ enemy1 = Enemy(True, 50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgRai
 enemy2 = Enemy(True,50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy3 = Enemy(True,50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy4 = Enemy(True, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
-enemy5 = Enemy(False, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 90, projectileList, 0.5, "left", 3, 10, 3, 10, 1, bigBall)
+enemy5 = Enemy(False, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 1, bigBall)
 #enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
 enemyList = [enemy5]
 
@@ -191,7 +191,9 @@ while running:
         velX = 0
         
     player.move(velX, velY)
-    playerRect = pygame.Rect(player.X, player.Y, player.size/2, player.size/2)
+    playerHitbox = pygame.Rect(0,0, player.size/4, player.size/4)
+    # center the hitbox on the ship's cockpit
+    playerRect = pygame.Rect(player.X+player.size/2 - playerHitbox.width/2, player.Y+player.size/2, playerHitbox.width, playerHitbox.height)
 
     for bullet in projectileList:
         if bullet.update(enemyList) == True:
@@ -285,11 +287,14 @@ while running:
     screen.blit(ultimateText, (10, 50))
     ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
     screen.blit(ultimateText, (10, 70))
-    
+
     for button in buttonList:
         screen.blit(button.image, button.rect)
         screen.blit(button.text, button.text_rect)
     
+    if pressed[pygame.K_LSHIFT]:
+        pygame.draw.rect(screen, (0,255,0), playerRect)
+
     pygame.display.update()
 
 pygame.quit()
