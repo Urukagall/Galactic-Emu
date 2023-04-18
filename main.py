@@ -250,12 +250,12 @@ while running:
     if pressed[pygame.K_w]:
         if player.cooldown <= 0:
             player.shoot()
+            if player.speed != player.slowSpeed:
+                if player.missileCooldown <= 0:
+                    player.shootHoming()
+                    player.missileCooldown = player.timeBetweenMissiles
             player.cooldown = player.timeBetweenShots
     if pressed[pygame.K_x]:
-        if player.missileCooldown <= 0:
-            player.shootHoming()
-            player.missileCooldown = player.timeBetweenMissiles
-    if pressed[pygame.K_c]:
         if player.ultimateCooldown <= 0:
             #play sfx
             ultimateSound.play()

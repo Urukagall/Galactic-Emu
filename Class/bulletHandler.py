@@ -21,6 +21,8 @@ class BulletHandler():
         self.isPlayer = isPlayer
         self.isHoming = isHoming
         self.rotation = 0
+
+        self.angleOffset = 0
         
     
     def update(self, direction):
@@ -32,11 +34,15 @@ class BulletHandler():
         arrayMax = numPositives - 1
         arrayMin = -numNegatives
 
+        if abs(arrayMin) != arrayMax:
+            #nombre pair
+            self.angleOffset = self.angleBetweenArrays /2
+
         for array in range(arrayMin, arrayMax+1):
             #create bullet
             directionAngle = math.atan2(direction[1], direction[0])
 
-            radians = math.radians(array * self.angleBetweenArrays + self.rotation) + directionAngle
+            radians = math.radians(array * self.angleBetweenArrays + self.rotation + self.angleOffset) + directionAngle
             destX = math.cos(radians)
             destY = math.sin(radians)
             arrayDirection = (destX, destY)

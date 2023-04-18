@@ -52,7 +52,7 @@ class Projectile():
     def chase(self, enemyList):
         if(self.isPlayer):
             distance = 10000
-            target = pygame.Vector2(self.x, -1000)
+            target = pygame.Vector2(self.x + self.velocity[0], self.y + self.velocity[1])
             for enemy in enemyList:
                 if distance > pygame.math.Vector2.distance_to(pygame.math.Vector2(enemy.x, enemy.y), pygame.math.Vector2(self.x, self.y)):
                     distance = pygame.math.Vector2.distance_to(pygame.math.Vector2(enemy.x, enemy.y), pygame.math.Vector2(self.x, self.y))

@@ -24,6 +24,8 @@ class Player():
         self.arrayNumber = 3
         self.bulletSpeed = 50
         self.angleBetweenArrays = 10
+        self.angleBetweenMissileArrays = 30
+        self.missileArrayNumber = 2
         #60 = 1sec
         self.timeBetweenShots = 0.3
         self.cooldown = self.timeBetweenShots
@@ -39,7 +41,7 @@ class Player():
         self.missileImg = pygame.transform.scale(self.missileImg, (50, 50))
 
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
-        self.missileHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
+        self.missileHandler = BulletHandler(self.bulletSpeed, self.missileArrayNumber, self.angleBetweenMissileArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
         
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
