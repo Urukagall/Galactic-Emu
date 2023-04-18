@@ -17,6 +17,7 @@ class Player():
         self.cooldownDash = cooldownDash
         self.timeDash = timeDash
         self.lives = lives
+        self.money = 0
 
 
         self.projectileList = projectileList
@@ -41,7 +42,7 @@ class Player():
 
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
         self.missileHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
-
+        
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
             self.X = self.X + math.sqrt(1/2) * self.speed * veloX
