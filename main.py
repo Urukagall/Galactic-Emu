@@ -9,6 +9,7 @@ from Class.projectile import Projectile
 from Class.player import Player
 from Class.enemy import Enemy
 from Class.score import Score
+from Class.button import Button
 
 #Import Patterns
 from Pattern.enemiesPattern import *
@@ -93,6 +94,16 @@ enemy5 = Enemy(50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, cl
 #enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
 enemyList = [enemy5]
 
+# Create Button
+
+button_surface = pygame.image.load("img/button.png")
+button_surface = pygame.transform.scale(button_surface, (200, 75))
+
+button = Button(button_surface, 500, 500, "Change Weapon price:30", True, 30, Button.ChangeWeapon, imgEnemy)
+button2 = Button(button_surface, 900, 700, "Do nothing", False, 0, Button.ChangeWeapon, None)
+
+buttonList = [button, button2]
+
 #Initiate dash coordinates
 timerDash = [0 , 0]
 
@@ -102,16 +113,15 @@ score = Score()
 # Main Loop
 running = True
 
-# Music du jeuen boucle (Faudra le mettre autre part)
+# Font importe
 
-
+font = pygame.font.Font(None, 36)
 
 
 while running:
     # run the game at a constant 60fps
     clock.tick(60)
 
-    font = pygame.font.Font(None, 36)
     
     #Close window on Escape press
     for events in pygame.event.get():
@@ -120,7 +130,11 @@ while running:
         elif events.type == pygame.KEYDOWN:
             if events.key == pygame.K_ESCAPE:
                 running=False
-    
+        if events.type == pygame.MOUSEBUTTONDOWN:
+            for button in buttonList:
+                button.checkForInput(pygame.mouse.get_pos(), player)
+        for button in buttonList:
+            button.changeColor(pygame.mouse.get_pos())
     # Play music in Loop
     
     if bulletHellSound.get_num_channels() == 0:
@@ -213,6 +227,7 @@ while running:
                     projectileList.pop(projectileList.index(bullet))
 
                 if(enemy.health <= 0):
+                    player.money += 10
                     score.score_increment(enemy.score)
                     break
         if rect.colliderect(playerRect):
@@ -261,13 +276,20 @@ while running:
     #Draw player model on screen
     screen.blit(imgPlayer, (player.X, player.Y))
     
-    #Write player's score & remaining lives
+    #Write player's score & remaining lives 
     scoreText = font.render(f'Score: {score.score}', True, (255, 255, 255))
     screen.blit(scoreText, (10, 10))
     livesText = font.render(f'Lives: {player.lives}', True, (255, 255, 255))
     screen.blit(livesText, (10, 30))
     ultimateText = font.render(f'Ultimate in: {math.ceil(player.ultimateCooldown/60)}', True, (255, 255, 255))
     screen.blit(ultimateText, (10, 50))
+    ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
+    screen.blit(ultimateText, (10, 70))
+    
+    for button in buttonList:
+        screen.blit(button.image, button.rect)
+        screen.blit(button.text, button.text_rect)
+    
     pygame.display.update()
 
 pygame.quit()
