@@ -3,7 +3,7 @@ from Pattern.enemiesPattern import firstPattern
 import pygame, math
 
 class Enemy():
-    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, firingSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing):
+    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg1, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, bulletSpeed2 = 0, arrayNumber2 = 0, angleBetweenArrays2 = 0, timeBetweenShots2=0, bulletImg2=[]):
         self.health = health
         self.speed = speed
         self.x = x
@@ -13,20 +13,37 @@ class Enemy():
         self.displayHeight = displayHeight
         self.score = score
         self.image = image
+
         self.timeBetweenShots = timeBetweenShots
+        self.timeBetweenShots2 = timeBetweenShots2
         self.cooldown = self.timeBetweenShots
+        self.cooldown2 = self.timeBetweenShots2
+
         self.facing = facing
         self.patternStep = 0
+        self.bulletImg1 = bulletImg1
+        self.BHList = []
 
-        self.bulletImg = pygame.image.load("img/grosse_boule.png")
-        self.bulletImg = pygame.transform.scale(self.bulletImg, (50, 50))
-        self.bulletHandler = BulletHandler(firingSpeed, arrayNumber, angleBetweenArrays, projectileList, self.bulletImg)
-        self.bulletHandler.move(self.x, self.y)
+        
+            
+        self.bulletHandler = BulletHandler(bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, self.bulletImg1)
+        self.BHList.append(self.bulletHandler)
+        
+        if bulletSpeed2 != 0:
+            self.anotherBH = True
+            self.bulletHandler2 = BulletHandler(bulletSpeed2, arrayNumber2, angleBetweenArrays2, projectileList, bulletImg2)
+            self.bulletHandler2.move(self.x, self.y)
+            self.BHList.append(self.bulletHandler2)
+
+        for bulletHandler in self.BHList:
+            bulletHandler.move(self.x, self.y)
+        
 
     def move(self, veloX, veloY):
         self.x = self.x + veloX * self.speed
         self.y = self.y + veloY * self.speed
-        self.bulletHandler.move(self.x, self.y)
+        for bulletHandler in self.BHList:
+            bulletHandler.move(self.x, self.y)
 
     def takeDmg(self, dmg, enemyList):
         self.health -= dmg
@@ -45,8 +62,23 @@ class Enemy():
                 destX = math.cos(radians)
                 destY = math.sin(radians)
                 direction = (destX, destY)
+            self.BHList[0].update(direction)
             
-            self.bulletHandler.update(direction)
             self.cooldown = self.timeBetweenShots*60
         else:
             self.cooldown -= 1
+
+        if self.cooldown2 <= 0 - self.cooldown/2 and len(self.BHList) > 1:
+            #shoot
+            direction = (0, 1)
+            if player:
+                radians = math.atan2(player.Y - self.y, player.X - self.x)
+
+                destX = math.cos(radians)
+                destY = math.sin(radians)
+                direction = (destX, destY)
+            self.BHList[1].update(direction)
+            
+            self.cooldown2 = self.timeBetweenShots2*60
+        else:
+            self.cooldown2 -= 1

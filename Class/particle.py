@@ -6,7 +6,7 @@ class Particle():
         self.radius = radius
         self.maxRadius = 1100
         self.color = color
-        self.TTL = 200
+        self.TTL = 120
         self.particleList = particleList
         self.particleList.append(self)
         self.reverse = False
