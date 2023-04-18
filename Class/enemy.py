@@ -3,7 +3,7 @@ from Pattern.enemiesPattern import firstPattern
 import pygame, math
 
 class Enemy():
-    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg1, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, bulletSpeed2 = 0, arrayNumber2 = 0, angleBetweenArrays2 = 0, timeBetweenShots2=0, bulletImg2=[]):
+    def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg1, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, bulletRotation=0, bulletSpeed2 = 0, arrayNumber2 = 0, angleBetweenArrays2 = 0, timeBetweenShots2=0, bulletImg2=[], bulletRotation2 = 0):
         self.health = health
         self.speed = speed
         self.x = x
@@ -24,14 +24,17 @@ class Enemy():
         self.bulletImg1 = bulletImg1
         self.BHList = []
 
+        self.bulletRotation = bulletRotation
+        self.bulletRotation2 = bulletRotation2
+
         
             
-        self.bulletHandler = BulletHandler(bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, self.bulletImg1)
+        self.bulletHandler = BulletHandler(bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, self.bulletImg1, self.bulletRotation)
         self.BHList.append(self.bulletHandler)
         
         if bulletSpeed2 != 0:
             self.anotherBH = True
-            self.bulletHandler2 = BulletHandler(bulletSpeed2, arrayNumber2, angleBetweenArrays2, projectileList, bulletImg2)
+            self.bulletHandler2 = BulletHandler(bulletSpeed2, arrayNumber2, angleBetweenArrays2, projectileList, bulletImg2, self.bulletRotation2)
             self.bulletHandler2.move(self.x, self.y)
             self.BHList.append(self.bulletHandler2)
 

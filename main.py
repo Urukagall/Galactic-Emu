@@ -88,9 +88,10 @@ imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBall, 4, 10, 5, projectileList, 1, "left")
 enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
-enemy4 = Enemy(50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 10, 1, 0, 2, bigBall)
-enemyList = [enemy1, enemy2, enemy3, enemy4]
-#enemyList = [enemy4]
+enemy4 = Enemy(50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
+enemy5 = Enemy(50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 90, projectileList, 1, "left", 0)
+#enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
+enemyList = [enemy5]
 
 #Initiate dash coordinates
 timerDash = [0 , 0]

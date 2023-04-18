@@ -5,22 +5,22 @@ class BulletHandler():
     maxSpinSpeed=0
     radius=100
     bulletAcceleration=0
-    bulletCurve=0
     invertSpin=False
     bulletTTL = 0
     X = 0
     Y = 0
 
-    def __init__(self, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, img, isHoming = False, isPlayer = False):
+    def __init__(self, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, img, rotation=0,isHoming = False, isPlayer = False):
         self.bulletSpeed = bulletSpeed
         self.arrayNumber = arrayNumber
         self.angleBetweenArrays = angleBetweenArrays
         self.arrayList = []
         self.projectileList = projectileList
         self.img = img
+        self.rotationIncrement = rotation
         self.isPlayer = isPlayer
         self.isHoming = isHoming
-
+        self.rotation = 0
         
     
     def update(self, direction):
@@ -36,11 +36,13 @@ class BulletHandler():
             #create bullet
             directionAngle = math.atan2(direction[1], direction[0])
 
-            radians = math.radians(array * self.angleBetweenArrays) + directionAngle
+            radians = math.radians(array * (self.angleBetweenArrays+ self.rotation)) + directionAngle
             destX = math.cos(radians)
             destY = math.sin(radians)
             arrayDirection = (destX, destY)
+
             bullet = Projectile(self.X, self.Y, bulletWidth, self.img, arrayDirection, 1, self.isHoming, 1920, 1080, self.projectileList, self.bulletSpeed, self.isPlayer)
+            self.rotation += self.rotationIncrement
             
 
         
