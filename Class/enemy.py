@@ -68,7 +68,7 @@ class Enemy():
         else:
             self.cooldown -= 1
 
-        if self.cooldown2 <= 0 and len(self.BHList) > 1:
+        if self.cooldown2 <= 0 - self.cooldown/2 and len(self.BHList) > 1:
             #shoot
             direction = (0, 1)
             if player:
