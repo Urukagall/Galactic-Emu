@@ -36,8 +36,6 @@ class Player():
         self.bulletImg = pygame.transform.scale(self.bulletImg, (50, 50))
         self.missileImg = pygame.image.load("img/missile.png")
         self.missileImg = pygame.transform.scale(self.missileImg, (50, 50))
-        self.ultimateImg = pygame.image.load("img/emeu.jpg")
-        self.ultimateImg = pygame.transform.scale(self.ultimateImg, (50, 50))
 
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
         self.missileHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)

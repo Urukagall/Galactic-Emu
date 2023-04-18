@@ -44,6 +44,8 @@ missileWidth = missile.get_width()
 classicBullet =  pygame.image.load("img/bullet.png")
 classicBullet = pygame.transform.scale(classicBullet, (50, 50))
 classicBulletWidth = classicBullet.get_width()
+bigBall = pygame.image.load("img/grosse_boule.png")
+bigBall = pygame.transform.scale(bigBall, (50, 50))
 
 #Import ultimate
 ultimateShoot = pygame.image.load("img/grosse_boule.png")
@@ -77,14 +79,18 @@ player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectil
 
 
 #Create Enemy
-imgEnemy = pygame.image.load("img/enemy.png").convert()
+#Load different images
+imgRailgun = pygame.image.load("img/railgun.png")
+imgRailgun = pygame.transform.scale(imgRailgun, (50, 50))
+imgEnemy = pygame.image.load("img/bozo.png")
 imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 
-enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 4, 10, 5, projectileList, 1, "left")
-enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 3, 10, projectileList, 1, "left")
-enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, 10, 3, 10, projectileList, 1, "left")
-enemyList = [enemy1, enemy2, enemy3]
-
+enemy1 = Enemy(50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBall, 4, 10, 5, projectileList, 1, "left")
+enemy2 = Enemy(50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
+enemy3 = Enemy(50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
+enemy4 = Enemy(50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 4, 1, 0, 3, imgPlayer)
+#enemyList = [enemy1, enemy2, enemy3, enemy4]
+enemyList = [enemy4]
 
 #Initiate dash coordinates
 timerDash = [0 , 0]
