@@ -48,7 +48,7 @@ class Boss():
         self.x = self.x + veloX * self.speed
         self.y = self.y + veloY * self.speed
         for BH in self.BHList:
-            BH.move(self.x + self.size/2, self.y + self.size/2)
+            BH.move(self.x + self.size/2, self.y + 100)
 
     def takeDmg(self, dmg, enemyList):
         self.health -= dmg
@@ -80,7 +80,10 @@ class Boss():
                 direction = (0, 1)
                 
                 if self.BHdata[index][5] == True: #shoot toward player
-                    radians = math.atan2(player.Y - self.y, player.X - self.x)
+                    playerHitbox = pygame.Rect(0,0, player.size/8, player.size/8)
+                    # center the hitbox on the ship's cockpit
+                    target = pygame.math.Vector2(player.X+player.size/2 - playerHitbox.width/4, player.Y+player.size/4)
+                    radians = math.atan2(target.y - bulletHandler.Y, target.x - bulletHandler.X)
                     destX = math.cos(radians)
                     destY = math.sin(radians)
                     direction = (destX, destY)
@@ -100,15 +103,15 @@ class Boss():
         self.cooldowns.clear()
         self.timeBetweenShots.clear()
         if self.patternNum == 1:
-            BH1 = [1, 2, 8, 45, self.carreau_purple, False, 3]
-            BH2 = [1, 2, 8, 45, self.carreau_green, False, -3]
+            BH1 = [0.5, 2, 8, 45, self.carreau_purple, False, 3]
+            BH2 = [0.5, 2, 8, 45, self.carreau_green, False, -3]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
         elif self.patternNum == 2:
-            BH1 = [1, 2, 8, 45, self.bullet, False, -3]
-            BH2 = [1, 4, 3, 10, self.bigBall, True, 0]
+            BH1 = [0.5, 2, 8, 45, self.bullet, False, -3]
+            BH2 = [1, 8, 3, 10, self.bigBall, True, 0]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.timeBetweenShots.append(BH1[0])
