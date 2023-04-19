@@ -10,6 +10,7 @@ from Class.player import Player
 from Class.enemy import Enemy
 from Class.score import Score
 from Class.button import Button
+from Class.boss import Boss
 
 #Import Patterns
 from Pattern.enemiesPattern import *
@@ -44,11 +45,11 @@ missileWidth = missile.get_width()
 #Import bullets 
 classicBullet =  pygame.image.load("img/bullet.png")
 classicBullet = pygame.transform.scale(classicBullet, (classicBullet.get_width()*2, classicBullet.get_height()*2))
-bigBall = pygame.image.load("img/grosse_boule.png")
+bigBall = pygame.image.load("img/bigBall.png")
 bigBall = pygame.transform.scale(bigBall, (50, 50))
 
 #Import ultimate
-ultimateShoot = pygame.image.load("img/grosse_boule.png")
+ultimateShoot = pygame.image.load("img/bigBall.png")
 ultimateShoot = pygame.transform.scale(ultimateShoot, (100, 100))
 ultimateShootWidth = ultimateShoot.get_width()
 
@@ -91,11 +92,21 @@ enemy2 = Enemy(True,50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEne
 enemy3 = Enemy(True,50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy4 = Enemy(True, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
 enemy5 = Enemy(False, 50, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 1, 0, 3, bigBall)
-enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
-#enemyList = [enemy5]
+enemy6 = Enemy(False, 50, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 4, 90, 0.5, classicBullet, False, -6)
+#enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
+enemyList = []
+
+#create boss
+bossSize = 300
+bossImg = pygame.image.load("img/boss1.png")
+bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
+boss = Boss(1000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
+enemyList.append(boss)
+boss.changePattern(1)
+bossFight = True
+
 
 # Create Button
-
 button_surface = pygame.image.load("img/button.png")
 button_surface = pygame.transform.scale(button_surface, (200, 75))
 
@@ -218,12 +229,25 @@ while running:
     #Enemy
     for enemy in enemyList:
         enemy.update(player)
-        rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
+        if enemy.__class__.__name__ == "Boss":
+            if boss.health < 500:
+                boss.changePattern(2)
+            elif boss.health < 300:
+                boss.changePattern(3)
+            bossHitbox = pygame.Rect(0,0, boss.size/2, boss.size)
+            # center the hitbox on the boss
+            rect = pygame.Rect(boss.x + boss.size/2 - bossHitbox.width/2, boss.y, bossHitbox.width, bossHitbox.height)
+        else:
+            rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
+        #pygame.draw.rect(screen, (255,0,0), rect)
         
         screen.blit(enemy.image, (enemy.x, enemy.y))
         if enemy.y > enemy.displayHeight:
-            enemy.health = 0
-            enemyList.pop(enemyList.index(enemy))
+            if enemy.__class__.__name__ == "Boss":
+                boss.move(0,-1)
+            else:
+                enemy.health = 0
+                enemyList.pop(enemyList.index(enemy))
 
         #Collision bullet & enemy
         for bullet in projectileList:
@@ -237,11 +261,16 @@ while running:
                 if(enemy.health <= 0):
                     player.updateMoney(10)
                     score.score_increment(enemy.score)
+                    #the enemy pops itself out of enemyList
                     break
         if rect.colliderect(playerRect):
             player.getHit()
-            score.score_increment(10)
-            enemyList.pop(enemyList.index(enemy))
+            if enemy.__class__.__name__ == "Enemy":
+                score.score_increment(10)
+                enemyList.pop(enemyList.index(enemy))
+            else:
+                enemy.health -= 10
+
 
     for particle in particleList:
         if(particle.draw(screen, projectileList)):

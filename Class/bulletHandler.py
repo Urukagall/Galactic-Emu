@@ -20,7 +20,7 @@ class BulletHandler():
         self.rotationIncrement = rotation
         self.isPlayer = isPlayer
         self.isHoming = isHoming
-        self.rotation = 0
+        self.rotation = rotation
 
         self.angleOffset = 0
         
@@ -33,7 +33,7 @@ class BulletHandler():
         numPositives = math.ceil(self.arrayNumber / 2)
         arrayMax = numPositives - 1
         arrayMin = -numNegatives
-
+        
         if abs(arrayMin) != arrayMax:
             #nombre pair
             self.angleOffset = self.angleBetweenArrays /2
@@ -46,11 +46,9 @@ class BulletHandler():
             destX = math.cos(radians)
             destY = math.sin(radians)
             arrayDirection = (destX, destY)
-
-            bullet = Projectile(self.X, self.Y, bulletWidth, self.img, arrayDirection, 1, self.isHoming, 1920, 1080, self.projectileList, self.bulletSpeed, self.isPlayer)
+            bullet = Projectile(self.X, self.Y, bulletWidth, self.img, arrayDirection, 1, self.isHoming, 1920, 1080, self.bulletSpeed, self.isPlayer)
+            self.projectileList.append(bullet)
             self.rotation += self.rotationIncrement
-            
-
         
 
     def move(self, targetX, targetY):

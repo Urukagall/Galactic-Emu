@@ -12,6 +12,7 @@ class Particle():
         self.reverse = False
         self.alpha = 255
         self.doDamage = False
+        self.didDamage = False
 
     def draw(self, screen, projectileList=[]):
         
@@ -26,7 +27,11 @@ class Particle():
             if self.radius >= 30:
                 self.radius -= 30
             else:
-                self.doDamage = True
+                if(not self.didDamage):
+                    self.doDamage = True
+                else:
+                    self.doDamage = False
+                self.didDamage = True
                 self.radius = 0
                 screen.blit(self.draw_rect(1920, (self.alpha,self.alpha,self.alpha)), (0,0), special_flags = pygame.BLEND_RGB_ADD)
                 if(self.alpha >= 5):
