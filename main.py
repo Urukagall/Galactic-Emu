@@ -57,9 +57,10 @@ ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
 ultimateSound.set_volume(0.2)
 
 # Import Music
-
 bulletHellSound = pygame.mixer.Sound("sound/Bullet_Hell.mp3")
 bulletHellSound.set_volume(0.2)
+bossMusic = pygame.mixer.Sound("sound/bossFight.mp3")
+bossMusic.set_volume(0.2)
 
 #projectileList & CD
 projectileList = []
@@ -153,8 +154,10 @@ while running:
             button.changeColor(pygame.mouse.get_pos())
     # Play music in Loop
     
-    if bulletHellSound.get_num_channels() == 0:
-        bulletHellSound.play()
+    '''if bulletHellSound.get_num_channels() == 0:
+        bulletHellSound.play()'''
+    if bossMusic.get_num_channels() == 0:
+        bossMusic.play()
     
     #draw scrolling background
     
