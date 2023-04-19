@@ -100,9 +100,8 @@ enemyList = []
 bossSize = 300
 bossImg = pygame.image.load("img/boss1.png")
 bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
-boss = Boss(1000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
+boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
 enemyList.append(boss)
-boss.changePattern(1)
 bossFight = True
 
 
@@ -115,17 +114,16 @@ button2 = Button(button_surface, 900, 700, "Do nothing", False, 0, Button.Change
 
 buttonList = [button, button2]
 
-#Initiate dash coordinates
+#Initialize dash coordinates
 timerDash = [0 , 0]
 
-#Initiate score
+#Initialize score
 score = Score()
 
 # Main Loop
 running = True
 
 # Font importe
-
 font = pygame.font.Font(None, 36)
 
 def rotate(image, rect, angle):
@@ -230,10 +228,6 @@ while running:
     for enemy in enemyList:
         enemy.update(player)
         if enemy.__class__.__name__ == "Boss":
-            if boss.health < 500:
-                boss.changePattern(2)
-            elif boss.health < 300:
-                boss.changePattern(3)
             bossHitbox = pygame.Rect(0,0, boss.size/2, boss.size)
             # center the hitbox on the boss
             rect = pygame.Rect(boss.x + boss.size/2 - bossHitbox.width/2, boss.y, bossHitbox.width, bossHitbox.height)
@@ -322,6 +316,9 @@ while running:
     screen.blit(ultimateText, (10, 50))
     ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
     screen.blit(ultimateText, (10, 70))
+
+    bossHPText = font.render(f'Boss HP: {boss.health}', True, (255, 255, 255))
+    screen.blit(bossHPText, (10, 100))
 
     for button in buttonList:
         screen.blit(button.image, button.rect)
