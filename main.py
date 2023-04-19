@@ -90,9 +90,9 @@ enemy1 = Enemy(True, 50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgRai
 enemy2 = Enemy(True,50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy3 = Enemy(True,50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy4 = Enemy(True, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
-enemy5 = Enemy(False, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 1, bigBall)
-#enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
-enemyList = [enemy4]
+enemy5 = Enemy(False, 50, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 1, 0, 3, bigBall)
+enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
+#enemyList = [enemy5]
 
 # Create Button
 
@@ -198,19 +198,18 @@ while running:
         velX = 0
         
     player.move(velX, velY)
-    playerHitbox = pygame.Rect(0,0, player.size/4, player.size/4)
+    playerHitbox = pygame.Rect(0,0, player.size/8, player.size/8)
     # center the hitbox on the ship's cockpit
     playerRect = pygame.Rect(player.X+player.size/2 - playerHitbox.width/2, player.Y+player.size/2, playerHitbox.width, playerHitbox.height)
 
     for bullet in projectileList:
         if bullet.update(enemyList) == True:
             projectileList.pop(projectileList.index(bullet))
-        #rotated_image = pygame.transform.rotate(bullet.image, bullet.angle)
         bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.image.get_width(), bullet.image.get_height())
         rotated_image, bulletRect = rotate(bullet.image, bulletRect, bullet.angle)
         screen.blit(rotated_image, (bullet.x, bullet.y))
         if bullet.isPlayer == False:
-            pygame.draw.rect(screen, (255,0,0), bulletRect)
+            #pygame.draw.rect(screen, (255,0,0), bulletRect)
             if playerRect.colliderect(bulletRect):
                 player.getHit()
                 projectileList.pop(projectileList.index(bullet))
