@@ -235,7 +235,7 @@ while running:
                     projectileList.pop(projectileList.index(bullet))
 
                 if(enemy.health <= 0):
-                    player.money += 10
+                    player.updateMoney(10)
                     score.score_increment(enemy.score)
                     break
         if rect.colliderect(playerRect):

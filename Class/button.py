@@ -24,7 +24,7 @@ class Button():
 	def checkForInput(self, position, player):
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
 			if self.isShopping and self.price <= player.money:
-				player.money -= self.price
+				player.updateMoney(-self.price)
 				self.function(player, self.newImg)
 			# img = pygame.image.load("img/emeu.jpg")
 			# img = pygame.transform.scale(img, (50, 50))
