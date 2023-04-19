@@ -28,7 +28,6 @@ class Enemy():
 
         self.bulletRotation = bulletRotation
         self.bulletRotation2 = bulletRotation2
-
         
             
         self.bulletHandler = BulletHandler(bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, self.bulletImg1, self.bulletRotation)
@@ -48,7 +47,7 @@ class Enemy():
         self.x = self.x + veloX * self.speed
         self.y = self.y + veloY * self.speed
         for bulletHandler in self.BHList:
-            bulletHandler.move(self.x, self.y)
+            bulletHandler.move(self.x + self.size/2, self.y + self.size/2)
 
     def takeDmg(self, dmg, enemyList):
         self.health -= dmg

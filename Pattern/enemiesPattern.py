@@ -43,10 +43,22 @@ def firstPattern(Enemy):
         Enemy.move(-1,1)
     
     if Enemy.facing == "left" and Enemy.patternStep > (1920 - Enemy.size)//2 and (Enemy.patternStep-(1920-Enemy.size)//2)%6 == 0:
-        Enemy.x -= 1
+        Enemy.move(-1, 0)
     elif Enemy.facing == "left" and Enemy.patternStep > (1920 - Enemy.size)//2:
         '''Enemy.x -= 1
         Enemy.y -=1'''
         Enemy.move(-1, -1)
 
     Enemy.patternStep += 1
+
+def bossPattern(Enemy, patternNum):
+    if patternNum == 1:
+        if Enemy.x <= 0:
+            Enemy.facing = "right"
+        elif Enemy.x >= 1920 - Enemy.size:
+            Enemy.facing = "left"
+
+        if Enemy.facing == "left":
+            Enemy.move(-1,0)
+        elif Enemy.facing == "right":
+            Enemy.move(1, 0)
