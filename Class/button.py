@@ -17,15 +17,17 @@ class Button():
 		self.function = function
 		self.newImg = newImg
 
-	# def update(self):
-		# screen.blit(self.image, self.rect)
-		# screen.blit(self.text, self.text_rect)
+	def update(self, screen):
+		screen.blit(self.image, self.rect)
+		screen.blit(self.text, self.text_rect)
 
 	def checkForInput(self, position, player):
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
 			if self.isShopping and self.price <= player.money:
-				player.updateMoney(-self.price)
+				player.money -= self.price
 				self.function(player, self.newImg)
+			return True
+		return False
 			# img = pygame.image.load("img/emeu.jpg")
 			# img = pygame.transform.scale(img, (50, 50))
 			# player.bulletHandler.img = img
