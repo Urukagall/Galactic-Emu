@@ -12,7 +12,7 @@ from Class.boss import Boss
 
 from Functions.enemiesPattern import *
 
-def play(missileA, classicBulletA, projectileListA, playerA):
+def play(missileA, bulletBlueA, projectileListA, playerA):
     pygame.init()
     clock = pygame.time.Clock()
 
@@ -40,15 +40,16 @@ def play(missileA, classicBulletA, projectileListA, playerA):
     missileWidth = missile.get_width()
 
     #Import bullets 
-    classicBullet =  pygame.image.load("img/bullet.png").convert_alpha()
-    classicBullet = pygame.transform.scale(classicBullet, (classicBullet.get_width()*2, classicBullet.get_height()*2))
+    #blue
+    bulletBlue =  pygame.image.load("img/bullet.png").convert_alpha()
+    bulletBlue = pygame.transform.scale(bulletBlue, (bulletBlue.get_width()*2, bulletBlue.get_height()*2))
+
     bigBall = pygame.image.load("img/bigBall.png").convert_alpha()
     bigBall = pygame.transform.scale(bigBall, (50, 50))
 
-    #Import ultimate
-    ultimateShoot = pygame.image.load("img/bigBall.png").convert_alpha()
-    ultimateShoot = pygame.transform.scale(ultimateShoot, (100, 100))
-    ultimateShootWidth = ultimateShoot.get_width()
+    #RED
+    bulletRed = pygame.image.load("img/bulletRed.png").convert_alpha()
+    bulletRed = pygame.transform.scale(bulletRed, (bulletRed.get_width()*2, bulletRed.get_height()*2))
 
     ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
     ultimateSound.set_volume(0.2)
@@ -74,7 +75,7 @@ def play(missileA, classicBulletA, projectileListA, playerA):
     imgPlayer = pygame.image.load("img/player.png").convert_alpha()
     imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
-    player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, classicBullet, missile)
+    player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, bulletBlue, missile)
 
 
 
@@ -86,13 +87,13 @@ def play(missileA, classicBulletA, projectileListA, playerA):
     imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 
     enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100]]
-    enemy1 = Enemy(True, 50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBall, 4, 10, 5, projectileList, 1, "left")
-    enemy2 = Enemy(True,50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
-    enemy3 = Enemy(True,50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
-    enemy4 = Enemy(True, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
-    enemy5 = Enemy(False, 50, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, bigBall)
-    enemy6 = Enemy(False, 50, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 4, 90, 0.5, classicBullet, False, -6)
-    enemyList  = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6]
+    bozo = Enemy(True,50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletRed, 10, 1, 0, projectileList, 1, "left")
+    railgun = Enemy(True, 200, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBall, 3, 5, 10, projectileList, 3, "left")
+    supressor = Enemy(True, 100, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletBlue, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
+    spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletBlue, 1, 4, 90, projectileList, 1.5, "left",3)
+    miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletBlue, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, bigBall)
+    #enemyList  = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6]
+    enemyList  = [spyral]
     onScreenEnemiesList = []
 
     #create boss
@@ -100,9 +101,8 @@ def play(missileA, classicBulletA, projectileListA, playerA):
     bossImg = pygame.image.load("img/boss1.png").convert_alpha()
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
     boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
-    enemyList.append(boss)
+    #enemyList.append(boss)
     bossFight = True
-    enemyList.append(boss)
 
 
     # Create Button
