@@ -148,7 +148,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
     supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletYellow, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
     spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, carreauGreen, 1, 4, 90, projectileList, 1.5, "left",3)
     miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballYellow)
-    enemyList  = [railgun]
+    enemyList  = []
     #enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
     onScreenEnemiesList = []
 
@@ -157,7 +157,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
     bossImg = pygame.image.load("img/boss1.png").convert_alpha()
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
     boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
-    #enemyList.append(boss)
+    enemyList.append(boss)
     bossFight = True
 
 

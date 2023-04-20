@@ -55,10 +55,14 @@ class Boss():
         if(self.health <= 0):
             enemyList.pop(enemyList.index(self))
         elif self.health <= 3000:
+            if self.patternNum != 5:
+                self.patternNum =5
+                self.changePattern()
+        elif self.health <= 5000:
             if self.patternNum != 4:
                 self.patternNum =4
                 self.changePattern()
-        elif self.health <= 5500:
+        elif self.health <= 7000:
             if self.patternNum != 3:
                 self.patternNum =3
                 self.changePattern()
@@ -104,7 +108,7 @@ class Boss():
         self.BHList.clear()
         self.cooldowns.clear()
         self.timeBetweenShots.clear()
-        if self.patternNum == 5:
+        if self.patternNum == 1:
             BH1 = [0.75, 2, 8, 45, self.carreau_purple, False, 3]
             BH2 = [0.75, 2, 8, 45, self.carreau_green, False, -3]
             self.BHdata.append(BH1)
@@ -138,7 +142,7 @@ class Boss():
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
             self.timeBetweenShots.append(BH3[0])
-        elif self.patternNum == 1:
+        elif self.patternNum == 5:
             BH1 = [0.5, 2, 8, 45, self.bullet, True, -3]
             BH2 = [0.5, 5, 2, 10, self.bigBall, True, 0]
             BH3 = [3, 1, 5, 20, self.carreau_purple, True, 0]
