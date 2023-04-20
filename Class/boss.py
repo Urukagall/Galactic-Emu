@@ -32,26 +32,39 @@ class Boss():
         self.timeBetweenShots = []
         self.BHdata = []
         self.BHList = []
-        self.changePattern(1)
+        self.patternNum = 1
+        
+        self.projectileList = projectileList
+        self.changePattern()
 
-
-        for BH in self.BHdata:
+        '''for BH in self.BHdata:
             index = self.BHdata.index(BH)
-            newBH = BulletHandler(BH[1], BH[2], BH[3], projectileList, BH[4], BH[6])
+            newBH = BulletHandler(BH[1], BH[2], BH[3], self.projectileList, BH[4], BH[6])
             self.cooldowns.append(self.timeBetweenShots[index])
             self.BHList.append(newBH)
-            newBH.move(self.x, self.y)
+            newBH.move(self.x, self.y)'''
 
     def move(self, veloX, veloY):
         self.x = self.x + veloX * self.speed
         self.y = self.y + veloY * self.speed
         for BH in self.BHList:
-            BH.move(self.x + self.size/2, self.y + self.size/2)
+            BH.move(self.x + self.size/2, self.y + 100)
 
     def takeDmg(self, dmg, enemyList):
         self.health -= dmg
         if(self.health <= 0):
             enemyList.pop(enemyList.index(self))
+        elif self.health <= 3000:
+            if self.patternNum != 3:
+                self.patternNum =3
+                self.changePattern()
+                print("Patern 3")
+        elif self.health <= 6000:
+            if self.patternNum != 2:
+                self.patternNum =2
+                self.changePattern()
+                print("Patern 2")
+        
     
     def update(self, player):
         #move
@@ -67,7 +80,10 @@ class Boss():
                 direction = (0, 1)
                 
                 if self.BHdata[index][5] == True: #shoot toward player
-                    radians = math.atan2(player.Y - self.y, player.X - self.x)
+                    playerHitbox = pygame.Rect(0,0, player.size/8, player.size/8)
+                    # center the hitbox on the ship's cockpit
+                    target = pygame.math.Vector2(player.X+player.size/2 - playerHitbox.width/4, player.Y+player.size/4)
+                    radians = math.atan2(target.y - bulletHandler.Y, target.x - bulletHandler.X)
                     destX = math.cos(radians)
                     destY = math.sin(radians)
                     direction = (destX, destY)
@@ -76,34 +92,45 @@ class Boss():
             else:
                 self.cooldowns[index] -= 1
     
-    def changePattern(self, patternNum):
+    def changePattern(self):
         '''
         -- How to add a pattern --
         [timeBetweenShots, bulletSpeed, arrayNumber, angleBetweenArrays, image, shootTowardPlayer?, rotation]
         '''
-        if patternNum == 1:
-            BH1 = [1, 2, 8, 45, self.carreau_purple, False, 3]
-            self.BHdata.append(BH1)
-            self.timeBetweenShots.append(BH1[0])
-            BH2 = [1, 2, 8, 45, self.carreau_green, False, -3]
-            self.BHdata.append(BH2)
-            self.timeBetweenShots.append(BH2[0])
-        elif patternNum == 2:
-            self.BHdata = []
-            BH1 = [5, 3, 10, self.bigBall, True, 0]
-            BH2 = [0.5, 4, 90, self.bullet, False, 10]
+
+        self.BHdata.clear()
+        self.BHList.clear()
+        self.cooldowns.clear()
+        self.timeBetweenShots.clear()
+        if self.patternNum == 1:
+            BH1 = [0.5, 2, 8, 45, self.carreau_purple, False, 3]
+            BH2 = [0.5, 2, 8, 45, self.carreau_green, False, -3]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
-        elif patternNum == 3:
-            self.BHdata = []
-            BH1 = [1, 1, 4, 90, self.bullet, False, 10]
-            BH2 = [1, 1, 4, 90, self.bullet, False, -10]
-            BH3 = [5, 3, 10, self.bigBall, True, 0]
+        elif self.patternNum == 2:
+            BH1 = [0.5, 2, 8, 45, self.bullet, False, -3]
+            BH2 = [1, 8, 3, 10, self.bigBall, True, 0]
+            self.BHdata.append(BH1)
+            self.BHdata.append(BH2)
+            self.timeBetweenShots.append(BH1[0])
+            self.timeBetweenShots.append(BH2[0])
+        elif self.patternNum == 3:
+            BH1 = [1, 1, 8, 45, self.carreau_green, False, 3]
+            BH2 = [1, 1, 8, 45, self.carreau_purple, False, -3]
+            BH3 = [1, 3, 5, 15, self.bullet, True, 0]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.BHdata.append(BH3)
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
             self.timeBetweenShots.append(BH3[0])
+
+        #create new bullet handlers
+        for BH in self.BHdata:
+            index = self.BHdata.index(BH)
+            newBH = BulletHandler(BH[1], BH[2], BH[3], self.projectileList, BH[4], BH[6])
+            self.cooldowns.append(self.timeBetweenShots[index])
+            self.BHList.append(newBH)
+            newBH.move(self.x, self.y)

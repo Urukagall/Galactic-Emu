@@ -57,9 +57,10 @@ ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
 ultimateSound.set_volume(0.2)
 
 # Import Music
-
 bulletHellSound = pygame.mixer.Sound("sound/Bullet_Hell.mp3")
 bulletHellSound.set_volume(0.2)
+bossMusic = pygame.mixer.Sound("sound/bossFight.mp3")
+bossMusic.set_volume(0.2)
 
 #projectileList & CD
 projectileList = []
@@ -91,8 +92,8 @@ enemy1 = Enemy(True, 50, 2, 300, 0, 50, displayWidth, displayHeight, 100, imgRai
 enemy2 = Enemy(True,50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy3 = Enemy(True,50, 2, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bigBall, 10, 3, 10, projectileList, 1, "left")
 enemy4 = Enemy(True, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
-enemy5 = Enemy(False, 50, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 1, 0, 3, bigBall)
-enemy6 = Enemy(False, 50, 0, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 4, 90, 0.5, classicBullet, False, -3)
+enemy5 = Enemy(False, 50, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, bigBall)
+enemy6 = Enemy(False, 50, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, classicBullet, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 4, 90, 0.5, classicBullet, False, -6)
 #enemyList = [enemy1, enemy2, enemy3, enemy4, enemy5]
 enemyList = []
 
@@ -100,9 +101,8 @@ enemyList = []
 bossSize = 300
 bossImg = pygame.image.load("img/boss1.png")
 bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
-boss = Boss(1000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
+boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
 enemyList.append(boss)
-boss.changePattern(1)
 bossFight = True
 
 
@@ -115,17 +115,16 @@ button2 = Button(button_surface, 900, 700, "Do nothing", False, 0, Button.Change
 
 buttonList = [button, button2]
 
-#Initiate dash coordinates
+#Initialize dash coordinates
 timerDash = [0 , 0]
 
-#Initiate score
+#Initialize score
 score = Score()
 
 # Main Loop
 running = True
 
 # Font importe
-
 font = pygame.font.Font(None, 36)
 
 def rotate(image, rect, angle):
@@ -155,8 +154,10 @@ while running:
             button.changeColor(pygame.mouse.get_pos())
     # Play music in Loop
     
-    if bulletHellSound.get_num_channels() == 0:
-        bulletHellSound.play()
+    '''if bulletHellSound.get_num_channels() == 0:
+        bulletHellSound.play()'''
+    if bossMusic.get_num_channels() == 0:
+        bossMusic.play()
     
     #draw scrolling background
     
@@ -230,10 +231,6 @@ while running:
     for enemy in enemyList:
         enemy.update(player)
         if enemy.__class__.__name__ == "Boss":
-            if boss.health < 500:
-                boss.changePattern(2)
-            elif boss.health < 300:
-                boss.changePattern(3)
             bossHitbox = pygame.Rect(0,0, boss.size/2, boss.size)
             # center the hitbox on the boss
             rect = pygame.Rect(boss.x + boss.size/2 - bossHitbox.width/2, boss.y, bossHitbox.width, bossHitbox.height)
@@ -259,7 +256,7 @@ while running:
                     projectileList.pop(projectileList.index(bullet))
 
                 if(enemy.health <= 0):
-                    player.updateMoney(10)
+                    player.money += 10
                     score.score_increment(enemy.score)
                     #the enemy pops itself out of enemyList
                     break
@@ -322,6 +319,9 @@ while running:
     screen.blit(ultimateText, (10, 50))
     ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
     screen.blit(ultimateText, (10, 70))
+
+    bossHPText = font.render(f'Boss HP: {boss.health}', True, (255, 255, 255))
+    screen.blit(bossHPText, (10, 100))
 
     for button in buttonList:
         screen.blit(button.image, button.rect)
