@@ -12,6 +12,14 @@ from Class.boss import Boss
 
 from Functions.enemiesPattern import *
 
+def darken(image, percent = 50):
+    '''Creates a darkened copy of an image, darkened by percent (50% by default)'''
+    newImg = image.copy()
+    dark = pygame.Surface(newImg.get_size()).convert_alpha()
+    dark.fill((0,0,0,percent/100*255))
+    newImg.blit(dark, (0,0))
+    return newImg
+
 def play(missileA, bulletBlueA, projectileListA, playerA):
     pygame.init()
     clock = pygame.time.Clock()
@@ -34,22 +42,51 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
     tilesHeight = math.ceil(displayHeight / backGroundHeight) + 1
     tilesWidth = math.ceil(displayWidth / backGroundWidth) + 1
 
-    #Import missile model
-    missile = pygame.image.load("img/missile.png").convert_alpha()
-    missile = pygame.transform.scale(missile, (missile.get_width(), missile.get_height()))
-    missileWidth = missile.get_width()
-
     #Import bullets 
-    #blue
+    #BLUE
+    ballBlue = pygame.image.load("img/ball.png").convert_alpha()
+    ballBlue = pygame.transform.scale(ballBlue, (ballBlue.get_width()*2, ballBlue.get_height()*2))
+    bigBallBlue = pygame.image.load("img/bigBall.png").convert_alpha()
+    bigBallBlue = pygame.transform.scale(bigBallBlue, (50, 50))
     bulletBlue =  pygame.image.load("img/bullet.png").convert_alpha()
     bulletBlue = pygame.transform.scale(bulletBlue, (bulletBlue.get_width()*2, bulletBlue.get_height()*2))
-
-    bigBall = pygame.image.load("img/bigBall.png").convert_alpha()
-    bigBall = pygame.transform.scale(bigBall, (50, 50))
-
+    carreauBlue =  pygame.image.load("img/carreau.png").convert_alpha()
+    carreauBlue = pygame.transform.scale(carreauBlue, (carreauBlue.get_width()*2, carreauBlue.get_height()*2))
+    missileBlue = pygame.image.load("img/missile.png").convert_alpha()
+    missileBlue = pygame.transform.scale(missileBlue, (missileBlue.get_width(), missileBlue.get_height()))
     #RED
-    bulletRed = pygame.image.load("img/bulletRed.png").convert_alpha()
+    ballRed = pygame.image.load("img/ball_red.png").convert_alpha()
+    ballRed = pygame.transform.scale(ballRed, (ballRed.get_width()*2, ballRed.get_height()*2))
+    bigBallRed = pygame.image.load("img/bigBall_red.png").convert_alpha()
+    bigBallRed = pygame.transform.scale(bigBallRed, (50, 50))
+    bulletRed =  pygame.image.load("img/bullet_red.png").convert_alpha()
     bulletRed = pygame.transform.scale(bulletRed, (bulletRed.get_width()*2, bulletRed.get_height()*2))
+    carreauRed =  pygame.image.load("img/carreau_red.png").convert_alpha()
+    carreauRed = pygame.transform.scale(carreauRed, (carreauRed.get_width()*2, carreauRed.get_height()*2))
+    missileRed = pygame.image.load("img/missile_red.png").convert_alpha()
+    missileRed = pygame.transform.scale(missileRed, (missileRed.get_width(), missileRed.get_height()))
+    #GREEN
+    ballGreen = pygame.image.load("img/ball_green.png").convert_alpha()
+    ballGreen = pygame.transform.scale(ballGreen, (ballGreen.get_width()*2, ballGreen.get_height()*2))
+    bigBallGreen = pygame.image.load("img/bigBall_green.png").convert_alpha()
+    bigBallGreen = pygame.transform.scale(bigBallGreen, (50, 50))
+    bulletGreen =  pygame.image.load("img/bullet_green.png").convert_alpha()
+    bulletGreen = pygame.transform.scale(bulletGreen, (bulletGreen.get_width()*2, bulletGreen.get_height()*2))
+    carreauGreen =  pygame.image.load("img/carreau_green.png").convert_alpha()
+    carreauGreen = pygame.transform.scale(carreauGreen, (carreauGreen.get_width()*2, carreauGreen.get_height()*2))
+    missileGreen = pygame.image.load("img/missile_green.png").convert_alpha()
+    missileGreen = pygame.transform.scale(missileGreen, (missileGreen.get_width(), missileGreen.get_height()))
+    #PURPLE
+    ballPurple = pygame.image.load("img/ball_purple.png").convert_alpha()
+    ballPurple = pygame.transform.scale(ballPurple, (ballPurple.get_width()*2, ballPurple.get_height()*2))
+    bigBallPurple = pygame.image.load("img/bigBall_purple.png").convert_alpha()
+    bigBallPurple = pygame.transform.scale(bigBallPurple, (50, 50))
+    bulletPurple =  pygame.image.load("img/bullet_purple.png").convert_alpha()
+    bulletPurple = pygame.transform.scale(bulletPurple, (bulletPurple.get_width()*2, bulletPurple.get_height()*2))
+    carreauPurple =  pygame.image.load("img/carreau_purple.png").convert_alpha()
+    carreauPurple = pygame.transform.scale(carreauPurple, (carreauPurple.get_width()*2, carreauPurple.get_height()*2))
+    missilePurple = pygame.image.load("img/missile_purple.png").convert_alpha()
+    missilePurple = pygame.transform.scale(missilePurple, (missilePurple.get_width(), missilePurple.get_height()))
 
     ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
     ultimateSound.set_volume(0.2)
@@ -75,7 +112,11 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
     imgPlayer = pygame.image.load("img/player.png").convert_alpha()
     imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
-    player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, bulletBlue, missile)
+
+    #darken the player's bullets
+    darkBullet = darken(bulletBlue)
+    darkMissile = darken(missileBlue)
+    player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, darkBullet, darkMissile)
 
 
 
@@ -86,14 +127,14 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
     imgEnemy = pygame.image.load("img/bozo.png").convert_alpha()
     imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 
-    enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100]]
-    bozo = Enemy(True,50, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletRed, 10, 1, 0, projectileList, 1, "left")
-    railgun = Enemy(True, 200, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBall, 3, 5, 10, projectileList, 3, "left")
-    supressor = Enemy(True, 100, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletBlue, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBall)
-    spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletBlue, 1, 4, 90, projectileList, 1.5, "left",3)
-    miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletBlue, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, bigBall)
-    #enemyList  = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6]
-    enemyList  = [spyral]
+    enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100]]
+    bozo = Enemy(True,100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletRed, 10, 1, 0, projectileList, 1, "left")
+    railgun = Enemy(True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallBlue, 3, 5, 10, projectileList, 3, "left")
+    supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletBlue, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
+    spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, carreauGreen, 1, 4, 90, projectileList, 1.5, "left",3)
+    miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballBlue)
+    enemyList  = [spyral, supressor, miniboss, railgun]
+    #enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
     onScreenEnemiesList = []
 
     #create boss
@@ -217,18 +258,22 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
         if enemyDelayList != [] and enemyDelayList[0][2] <= 0 and enemyList  != []:
             onScreenEnemiesList.append(enemyList.pop(0))
             enemyDelayList.pop(0)
-
+        playerBullets = pygame.surface.Surface((displayWidth, displayHeight))
+        enemyBullets = pygame.surface.Surface((displayWidth, displayHeight))
         for bullet in projectileList:
             if bullet.update(onScreenEnemiesList) == True:
                 projectileList.pop(projectileList.index(bullet))
             bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.image.get_width(), bullet.image.get_height())
             rotated_image, bulletRect = rotate(bullet.image, bulletRect, bullet.angle)
-            screen.blit(rotated_image, (bullet.x, bullet.y))
+            
             if bullet.isPlayer == False:
+                playerBullets.blit(rotated_image, (bullet.x, bullet.y))
                 #pygame.draw.rect(screen, (255,0,0), bulletRect)
                 if playerRect.colliderect(bulletRect):
                     player.getHit()
                     projectileList.pop(projectileList.index(bullet))
+            else:
+                enemyBullets.blit(rotated_image, (bullet.x, bullet.y))
         
 
         #Enemy
@@ -314,6 +359,9 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
             
         #Draw player model on screen
         screen.blit(imgPlayer, (player.X, player.Y))
+
+        screen.blit(playerBullets, (0,0), (0,0,displayWidth, displayHeight), pygame.BLEND_RGB_ADD)
+        screen.blit(enemyBullets, (0,0), (0,0,displayWidth, displayHeight), pygame.BLEND_RGB_ADD)
         
         #Write player's score & remaining lives 
         scoreText = font.render(f'Score: {score.score}', True, (255, 255, 255))
