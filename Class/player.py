@@ -70,7 +70,7 @@ class Player():
         else:
             print("You lost")
         
-    def updateMoney(self,gain):
+    def updateMoney(self,gain): 
         self.money += gain
     
     def shoot(self, shift):

@@ -13,9 +13,12 @@ from Functions.options import gameOptions
 from Functions.shop import shop
 from Functions.play import *
 
+# Logo windows
+icon = pygame.image.load("img/emeu.jpg")
+pygame.display.set_icon(icon)
 
 buttonSurface = pygame.image.load("img/button.png")
-buttonSurface = pygame.transform.scale(buttonSurface, (200, 75))
+buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 #Import missile model
 missile = pygame.image.load("img/missile.png")
@@ -57,10 +60,10 @@ def main_menu():
         MENU_TEXT = get_font(100).render("MAIN MENU", True, "#b68f40")
         MENU_RECT = MENU_TEXT.get_rect(center=(960, 100))
 
-        PLAY_BUTTON = Button(buttonSurface, 960, 400, "Play", False, 0, play, buttonSurface)
-        SHOP_BUTTON = Button(buttonSurface, 960, 550, "Shop", False, 0, gameOptions, buttonSurface)
-        OPTIONS_BUTTON = Button(buttonSurface, 960, 700, "Options", False, 0, gameOptions, buttonSurface)
-        QUIT_BUTTON = Button(buttonSurface, 960, 850, "Quit", False, 0, None, buttonSurface)
+        PLAY_BUTTON = Button(buttonSurface, 960, 400, "Play", False, None, play, buttonSurface)
+        SHOP_BUTTON = Button(buttonSurface, 960, 550, "Shop", False, None, gameOptions, buttonSurface)
+        OPTIONS_BUTTON = Button(buttonSurface, 960, 700, "Options", False, None, gameOptions, buttonSurface)
+        QUIT_BUTTON = Button(buttonSurface, 960, 850, "Quit", False, None, None, buttonSurface)
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
@@ -76,9 +79,9 @@ def main_menu():
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     play(missile, classicBullet, projectileList, player, gameManager)
                 if SHOP_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    shop(SCREEN, BG, buttonSurface, player, main_menu, gameManager)
+                    shop(SCREEN, BG, player, main_menu, gameManager)
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    gameOptions(SCREEN, BG, buttonSurface, player, main_menu, gameManager)
+                    gameOptions(SCREEN, BG, player, main_menu, gameManager)
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     running = False
                     pygame.quit()
