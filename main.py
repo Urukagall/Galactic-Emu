@@ -25,6 +25,8 @@ missileWidth = missile.get_width()
 #Import bullets 
 classicBullet =  pygame.image.load("img/bullet.png")
 classicBullet = pygame.transform.scale(classicBullet, (classicBullet.get_width()*2, classicBullet.get_height()*2))
+carreauBlue =  pygame.image.load("img/carreau.png")
+carreauBlue = pygame.transform.scale(carreauBlue, (carreauBlue.get_width()*2, carreauBlue.get_height()*2))
 
 #projectileList & CD
 projectileList = []
@@ -32,7 +34,7 @@ projectileList = []
 imgPlayer = pygame.image.load("img/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
-player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, classicBullet, missile)
+player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, classicBullet, missile, carreauBlue)
 
 SCREEN = pygame.display.set_mode((1920, 1080))
 pygame.display.set_caption("Menu")  

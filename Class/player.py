@@ -4,7 +4,7 @@ from Class.bulletHandler import BulletHandler
 from Class.particle import Particle
 
 class Player():
-    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile):
+    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile, imgPrecise):
         self.X = 0
         self.Y = 0
         self.basicSpeed = basicSpeed
@@ -20,6 +20,7 @@ class Player():
         self.money = 0
         self.bulletImg = imgBullet
         self.missileImg = imgMissile
+        self.preciseImg = imgPrecise
 
 
         self.projectileList = projectileList
@@ -39,7 +40,8 @@ class Player():
 
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
         self.missileHandler = BulletHandler(self.bulletSpeed, self.missileArrayNumber, self.angleBetweenMissileArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
-        
+        self.preciseHandler = BulletHandler(self.bulletSpeed, self.arrayNumber+1, self.angleBetweenArrays/2, self.projectileList, self.preciseImg, isHoming=False,isPlayer = True)
+
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
             self.X = self.X + math.sqrt(1/2) * self.speed * veloX
@@ -60,6 +62,7 @@ class Player():
         #move the bulletHandlers to the center of the player sprite
         self.bulletHandler.move(self.X+self.size/4, self.Y+self.size/4)
         self.missileHandler.move(self.X+self.size/4, self.Y+self.size/4)
+        self.preciseHandler.move(self.X+self.size/4, self.Y+self.size/4)
     
     def getHit(self):
         if self.lives > 0:
@@ -70,8 +73,10 @@ class Player():
     def updateMoney(self,gain):
         self.money += gain
     
-    def shoot(self):
+    def shoot(self, shift):
         direction = (0,-1)
+        if shift:
+            self.preciseHandler.update(direction)
         self.bulletHandler.update(direction)
 
     def shootHoming(self):
