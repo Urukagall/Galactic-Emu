@@ -12,7 +12,7 @@ from Class.boss import Boss
 
 from Functions.enemiesPattern import *
 
-def play(missileA, classicBulletA, projectileListA, playerA):
+def play(missileA, classicBulletA, projectileListA, playerA, gameManager):
     pygame.init()
     clock = pygame.time.Clock()
 
@@ -25,7 +25,7 @@ def play(missileA, classicBulletA, projectileListA, playerA):
 
     #Import background model
     backGround = pygame.image.load("img/back.png").convert()
-    backGround = pygame.transform.scale(backGround, (100, 100))
+    backGround = pygame.transform.scale(backGround, (1920, 1080))
     backGroundHeight = backGround.get_height()
     backGroundWidth = backGround.get_width()
 
@@ -51,13 +51,13 @@ def play(missileA, classicBulletA, projectileListA, playerA):
     ultimateShootWidth = ultimateShoot.get_width()
 
     ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
-    ultimateSound.set_volume(0.2)
+    ultimateSound.set_volume(0.2 * gameManager.sound)
 
     # Import Music
     bulletHellSound = pygame.mixer.Sound("sound/Bullet_Hell.mp3")
-    bulletHellSound.set_volume(0.2)
+    bulletHellSound.set_volume(0.2 * gameManager.sound)
     bossMusic = pygame.mixer.Sound("sound/bossFight.mp3")
-    bossMusic.set_volume(0.2)
+    bossMusic.set_volume(0.2 * gameManager.sound)
 
     #projectileList & CD
     projectileList = []
@@ -104,16 +104,6 @@ def play(missileA, classicBulletA, projectileListA, playerA):
     bossFight = True
     enemyList.append(boss)
 
-
-    # Create Button
-    button_surface = pygame.image.load("img/button.png")
-    button_surface = pygame.transform.scale(button_surface, (200, 75))
-
-    button = Button(button_surface, 500, 500, "Change Weapon price:30", True, 30, Button.ChangeWeapon, imgEnemy)
-    button2 = Button(button_surface, 900, 700, "Do nothing", False, 0, Button.ChangeWeapon, None)
-
-    buttonList = [button, button2]
-
     #Initialize dash coordinates
     timerDash = [0 , 0]
 
@@ -146,11 +136,6 @@ def play(missileA, classicBulletA, projectileListA, playerA):
             elif events.type == pygame.KEYDOWN:
                 if events.key == pygame.K_ESCAPE:
                     running=False
-            if events.type == pygame.MOUSEBUTTONDOWN:
-                for button in buttonList:
-                    button.checkForInput(pygame.mouse.get_pos(), player)
-            for button in buttonList:
-                button.changeColor(pygame.mouse.get_pos())
         # Play music in Loop
         
         '''if bulletHellSound.get_num_channels() == 0:
@@ -327,10 +312,6 @@ def play(missileA, classicBulletA, projectileListA, playerA):
 
         bossHPText = font.render(f'Boss HP: {boss.health}', True, (255, 255, 255))
         screen.blit(bossHPText, (10, 100))
-
-        for button in buttonList:
-            screen.blit(button.image, button.rect)
-            screen.blit(button.text, button.text_rect)
         
         if pressed[pygame.K_LSHIFT]:
             pygame.draw.rect(screen, (0,255,0), playerRect)
