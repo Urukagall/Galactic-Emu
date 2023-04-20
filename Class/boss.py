@@ -89,6 +89,7 @@ class Boss():
             self.BHdata.append(BH2)
             self.timeBetweenShots.append(BH2[0])
         elif patternNum == 2:
+            self.BHdata = []
             BH1 = [5, 3, 10, self.bigBall, True, 0]
             BH2 = [0.5, 4, 90, self.bullet, False, 10]
             self.BHdata.append(BH1)
@@ -96,6 +97,7 @@ class Boss():
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
         elif patternNum == 3:
+            self.BHdata = []
             BH1 = [1, 1, 4, 90, self.bullet, False, 10]
             BH2 = [1, 1, 4, 90, self.bullet, False, -10]
             BH3 = [5, 3, 10, self.bigBall, True, 0]
