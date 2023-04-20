@@ -5,8 +5,8 @@ from Class.particle import Particle
 
 class Player():
     def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile):
-        self.X = 0
-        self.Y = 0
+        self.X = 800
+        self.Y = 500
         self.basicSpeed = basicSpeed
         self.slowSpeed = slowSpeed
         self.speed = basicSpeed
