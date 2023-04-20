@@ -27,15 +27,15 @@ def shopBullet(SCREEN, BG, buttonSurface, player, main_menu, gameManager, shop):
         
         # Upgrade Button Bullet 1
         SPEED_BULLET_BUTTON = Button(buttonSurface, 510, 550, "Speed", False, 0, None, buttonSurface, "Increase the speed of the bullet")
-        DAMAGE_BUTTON = Button(buttonSurface, 760, 550, "Damage", False, 0, None, buttonSurface)
-        CANONS_BUTTON = Button(buttonSurface, 510, 700, "Canons", False, 0, None, buttonSurface)
-        FIRERATE_BUTTON = Button(buttonSurface, 760, 700, "Firerate", False, 0, None, buttonSurface)
+        DAMAGE_BUTTON = Button(buttonSurface, 760, 550, "Damage", False, 0, None, buttonSurface, "Increase the damage of the bullet")
+        CANONS_BUTTON = Button(buttonSurface, 510, 700, "Canons", False, 0, None, buttonSurface, "Shoot more bullet")
+        FIRERATE_BUTTON = Button(buttonSurface, 760, 700, "Firerate", False, 0, None, buttonSurface, "Increase the firerate of the bullet")
         
         # Upgrade Button bullet 2
-        SPEED_BULLET_2_BUTTON = Button(buttonSurface, 1160, 550, "Speed", False, 0, None, buttonSurface)
-        DAMAGE_2_BUTTON = Button(buttonSurface, 1410, 550, "Damage", False, 0, None, buttonSurface)
-        CANONS_2_BUTTON = Button(buttonSurface, 1160, 700, "Canons", False, 0, None, buttonSurface)
-        FIRERATE_2_BUTTON = Button(buttonSurface, 1410, 700, "Firerate", False, 0, None, buttonSurface)
+        SPEED_BULLET_2_BUTTON = Button(buttonSurface, 1160, 550, "Speed", False, 0, None, buttonSurface, "Increase the speed of the bullet")
+        DAMAGE_2_BUTTON = Button(buttonSurface, 1410, 550, "Damage", False, 0, None, buttonSurface, "Increase the damage of the bullet")
+        CANONS_2_BUTTON = Button(buttonSurface, 1160, 700, "Canons", False, 0, None, buttonSurface, "Shoot more bullet")
+        FIRERATE_2_BUTTON = Button(buttonSurface, 1410, 700, "Firerate", False, 0, None, buttonSurface, "Increase the firerate of the bullet")
 
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         SCREEN.blit(MENU_UPGRADE_1, MENU_UPGRADE_1_RECT)
