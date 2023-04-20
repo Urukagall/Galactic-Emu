@@ -220,7 +220,14 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         pressed = pygame.key.get_pressed()
 
         if pressed[pygame.K_LSHIFT]:
-            player.speed = player.slowSpeed
+            if pressed[pygame.K_SPACE] and timerDash[1] == 0:
+                invincible = True
+                timerDash[1] = player.cooldownDash
+                timerDash[0] = player.timeDash
+                invincibleCountdown = timerDash[0] + 10
+                player.speed = player.dashSpeed
+            elif timerDash[0] == 0:
+                player.speed = player.slowSpeed
         elif pressed[pygame.K_SPACE] and timerDash[1] == 0:
             invincible = True
             timerDash[1] = player.cooldownDash
