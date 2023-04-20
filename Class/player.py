@@ -29,9 +29,9 @@ class Player():
         self.angleBetweenMissileArrays = 30
         self.missileArrayNumber = 2
         #60 = 1sec
-        self.timeBetweenShots = 0.3
+        self.timeBetweenShots = 1
         self.cooldown = self.timeBetweenShots
-        self.timeBetweenMissiles = 0.9
+        self.timeBetweenMissiles = 2
         self.missileCooldown = self.timeBetweenMissiles
         self.timeBetweenUltimates = 60
         self.ultimateCooldown = self.timeBetweenUltimates
