@@ -3,28 +3,48 @@ import sys
 
 from Class.button import Button
 
-def gameOptions(SCREEN):
-    while True:
-        OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
+def get_font(size): # Returns Press-Start-2P in the desired size
+    return pygame.font.Font("font.ttf", size)
 
-        SCREEN.fill("white")
+def gameOptions(SCREEN, BG, buttonSurface, player, main_menu, gameManager):
+    running = True
+    while running:
+        SCREEN.blit(BG, (0, 0))
 
-        OPTIONS_TEXT = get_font(45).render("This is the OPTIONS screen.", True, "Black")
-        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        OPTIONS_BACK = Button(image=None, pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
+        MENU_TEXT = get_font(100).render("OPTIONS", True, "#b68f40")
+        MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
+        MENU_SOUND = get_font(30).render("Sound:%.1f" % gameManager.sound , True, "#b68f40")
+        MENU_SOUND_RECT = MENU_SOUND.get_rect(center=(960, 480))
 
-        OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
-        OPTIONS_BACK.update(SCREEN)
+        RESUME_BUTTON = Button(buttonSurface, 960, 400, "Return", False, 0, None, buttonSurface)
+        SOUNDMORE_BUTTON = Button(buttonSurface, 760, 550, "+", False, 0, None, buttonSurface)
+        SOUNDLESS_BUTTON = Button(buttonSurface, 1160, 550, "-", False, 0, None, buttonSurface)
+        QUIT_BUTTON = Button(buttonSurface, 960, 700, "Quit", False, 0, None, buttonSurface)
 
+        SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
+        SCREEN.blit(MENU_SOUND, MENU_SOUND_RECT)
+
+        for button in [RESUME_BUTTON, SOUNDMORE_BUTTON, SOUNDLESS_BUTTON, QUIT_BUTTON]:
+            button.changeColor(MENU_MOUSE_POS)
+            button.update(SCREEN)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
+                if RESUME_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     main_menu()
-
+                if SOUNDMORE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    if gameManager.sound < 1:
+                        gameManager.changeSound(gameManager.sound + 0.1)
+                if SOUNDLESS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    if gameManager.sound > 0.01:
+                        gameManager.changeSound(gameManager.sound - 0.1)
+                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    running = False
+                    pygame.quit()
+                    sys.exit()
         pygame.display.update()
