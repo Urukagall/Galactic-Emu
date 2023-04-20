@@ -23,16 +23,16 @@ def shopShip(SCREEN, BG, buttonSurface, player, main_menu, gameManager, shop):
         
         
         # Upgrade Button Ship
-        LIVE_BUTTON = Button(buttonSurface, 510, 550, "Live", False, 0, None, buttonSurface)
-        DASH_BUTTON = Button(buttonSurface, 760, 550, "Dash Cooldown", False, 0, None, buttonSurface)
-        SPIRAL_BUTTON = Button(buttonSurface, 510, 700, "Special Spiral", False, 0, None, buttonSurface)
-        SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", False, 0, None, buttonSurface)
+        LIVE_BUTTON = Button(buttonSurface, 510, 550, "Live", False, 0, None, buttonSurface, "Increase the number of live")
+        DASH_BUTTON = Button(buttonSurface, 760, 550, "Dash Cooldown", False, 0, None, buttonSurface, "Increase the dash cooldown timer")
+        SPIRAL_BUTTON = Button(buttonSurface, 510, 700, "Special Spiral", False, 0, None, buttonSurface, "Acquire the spiral attack")
+        SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", False, 0, None, buttonSurface, "Increase the speed when normal movement \nand decrease it when slow movement")
         
         # Upgrade Button bullet
-        SPEED_BULLET_BUTTON = Button(buttonSurface, 1160, 550, "Speed", False, 0, None, buttonSurface)
-        DAMAGE_BUTTON = Button(buttonSurface, 1410, 550, "Damage", False, 0, None, buttonSurface)
-        CANONS_BUTTON = Button(buttonSurface, 1160, 700, "Canons", False, 0, None, buttonSurface)
-        FIRERATE_BUTTON = Button(buttonSurface, 1410, 700, "Firerate", False, 0, None, buttonSurface)
+        SPEED_BULLET_BUTTON = Button(buttonSurface, 1160, 550, "Speed", False, 0, None, buttonSurface, "Increase the number of live")
+        DAMAGE_BUTTON = Button(buttonSurface, 1410, 550, "Damage", False, 0, None, buttonSurface, "Increase the dash cooldown timer")
+        CANONS_BUTTON = Button(buttonSurface, 1160, 700, "Canons", False, 0, None, buttonSurface, "Acquire the spiral attack")
+        FIRERATE_BUTTON = Button(buttonSurface, 1410, 700, "Firerate", False, 0, None, buttonSurface, "Increase the speed when normal movement and decrease it when slow movement")
 
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
