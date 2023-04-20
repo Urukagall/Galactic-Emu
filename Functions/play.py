@@ -150,7 +150,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, carreauGreen, 1, 4, 90, projectileList, 1.5, "left",3)
     miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballYellow)
     enemyList  = []
-    #enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
+    # enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
     onScreenEnemiesList = []
 
     #create boss
