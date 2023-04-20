@@ -67,7 +67,9 @@ class Player():
         else:
             print("You lost")
         
-
+    def updateMoney(self,gain):
+        self.money += gain
+    
     def shoot(self):
         direction = (0,-1)
         self.bulletHandler.update(direction)
