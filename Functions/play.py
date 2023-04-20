@@ -42,7 +42,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
     tilesHeight = math.ceil(displayHeight / backGroundHeight) + 1
     tilesWidth = math.ceil(displayWidth / backGroundWidth) + 1
 
-    #Import bullets 
+    #Import projectiles
     #BLUE
     ballBlue = pygame.image.load("img/ball.png").convert_alpha()
     ballBlue = pygame.transform.scale(ballBlue, (ballBlue.get_width()*2, ballBlue.get_height()*2))
@@ -87,6 +87,17 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
     carreauPurple = pygame.transform.scale(carreauPurple, (carreauPurple.get_width()*2, carreauPurple.get_height()*2))
     missilePurple = pygame.image.load("img/missile_purple.png").convert_alpha()
     missilePurple = pygame.transform.scale(missilePurple, (missilePurple.get_width(), missilePurple.get_height()))
+    #YELLOW
+    ballYellow = pygame.image.load("img/ball_yellow.png").convert_alpha()
+    ballYellow = pygame.transform.scale(ballYellow, (ballYellow.get_width()*2, ballYellow.get_height()*2))
+    bigBallYellow = pygame.image.load("img/bigBall_yellow.png").convert_alpha()
+    bigBallYellow = pygame.transform.scale(bigBallYellow, (50, 50))
+    bulletYellow =  pygame.image.load("img/bullet_yellow.png").convert_alpha()
+    bulletYellow = pygame.transform.scale(bulletYellow, (bulletYellow.get_width()*2, bulletYellow.get_height()*2))
+    carreauYellow =  pygame.image.load("img/carreau_yellow.png").convert_alpha()
+    carreauYellow = pygame.transform.scale(carreauYellow, (carreauYellow.get_width()*2, carreauYellow.get_height()*2))
+    missileYellow = pygame.image.load("img/missile_yellow.png").convert_alpha()
+    missileYellow = pygame.transform.scale(missileYellow, (missileYellow.get_width(), missileYellow.get_height()))
 
     ultimateSound = pygame.mixer.Sound("sound/seismic_charge.mp3")
     ultimateSound.set_volume(0.2)
@@ -111,7 +122,11 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
     #Create Player
     imgPlayer = pygame.image.load("img/player.png").convert_alpha()
     imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
-
+    playerShield = pygame.image.load("img/playerShield2.png").convert_alpha()
+    playerShield = pygame.transform.scale(playerShield, (50, 50))
+    invincible = False
+    timeInvincible = 3 #in seconds
+    invincibleCountdown = 0
 
     #darken the player's bullets
     darkBullet = darken(bulletBlue)
@@ -129,11 +144,11 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
 
     enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100]]
     bozo = Enemy(True,100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletRed, 10, 1, 0, projectileList, 1, "left")
-    railgun = Enemy(True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallBlue, 3, 5, 10, projectileList, 3, "left")
-    supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletBlue, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
+    railgun = Enemy(True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left")
+    supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletYellow, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
     spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, carreauGreen, 1, 4, 90, projectileList, 1.5, "left",3)
-    miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballBlue)
-    enemyList  = [spyral, supressor, miniboss, railgun]
+    miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballYellow)
+    enemyList  = [railgun]
     #enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
     onScreenEnemiesList = []
 
@@ -222,10 +237,13 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
         if pressed[pygame.K_LSHIFT]:
             player.speed = player.slowSpeed
         elif pressed[pygame.K_SPACE] and timerDash[1] == 0:
+            invincible = True
             timerDash[1] = player.cooldownDash
             timerDash[0] = player.timeDash
+            invincibleCountdown = timerDash[0] + 10
             player.speed = player.dashSpeed
         elif timerDash[0] == 0: 
+            
             player.speed = player.basicSpeed
 
         if timerDash[0] > 0:
@@ -269,8 +287,10 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
             if bullet.isPlayer == False:
                 playerBullets.blit(rotated_image, (bullet.x, bullet.y))
                 #pygame.draw.rect(screen, (255,0,0), bulletRect)
-                if playerRect.colliderect(bulletRect):
+                if playerRect.colliderect(bulletRect) and not invincible:
                     player.getHit()
+                    invincibleCountdown = timeInvincible * 60
+                    invincible = True
                     projectileList.pop(projectileList.index(bullet))
             else:
                 enemyBullets.blit(rotated_image, (bullet.x, bullet.y))
@@ -282,10 +302,10 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
             if enemy.__class__.__name__ == "Boss":
                 bossHitbox = pygame.Rect(0,0, boss.size/2, boss.size)
                 # center the hitbox on the boss
-                rect = pygame.Rect(boss.x + boss.size/2 - bossHitbox.width/2, boss.y, bossHitbox.width, bossHitbox.height)
+                enemyRect = pygame.Rect(boss.x + boss.size/2 - bossHitbox.width/2, boss.y, bossHitbox.width, bossHitbox.height)
             else:
-                rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
-            #pygame.draw.rect(screen, (255,0,0), rect)
+                enemyRect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
+            #pygame.draw.enemyRect(screen, (255,0,0), enemyRect)
             
             screen.blit(enemy.image, (enemy.x, enemy.y))
             if enemy.y > enemy.displayHeight:
@@ -299,7 +319,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
             for bullet in projectileList:
                 if bullet.isPlayer == True:
                     bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.size, bullet.size)
-                    if rect.colliderect(bulletRect):
+                    if enemyRect.colliderect(bulletRect):
                         enemy.takeDmg(bullet.damage, onScreenEnemiesList)
                         score.score_increment(10)
                         projectileList.pop(projectileList.index(bullet))
@@ -309,8 +329,11 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
                         score.score_increment(enemy.score)
                         #the enemy pops itself out of onScreenEnemiesList
                         break
-            if rect.colliderect(playerRect):
-                player.getHit()
+            if enemyRect.colliderect(playerRect) and not invincible:
+                if not invincible:
+                    player.getHit()
+                    invincibleCountdown = timeInvincible * 60
+                    invincible = True
                 if enemy.__class__.__name__ == "Enemy":
                     score.score_increment(10)
                     onScreenEnemiesList.pop(onScreenEnemiesList.index(enemy))
@@ -349,6 +372,11 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
         player.missileCooldown -= 1
         player.ultimateCooldown -= 1
 
+        if invincibleCountdown > 0:
+            invincibleCountdown -= 1
+        else:
+            invincible = False
+
         if enemyDelayList != []:
             enemyDelayList[0][2] -= 1
 
@@ -358,7 +386,10 @@ def play(missileA, bulletBlueA, projectileListA, playerA):
             scoreTime = pygame.time.get_ticks()
             
         #Draw player model on screen
-        screen.blit(imgPlayer, (player.X, player.Y))
+        if invincible:
+            screen.blit(playerShield, (player.X, player.Y))
+        else:
+            screen.blit(imgPlayer, (player.X, player.Y))
 
         screen.blit(playerBullets, (0,0), (0,0,displayWidth, displayHeight), pygame.BLEND_RGB_ADD)
         screen.blit(enemyBullets, (0,0), (0,0,displayWidth, displayHeight), pygame.BLEND_RGB_ADD)
