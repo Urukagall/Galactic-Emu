@@ -35,18 +35,18 @@ def play(missileA, classicBulletA, projectileListA, playerA):
     tilesWidth = math.ceil(displayWidth / backGroundWidth) + 1
 
     #Import missile model
-    missile = pygame.image.load("img/missile.png")
+    missile = pygame.image.load("img/missile.png").convert_alpha()
     missile = pygame.transform.scale(missile, (missile.get_width(), missile.get_height()))
     missileWidth = missile.get_width()
 
     #Import bullets 
-    classicBullet =  pygame.image.load("img/bullet.png")
+    classicBullet =  pygame.image.load("img/bullet.png").convert_alpha()
     classicBullet = pygame.transform.scale(classicBullet, (classicBullet.get_width()*2, classicBullet.get_height()*2))
-    bigBall = pygame.image.load("img/bigBall.png")
+    bigBall = pygame.image.load("img/bigBall.png").convert_alpha()
     bigBall = pygame.transform.scale(bigBall, (50, 50))
 
     #Import ultimate
-    ultimateShoot = pygame.image.load("img/bigBall.png")
+    ultimateShoot = pygame.image.load("img/bigBall.png").convert_alpha()
     ultimateShoot = pygame.transform.scale(ultimateShoot, (100, 100))
     ultimateShootWidth = ultimateShoot.get_width()
 
@@ -71,7 +71,7 @@ def play(missileA, classicBulletA, projectileListA, playerA):
     screenShake = 40
 
     #Create Player
-    imgPlayer = pygame.image.load("img/player.png")
+    imgPlayer = pygame.image.load("img/player.png").convert_alpha()
     imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
     player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, classicBullet, missile)
@@ -80,9 +80,9 @@ def play(missileA, classicBulletA, projectileListA, playerA):
 
     #Create Enemy
     #Load different images
-    imgRailgun = pygame.image.load("img/railgun.png")
+    imgRailgun = pygame.image.load("img/railgun.png").convert_alpha()
     imgRailgun = pygame.transform.scale(imgRailgun, (50, 50))
-    imgEnemy = pygame.image.load("img/bozo.png")
+    imgEnemy = pygame.image.load("img/bozo.png").convert_alpha()
     imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 
     enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100]]
@@ -97,7 +97,7 @@ def play(missileA, classicBulletA, projectileListA, playerA):
 
     #create boss
     bossSize = 300
-    bossImg = pygame.image.load("img/boss1.png")
+    bossImg = pygame.image.load("img/boss1.png").convert_alpha()
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
     boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
     enemyList.append(boss)
@@ -106,7 +106,7 @@ def play(missileA, classicBulletA, projectileListA, playerA):
 
 
     # Create Button
-    button_surface = pygame.image.load("img/button.png")
+    button_surface = pygame.image.load("img/button.png").convert_alpha()
     button_surface = pygame.transform.scale(button_surface, (200, 75))
 
     button = Button(button_surface, 500, 500, "Change Weapon price:30", True, 30, Button.ChangeWeapon, imgEnemy)
