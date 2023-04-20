@@ -182,6 +182,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         return new_image, rect
 
     while running:
+        oldDamage = boss.health 
         # run the game at a constant 60fps
         clock.tick(60)
 
@@ -392,11 +393,16 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
         screen.blit(ultimateText, (10, 70))
 
+        currentDamage = boss.health
+        deltaD = oldDamage - currentDamage
+        deltaText = font.render(f'DPS: {deltaD * 60}', True, (255, 0, 0))
+        screen.blit(deltaText, (10, 150))
+        
         bossHPText = font.render(f'Boss HP: {boss.health}', True, (255, 255, 255))
         screen.blit(bossHPText, (10, 100))
         
         if pressed[pygame.K_LSHIFT]:
             pygame.draw.rect(screen, (0,255,0), playerRect)
-
+        
         pygame.display.update()
     bossMusic.stop()
