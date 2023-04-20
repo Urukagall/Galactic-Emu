@@ -122,16 +122,17 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     #Create Player
     imgPlayer = pygame.image.load("img/player.png").convert_alpha()
     imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
-    playerShield = pygame.image.load("img/playerShield2.png").convert_alpha()
+    playerShield = pygame.image.load("img/playerShield.png").convert_alpha()
     playerShield = pygame.transform.scale(playerShield, (50, 50))
     invincible = False
     timeInvincible = 3 #in seconds
     invincibleCountdown = 0
 
     #darken the player's bullets
+    darkCarreau = darken(carreauBlue)
     darkBullet = darken(bulletBlue)
     darkMissile = darken(missileBlue)
-    player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, darkBullet, darkMissile)
+    player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
 
 
 
@@ -347,11 +348,13 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         #Add a bullet to the projectileList list on press
         if pressed[pygame.K_w]:
             if player.cooldown <= 0:
-                player.shoot()
+                shift = True
                 if player.speed != player.slowSpeed:
+                    shift = False
                     if player.missileCooldown <= 0:
                         player.shootHoming()
                         player.missileCooldown = player.timeBetweenMissiles
+                player.shoot(shift)
                 player.cooldown = player.timeBetweenShots
         if pressed[pygame.K_x]:
             if player.ultimateCooldown <= 0:

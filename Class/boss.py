@@ -1,19 +1,11 @@
 from Class.bulletHandler import BulletHandler
 from Functions.enemiesPattern import bossPattern
 import pygame, math
+        
+
 
 class Boss():
     def __init__(self,health, speed, x, y, size, displayWidth, displayHeight, score, image, projectileList, facing):
-        
-        self.carreau_green = pygame.image.load("img/carreau_green.png")
-        self.carreau_green = pygame.transform.scale(self.carreau_green, (self.carreau_green.get_width()*2, self.carreau_green.get_height()*2))
-
-        self.carreau_purple = pygame.image.load("img/carreau_purple.png")
-        self.carreau_purple = pygame.transform.scale(self.carreau_purple, (self.carreau_purple.get_width()*2, self.carreau_purple.get_height()*2))
-
-        self.bigBall = pygame.image.load("img/bigBall.png")
-        self.bullet = pygame.image.load("img/bullet.png")
-        self.bullet = pygame.transform.scale(self.bullet, (self.bullet.get_width()*2, self.bullet.get_height()*2))
 
         self.health = health
         self.size = size
@@ -99,6 +91,52 @@ class Boss():
                 self.cooldowns[index] -= 1
     
     def changePattern(self):
+        #Import projectiles
+        #BLUE
+        ballBlue = pygame.image.load("img/ball.png").convert_alpha()
+        ballBlue = pygame.transform.scale(ballBlue, (ballBlue.get_width()*2, ballBlue.get_height()*2))
+        bigBallBlue = pygame.image.load("img/bigBall.png").convert_alpha()
+        bigBallBlue = pygame.transform.scale(bigBallBlue, (50, 50))
+        bulletBlue =  pygame.image.load("img/bullet.png").convert_alpha()
+        bulletBlue = pygame.transform.scale(bulletBlue, (bulletBlue.get_width()*2, bulletBlue.get_height()*2))
+        carreauBlue =  pygame.image.load("img/carreau.png").convert_alpha()
+        carreauBlue = pygame.transform.scale(carreauBlue, (carreauBlue.get_width()*2, carreauBlue.get_height()*2))
+        missileBlue = pygame.image.load("img/missile.png").convert_alpha()
+        missileBlue = pygame.transform.scale(missileBlue, (missileBlue.get_width(), missileBlue.get_height()))
+        #RED
+        ballRed = pygame.image.load("img/ball_red.png").convert_alpha()
+        ballRed = pygame.transform.scale(ballRed, (ballRed.get_width()*2, ballRed.get_height()*2))
+        bigBallRed = pygame.image.load("img/bigBall_red.png").convert_alpha()
+        bigBallRed = pygame.transform.scale(bigBallRed, (50, 50))
+        bulletRed =  pygame.image.load("img/bullet_red.png").convert_alpha()
+        bulletRed = pygame.transform.scale(bulletRed, (bulletRed.get_width()*2, bulletRed.get_height()*2))
+        carreauRed =  pygame.image.load("img/carreau_red.png").convert_alpha()
+        carreauRed = pygame.transform.scale(carreauRed, (carreauRed.get_width()*2, carreauRed.get_height()*2))
+        missileRed = pygame.image.load("img/missile_red.png").convert_alpha()
+        missileRed = pygame.transform.scale(missileRed, (missileRed.get_width(), missileRed.get_height()))
+        #GREEN
+        ballGreen = pygame.image.load("img/ball_green.png").convert_alpha()
+        ballGreen = pygame.transform.scale(ballGreen, (ballGreen.get_width()*2, ballGreen.get_height()*2))
+        bigBallGreen = pygame.image.load("img/bigBall_green.png").convert_alpha()
+        bigBallGreen = pygame.transform.scale(bigBallGreen, (50, 50))
+        bulletGreen =  pygame.image.load("img/bullet_green.png").convert_alpha()
+        bulletGreen = pygame.transform.scale(bulletGreen, (bulletGreen.get_width()*2, bulletGreen.get_height()*2))
+        carreauGreen =  pygame.image.load("img/carreau_green.png").convert_alpha()
+        carreauGreen = pygame.transform.scale(carreauGreen, (carreauGreen.get_width()*2, carreauGreen.get_height()*2))
+        missileGreen = pygame.image.load("img/missile_green.png").convert_alpha()
+        missileGreen = pygame.transform.scale(missileGreen, (missileGreen.get_width(), missileGreen.get_height()))
+        #PURPLE
+        ballPurple = pygame.image.load("img/ball_purple.png").convert_alpha()
+        ballPurple = pygame.transform.scale(ballPurple, (ballPurple.get_width()*2, ballPurple.get_height()*2))
+        bigBallPurple = pygame.image.load("img/bigBall_purple.png").convert_alpha()
+        bigBallPurple = pygame.transform.scale(bigBallPurple, (50, 50))
+        bulletPurple =  pygame.image.load("img/bullet_purple.png").convert_alpha()
+        bulletPurple = pygame.transform.scale(bulletPurple, (bulletPurple.get_width()*2, bulletPurple.get_height()*2))
+        carreauPurple =  pygame.image.load("img/carreau_purple.png").convert_alpha()
+        carreauPurple = pygame.transform.scale(carreauPurple, (carreauPurple.get_width()*2, carreauPurple.get_height()*2))
+        missilePurple = pygame.image.load("img/missile_purple.png").convert_alpha()
+        missilePurple = pygame.transform.scale(missilePurple, (missilePurple.get_width(), missilePurple.get_height()))
+
         '''
         -- How to add a pattern --
         [timeBetweenShots, bulletSpeed, arrayNumber, angleBetweenArrays, image, shootTowardPlayer?, rotation]
@@ -108,17 +146,17 @@ class Boss():
         self.BHList.clear()
         self.cooldowns.clear()
         self.timeBetweenShots.clear()
-        if self.patternNum == 1:
-            BH1 = [0.75, 2, 8, 45, self.carreau_purple, False, 3]
-            BH2 = [0.75, 2, 8, 45, self.carreau_green, False, -3]
+        if self.patternNum == 5:
+            BH1 = [0.75, 2, 8, 45, carreauPurple, False, 3]
+            BH2 = [0.75, 2, 8, 45, carreauGreen, False, -3]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
         elif self.patternNum == 2:
-            BH1 = [1, 2, 8, 45, self.carreau_green, False, 3]
-            BH2 = [1, 2, 8, 45, self.carreau_purple, False, -3]
-            BH3 = [1, 3, 5, 15, self.bullet, True, 0]
+            BH1 = [1, 2, 8, 45, carreauGreen, False, 3]
+            BH2 = [1, 2, 8, 45, carreauPurple, False, -3]
+            BH3 = [1, 3, 5, 15, bulletBlue, True, 0]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.BHdata.append(BH3)
@@ -126,27 +164,27 @@ class Boss():
             self.timeBetweenShots.append(BH2[0])
             self.timeBetweenShots.append(BH3[0])
         elif self.patternNum == 3:
-            BH1 = [0.5, 2, 8, 45, self.bullet, False, -3]
-            BH2 = [1, 8, 3, 10, self.bigBall, True, 0]
+            BH1 = [0.5, 2, 8, 45, bulletBlue, False, -3]
+            BH2 = [1, 8, 3, 10, bigBallRed, True, 0]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
         elif self.patternNum == 4:
-            BH1 = [0.5, 2, 8, 45, self.bullet, False, -3]
-            BH2 = [0.5, 8, 8, 10, self.bigBall, False, -3]
-            BH3 = [3, 15, 3, 10, self.carreau_green, True, 0]
+            BH1 = [0.5, 2, 8, 45, bulletGreen, False, -3]
+            BH2 = [0.5, 8, 8, 10, bigBallPurple, False, -3]
+            BH3 = [3, 15, 3, 10, carreauRed, True, 0]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.BHdata.append(BH3)
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
             self.timeBetweenShots.append(BH3[0])
-        elif self.patternNum == 5:
-            BH1 = [0.5, 2, 8, 45, self.bullet, True, -3]
-            BH2 = [0.5, 5, 2, 10, self.bigBall, True, 0]
-            BH3 = [3, 1, 5, 20, self.carreau_purple, True, 0]
-            BH4 = [3, 25, 1, 0, self.carreau_green, True, 0]
+        elif self.patternNum == 1:
+            BH1 = [0.5, 2, 8, 45, bulletPurple, True, -3]
+            BH2 = [0.5, 5, 2, 10, bigBallBlue, True, 0]
+            BH3 = [3, 1, 5, 20, carreauGreen, True, 0]
+            BH4 = [3, 25, 1, 0, missileRed, True, 0]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
             self.BHdata.append(BH3)
