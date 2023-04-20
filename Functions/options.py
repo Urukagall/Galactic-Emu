@@ -27,7 +27,7 @@ def gameOptions(SCREEN, BG, buttonSurface, player, main_menu, gameManager):
         SCREEN.blit(MENU_SOUND, MENU_SOUND_RECT)
 
         for button in [RESUME_BUTTON, SOUNDMORE_BUTTON, SOUNDLESS_BUTTON, QUIT_BUTTON]:
-            button.changeColor(MENU_MOUSE_POS)
+            button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
         
         for event in pygame.event.get():
