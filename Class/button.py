@@ -27,12 +27,8 @@ class Button():
 		if self.price != None:
 			self.PriceText = main_font.render("Price:" + str(self.price), True, (175, 187, 242))
 			self.PriceTextRect = self.PriceText.get_rect(center=(self.x_pos, self.y_pos - 50))
-<<<<<<< HEAD
 			screen.blit(self.priceText, self.priceTextRect)
-=======
-			screen.blit(self.PriceText, self.PriceTextRect)
 
->>>>>>> 9d418b7fc4e65e9725d1b4d1767ebe8f40c9a37d
 
 	def checkForInput(self, position, player):
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
