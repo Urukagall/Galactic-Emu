@@ -13,6 +13,7 @@ from Functions.options import gameOptions
 from Functions.shop import shop
 from Functions.play import *
 
+pygame.init()
 # Logo windows
 icon = pygame.image.load("img/emeu.jpg")
 pygame.display.set_icon(icon)
@@ -50,9 +51,14 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 
 gameManager = GameManager()
 
+menuMusic = pygame.mixer.Sound("sound/menu_music.ogg")
+menuMusic.set_volume(0.2 * gameManager.sound)
+
 def main_menu():
     running = True
     while running:
+        if menuMusic.get_num_channels() == 0:
+                menuMusic.play(-1)
         SCREEN.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -77,6 +83,7 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    menuMusic.stop()
                     play(missile, classicBullet, projectileList, player, gameManager)
                 if SHOP_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
