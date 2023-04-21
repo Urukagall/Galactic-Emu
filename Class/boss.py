@@ -146,7 +146,7 @@ class Boss():
         self.BHList.clear()
         self.cooldowns.clear()
         self.timeBetweenShots.clear()
-        if self.patternNum == 1:
+        if self.patternNum == 4:
             BH1 = [0.75, 2, 8, 45, carreauPurple, False, 3]
             BH2 = [0.75, 2, 8, 45, carreauGreen, False, -3]
             self.BHdata.append(BH1)
@@ -170,9 +170,9 @@ class Boss():
             self.BHdata.append(BH2)
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
-        elif self.patternNum == 4:
+        elif self.patternNum == 1:
             BH1 = [0.5, 2, 8, 45, bulletGreen, False, -3]
-            BH2 = [0.5, 8, 8, 10, bigBallPurple, False, -3]
+            BH2 = [0.5, 5, 8, 10, ballPurple, False, -3]
             BH3 = [3, 15, 3, 10, carreauRed, True, 0]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)

@@ -27,7 +27,6 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     # Create Window
     displayHeight = 1080
     displayWidth = 1920
-    backgroundColor = (200,200,200)
     screen = pygame.display.set_mode((displayWidth, displayHeight))
     pygame.display.set_caption("Bullet Hell")
 
@@ -36,6 +35,11 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     backGround = pygame.transform.scale(backGround, (1920, 1080))
     backGroundHeight = backGround.get_height()
     backGroundWidth = backGround.get_width()
+
+    bossBase = pygame.image.load("img/base-bg.png").convert_alpha()
+    bossBase = pygame.transform.scale(bossBase, (2140, 2140))
+    bossBaseCoordinates = pygame.Vector2(0,0)
+    bossBaseFacing = "right"
 
     #Pre-requisite for the screen scrolling
     trueScroll = 0 
@@ -110,9 +114,6 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
 
     #projectileList & CD
     projectileList = []
-    missileCooldown = 0
-    bulletCoolDown = 0
-    ultimateCooldown = 0
     scoreTime = 0
 
     particleList = []
@@ -143,14 +144,16 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     imgEnemy = pygame.image.load("img/bozo.png").convert_alpha()
     imgEnemy = pygame.transform.scale(imgEnemy, (50, 50))
 
+    '''How to add a delay for an enemy:
+    [spawnX, spawnY, delay after previous enemy]'''
     enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100]]
     bozo = Enemy(True,100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletRed, 10, 1, 0, projectileList, 1, "left")
     railgun = Enemy(True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left")
     supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletYellow, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
     spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, carreauGreen, 1, 4, 90, projectileList, 1.5, "left",3)
     miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgEnemy, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballYellow)
-    enemyList  = []
-    # enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
+    #enemyList = []
+    enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
     onScreenEnemiesList = []
 
     #create boss
@@ -159,7 +162,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
     boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
     enemyList.append(boss)
-    bossFight = True
+    bossFight = False
 
     #Initialize dash coordinates
     timerDash = [0 , 0]
@@ -196,10 +199,14 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
                     running=False
         # Play music in Loop
         
-        '''if bulletHellSound.get_num_channels() == 0:
-            bulletHellSound.play()'''
-        if bossMusic.get_num_channels() == 0:
-            bossMusic.play()
+        if bossFight:
+            bulletHellSound.stop()
+            if bossMusic.get_num_channels() == 0:
+                bossMusic.play()
+        else:
+            if bulletHellSound.get_num_channels() == 0:
+                bulletHellSound.play()
+        
         
         #draw scrolling background
         
@@ -209,10 +216,33 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         if shaking:
             scroll += random.randint(0, screenShake) - screenShake/2
 
+        # background scroll
         for i in range(0, tilesHeight):
             for j in range(0, tilesWidth):
                 screen.blit(backGround, (j*backGround.get_width(), i*backGround.get_height() - trueScroll))
-        
+        #bossfight background
+        if bossFight:
+            screen.blit(bossBase, bossBaseCoordinates)
+            if bossBaseCoordinates.x < -3*bossBase.get_width()/4:
+                bossBaseFacing = "right"
+            elif bossBaseCoordinates.x > displayWidth - bossBase.get_width()/4:
+                bossBaseFacing = "left"
+
+            if bossBaseFacing == "right":
+                bossBaseCoordinates.x += 1
+            else:
+                bossBaseCoordinates.x -= 1
+
+            if bossBaseCoordinates.y < -3*bossBase.get_height()/4:
+                bossBaseFacing = "down"
+            elif bossBaseCoordinates.y > displayHeight - bossBase.get_height()/4:
+                bossBaseFacing = "up"
+
+            if bossBaseFacing == "down":
+                bossBaseCoordinates.y += 1
+            else:
+                bossBaseCoordinates.y -= 1
+
         trueScroll += 1
         # reset scroll
         if trueScroll >= backGround.get_height():
@@ -268,8 +298,11 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         
         #Add enemies at the right time
         if enemyDelayList != [] and enemyDelayList[0][2] <= 0 and enemyList  != []:
+            if enemyList[0] == boss:
+                bossFight = True
             onScreenEnemiesList.append(enemyList.pop(0))
             enemyDelayList.pop(0)
+
         playerBullets = pygame.surface.Surface((displayWidth, displayHeight))
         enemyBullets = pygame.surface.Surface((displayWidth, displayHeight))
         for bullet in projectileList:

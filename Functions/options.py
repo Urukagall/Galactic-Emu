@@ -9,10 +9,9 @@ buttonAmeliorationSurface = pygame.transform.scale(buttonAmeliorationSurface, (b
 buttonSurface = pygame.image.load("img/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
-RESUME_BUTTON = Button(buttonSurface, 960, 400, "Return", False, None, None, buttonSurface)
+RESUME_BUTTON = Button(buttonSurface, 960, 700, "Return", False, None, None, buttonSurface)
 SOUNDMORE_BUTTON = Button(buttonAmeliorationSurface, 760, 550, "+", False, None, None, buttonSurface)
 SOUNDLESS_BUTTON = Button(buttonAmeliorationSurface, 1160, 550, "-", False, None, None, buttonSurface)
-QUIT_BUTTON = Button(buttonSurface, 960, 700, "Quit", False, None, None, buttonSurface)
         
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
@@ -34,7 +33,7 @@ def gameOptions(SCREEN, BG, player, main_menu, gameManager):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         SCREEN.blit(MENU_SOUND, MENU_SOUND_RECT)
 
-        for button in [RESUME_BUTTON, SOUNDMORE_BUTTON, SOUNDLESS_BUTTON, QUIT_BUTTON]:
+        for button in [RESUME_BUTTON, SOUNDMORE_BUTTON, SOUNDLESS_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
         
@@ -51,8 +50,4 @@ def gameOptions(SCREEN, BG, player, main_menu, gameManager):
                 if SOUNDLESS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     if gameManager.sound > 0.01:
                         gameManager.changeSound(gameManager.sound - 0.1)
-                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    running = False
-                    pygame.quit()
-                    sys.exit()
         pygame.display.update()
