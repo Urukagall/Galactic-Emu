@@ -10,16 +10,16 @@ from Functions.shopShip import shopShip
 buttonSurface = pygame.image.load("img/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
-RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
+RESUME_BUTTON = Button(buttonSurface, 960, 1000, "Return", False, None, None, buttonSurface)
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
-MENU_TEXT = get_font(100).render("CREDIT", True, "#b68f40")
+MENU_TEXT = get_font(100).render("CREDITS", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
 
-textHowToPlay = "Programmer:\n\n\nROLE 1:  Dani\nROLE 2:  Dani\nROLE 3:  Dani\nROLE 4:  Dani\nROLE 5:  Dani\n\n\nArtist:\n\n\nROLE 1:  Dani\nROLE 2:  Dani\n\n\nBusiness:\n\n\nROLE 1:  Dani\nROLE 2:  Dani\nROLE 3:  Dani"
+textHowToPlay = "Programmers:\n\n\nAlix Loan\nBoisseau Romain\nCoulon Noham\nJorge-Afonso Dani\nMartinan Victor\n\n\nArtists:\n\n\nPascal Léo\nMalfre Hugo\n\n\nBusiness:\n\n\nAudette Luke\nPrivat Florian\nDeconinck Amaury\n\n\nMusic:\nRionnet Rémi\nCone24"
 
 # La police et la taille du texte
 font = pygame.font.Font(None, 36)

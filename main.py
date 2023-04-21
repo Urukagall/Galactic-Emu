@@ -12,7 +12,7 @@ from Functions.enemiesPattern import *
 from Functions.options import gameOptions
 from Functions.shop import shop
 from Functions.play import *
-from Functions.credit import credit
+from Functions.credits import credit
 from Functions.howToPlay import howToPlay
 
 pygame.init()
