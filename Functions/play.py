@@ -12,7 +12,7 @@ from Class.boss import Boss
 
 
 from Functions.enemiesPattern import *
-from Functions.transition import *
+# from Functions.transition import *
 
 def drawTransition(surf, y, color):
     for x in range(16):
@@ -462,3 +462,4 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
 
         pygame.display.update()
     bossMusic.stop()
+    bulletHellSound.stop()
