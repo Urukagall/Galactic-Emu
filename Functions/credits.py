@@ -19,15 +19,15 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 MENU_TEXT = get_font(100).render("CREDITS", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
 
-textHowToPlay = "Programmers:\n\nAlix Loan\nBoisseau Romain\nCoulon Noham\nJorge-Afonso Dany\nMartinan Victor\n\n\nArtists:\n\nPascal Léo\nMalfre Hugo --Demuynck\n\n\nBusiness:\n\nAudette Luke\nPrivat Florian\nDeconinck Amaury\n\n\nMusic:\n\nRionnet Rémi\nAphinity"
+textCredits = "Programmers:\n\nAlix Loan\nBoisseau Romain\nCoulon Noham\nJorge-Afonso Dany\nMartinan Victor\n\n\nArtists:\n\nPascal Léo\nMalfre Hugo --Demuynck\n\n\nBusiness:\n\nAudette Luke\nPrivat Florian\nDeconinck Amaury\n\n\nMusic:\n\nRionnet Rémi\nAphinity"
 
 # La police et la taille du texte
 font = pygame.font.Font(None, 36)
 
 # La liste des surfaces de texte pour chaque ligne
-textHowToPlaySurface = []
-for line in textHowToPlay.split('\n'):
-    textHowToPlaySurface.append(get_font(20).render(line, True, "#b68f40"))
+textCreditsSurface = []
+for line in textCredits.split('\n'):
+    textCreditsSurface.append(get_font(20).render(line, True, "#b68f40"))
 
 
 
@@ -43,7 +43,7 @@ def credits(SCREEN, BG, player, main_menu, gameManager):
         y = 300
 
         # Blit chaque surface de texte sur l'écran à des positions différentes
-        for text in textHowToPlaySurface:
+        for text in textCreditsSurface:
             SCREEN.blit(text, (x, y))
             y += text.get_height()
 

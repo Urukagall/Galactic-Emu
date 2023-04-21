@@ -10,7 +10,7 @@ transition_data = False
 
 inited = False
 
-def init(transition ):
+def init(transition):
 	pass 
 
 def init(i_screen, i_window_width, i_window_height, i_background_color = [0, 0, 0]):
