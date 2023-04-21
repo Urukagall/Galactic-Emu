@@ -45,6 +45,7 @@ class Boss():
     def takeDmg(self, dmg, enemyList):
         self.health -= dmg
         if(self.health <= 0):
+            self.projectileList.clear()
             enemyList.pop(enemyList.index(self))
         elif self.health <= 3000:
             if self.patternNum != 5:
@@ -170,6 +171,7 @@ class Boss():
             self.BHdata.append(BH2)
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
+            self.projectileList.clear()
         elif self.patternNum == 4:
             BH1 = [0.5, 2, 8, 45, bulletGreen, False, -3]
             BH2 = [0.5, 5, 8, 10, bigBallPurple, False, -3]
@@ -180,6 +182,7 @@ class Boss():
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
             self.timeBetweenShots.append(BH3[0])
+            self.projectileList.clear()
         elif self.patternNum == 5:
             BH1 = [0.5, 2, 8, 45, bulletPurple, True, -3]
             BH2 = [0.5, 5, 2, 10, bigBallBlue, True, 0]
@@ -193,6 +196,7 @@ class Boss():
             self.timeBetweenShots.append(BH2[0])
             self.timeBetweenShots.append(BH3[0])
             self.timeBetweenShots.append(BH4[0])
+            self.projectileList.clear()
         
 
         #create new bullet handlers

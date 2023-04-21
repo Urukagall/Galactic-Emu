@@ -10,8 +10,14 @@ from Class.score import Score
 from Class.button import Button
 from Class.boss import Boss
 
+
 from Functions.enemiesPattern import *
-from Functions.transition import *
+# from Functions.transition import *
+
+def drawTransition(surf, y, color):
+    for x in range(16):
+        pygame.draw.rect(surf, color, (x,16-y,1,y))
+        y -= 1
 
 def darken(image, percent = 50):
     '''Creates a darkened copy of an image, darkened by percent (50% by default)'''
@@ -20,6 +26,14 @@ def darken(image, percent = 50):
     dark.fill((0,0,0,percent/100*255))
     newImg.blit(dark, (0,0))
     return newImg
+
+def rotate(image, rect, angle):
+    """Rotate the image while keeping its center."""
+    # Rotate the original image without modifying it.
+    new_image = pygame.transform.rotate(image, angle)
+    # Get a new rect with the center of the old rect.
+    rect = new_image.get_rect(center=rect.center)
+    return new_image, rect
 
 def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     pygame.init()
@@ -32,15 +46,21 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     pygame.display.set_caption("Bullet Hell")
 
     #Import background model
-    backGround = pygame.image.load("img/back.png").convert()
-    backGround = pygame.transform.scale(backGround, (1920, 1080))
-    backGroundHeight = backGround.get_height()
-    backGroundWidth = backGround.get_width()
+    levelBackground = pygame.image.load("img/back.png").convert()
+    levelBackground = pygame.transform.scale(levelBackground, (1920, 1080))
+    backGroundHeight = levelBackground.get_height()
+    backGroundWidth = levelBackground.get_width()
 
-    bossBase = pygame.image.load("img/base-bg.png").convert_alpha()
-    bossBase = pygame.transform.scale(bossBase, (2140, 2140))
-    bossBaseCoordinates = pygame.Vector2(0,0)
-    bossBaseFacing = "right"
+    bossBase = pygame.image.load("img/base-bg.png").convert()
+    bossBase = pygame.transform.scale(bossBase, (1920, 1080))
+
+    backGround = levelBackground
+
+    transition = False
+    transitionY = 0
+    subY = 0
+    transitionSurf = pygame.Surface((16, 9))
+    transitionSurf.set_colorkey((0,0,0))
 
     #Pre-requisite for the screen scrolling
     trueScroll = 0 
@@ -177,14 +197,6 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     # Font importe
     font = pygame.font.Font(None, 36)
 
-    def rotate(image, rect, angle):
-        """Rotate the image while keeping its center."""
-        # Rotate the original image without modifying it.
-        new_image = pygame.transform.rotate(image, angle)
-        # Get a new rect with the center of the old rect.
-        rect = new_image.get_rect(center=rect.center)
-        return new_image, rect
-
     while running:
         oldDamage = boss.health 
         # run the game at a constant 60fps
@@ -201,10 +213,13 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         # Play music in Loop
         
         if bossFight:
+            transition = True
+            backGround = bossBase
             bulletHellSound.stop()
             if bossMusic.get_num_channels() == 0:
                 bossMusic.play()
         else:
+            backGround = levelBackground
             if bulletHellSound.get_num_channels() == 0:
                 bulletHellSound.play()
         
@@ -221,28 +236,8 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         for i in range(0, tilesHeight):
             for j in range(0, tilesWidth):
                 screen.blit(backGround, (j*backGround.get_width(), i*backGround.get_height() - trueScroll))
-        #bossfight background
-        if bossFight:
-            screen.blit(bossBase, bossBaseCoordinates)
-            if bossBaseCoordinates.x < -3*bossBase.get_width()/4:
-                bossBaseFacing = "right"
-            elif bossBaseCoordinates.x > displayWidth - bossBase.get_width()/4:
-                bossBaseFacing = "left"
 
-            if bossBaseFacing == "right":
-                bossBaseCoordinates.x += 1
-            else:
-                bossBaseCoordinates.x -= 1
 
-            if bossBaseCoordinates.y < -3*bossBase.get_height()/4:
-                bossBaseFacing = "down"
-            elif bossBaseCoordinates.y > displayHeight - bossBase.get_height()/4:
-                bossBaseFacing = "up"
-
-            if bossBaseFacing == "down":
-                bossBaseCoordinates.y += 1
-            else:
-                bossBaseCoordinates.y -= 1
 
         trueScroll += 1
         # reset scroll
@@ -326,7 +321,6 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
 
         #Enemy
         for enemy in onScreenEnemiesList:
-            enemy.update(player)
             if enemy.__class__.__name__ == "Boss":
                 bossHitbox = pygame.Rect(0,0, boss.size/2, boss.size)
                 # center the hitbox on the boss
@@ -348,9 +342,9 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
                 if bullet.isPlayer == True:
                     bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.size, bullet.size)
                     if enemyRect.colliderect(bulletRect):
+                        projectileList.pop(projectileList.index(bullet))
                         enemy.takeDmg(bullet.damage, onScreenEnemiesList)
                         score.score_increment(10)
-                        projectileList.pop(projectileList.index(bullet))
 
                     if(enemy.health <= 0):
                         player.money += 10
@@ -367,6 +361,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
                     onScreenEnemiesList.pop(onScreenEnemiesList.index(enemy))
                 else:
                     enemy.health -= 10
+            enemy.update(player)
 
 
         for particle in particleList:
@@ -445,5 +440,26 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         if pressed[pygame.K_LSHIFT]:
             pygame.draw.rect(screen, (0,255,0), playerRect)
         
+        #transition
+        if transition:
+            if transitionY <= 32:
+                drawTransition(transitionSurf, transitionY, (255,255,255))
+                new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
+                screen.blit(new, (0,0))
+                transitionY += 1/6
+            elif transitionY > 32:
+                if subY <= 32:
+                    #the transition surf has a black color key, so drawing in black removes the color
+                    drawTransition(transitionSurf, subY, (0,0,0))
+                    new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
+                    screen.blit(new, (0,0))
+                    subY += 1/6
+            else:
+                transition = False
+                transitionY = 0
+                subY = 0
+
+
         pygame.display.update()
     bossMusic.stop()
+    bulletHellSound.stop()

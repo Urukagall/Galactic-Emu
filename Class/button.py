@@ -25,6 +25,8 @@ class Button():
 		screen.blit(self.image, self.rect)
 		screen.blit(self.text, self.text_rect)
 		if self.price != None:
+			self.PriceText = main_font.render("Price:" + str(self.price), True, (175, 187, 242))
+			self.PriceTextRect = self.PriceText.get_rect(center=(self.x_pos, self.y_pos - 50))
 			screen.blit(self.PriceText, self.PriceTextRect)
 
 
