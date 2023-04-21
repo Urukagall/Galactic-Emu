@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from Class.button import Button
+from Functions.jsonReader import *
 
 from Functions.jsonReader import *
 
@@ -57,6 +58,10 @@ def shopBullet(SCREEN, BG, player, main_menu, gameManager, shop):
                 if SPEED_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     post("Upgrade.json" ,"bulletSpeedLevel1" ,get("Upgrade.json" ,"bulletSpeedLevel1")+1)
                     SPEED_BULLET_BUTTON.price = get("Upgrade.json", "bulletSpeedPrice1")[get("Upgrade.json", "bulletSpeedLevel1")]
+<<<<<<< HEAD
+=======
+                    # faut changer la valeur de la speed de la bullet1
+>>>>>>> 9d418b7fc4e65e9725d1b4d1767ebe8f40c9a37d
                 if DAMAGE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     print("faut mettre un truc")
                 if CANONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):

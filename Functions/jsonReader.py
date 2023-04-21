@@ -14,8 +14,16 @@ def get (fileName, var):
 def post (fileName, var,value):
     with open('SaveFiles/' + str(fileName), 'r') as f:
         data = json.load(f)
+<<<<<<< HEAD
 
     data[var] = value
 
     with open('SaveFiles/' + str(fileName), 'w') as f:
         json.dump(data, f)
+=======
+        
+    data[var] = value
+    
+    with open('SaveFiles/' + str(fileName), 'w') as f:
+        json.dump(data, f)
+>>>>>>> 9d418b7fc4e65e9725d1b4d1767ebe8f40c9a37d

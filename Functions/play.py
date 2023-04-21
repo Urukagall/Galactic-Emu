@@ -10,8 +10,14 @@ from Class.score import Score
 from Class.button import Button
 from Class.boss import Boss
 
+
 from Functions.enemiesPattern import *
-from Functions.transition import *
+# from Functions.transition import *
+
+def drawTransition(surf, y, color):
+    for x in range(16):
+        pygame.draw.rect(surf, color, (x,16-y,1,y))
+        y -= 1
 
 def drawTransition(surf, y, color):
     for x in range(16):
@@ -27,6 +33,7 @@ def darken(image, percent = 50):
     return newImg
 
 def rotate(image, rect, angle):
+<<<<<<< HEAD
         """Rotate the image while keeping its center."""
         # Rotate the original image without modifying it.
         newImage = pygame.transform.rotate(image, angle)
@@ -35,6 +42,16 @@ def rotate(image, rect, angle):
         return newImage, rect
 
 def play(statsPlayer, gameManager):
+=======
+    """Rotate the image while keeping its center."""
+    # Rotate the original image without modifying it.
+    new_image = pygame.transform.rotate(image, angle)
+    # Get a new rect with the center of the old rect.
+    rect = new_image.get_rect(center=rect.center)
+    return new_image, rect
+
+def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
+>>>>>>> 9d418b7fc4e65e9725d1b4d1767ebe8f40c9a37d
     pygame.init()
     clock = pygame.time.Clock()
 
@@ -63,6 +80,12 @@ def play(statsPlayer, gameManager):
     transitionY = 0
     subY = 0
     transitionSurf = pygame.Surface((16,9))
+    transitionSurf.set_colorkey((0,0,0))
+
+    transition = False
+    transitionY = 0
+    subY = 0
+    transitionSurf = pygame.Surface((16, 9))
     transitionSurf.set_colorkey((0,0,0))
 
     #Pre-requisite for the screen scrolling
@@ -260,7 +283,11 @@ def play(statsPlayer, gameManager):
             if bossMusic.get_num_channels() == 0:
                 bossMusic.play()
         else:
+<<<<<<< HEAD
             backGround = levelBackGround
+=======
+            backGround = levelBackground
+>>>>>>> 9d418b7fc4e65e9725d1b4d1767ebe8f40c9a37d
             if bulletHellSound.get_num_channels() == 0:
                 bulletHellSound.play()
         
@@ -270,7 +297,12 @@ def play(statsPlayer, gameManager):
         #screen shake
         if shaking:
             scroll += random.randint(0, screenShake) - screenShake/2
+<<<<<<< HEAD
             
+=======
+
+        # background scroll
+>>>>>>> 9d418b7fc4e65e9725d1b4d1767ebe8f40c9a37d
         for i in range(0, tilesHeight):
             for j in range(0, tilesWidth):
                 screen.blit(backGround, (j*backGround.get_width(), i*backGround.get_height() - trueScroll))
@@ -504,6 +536,7 @@ def play(statsPlayer, gameManager):
 
         if pressed[pygame.K_LSHIFT]:
             pygame.draw.rect(screen, (0,255,0), playerRect)
+<<<<<<< HEAD
 
         #Transition
         if transition:
@@ -518,6 +551,29 @@ def play(statsPlayer, gameManager):
                 new = pygame.transform.scale(transitionSurf, (displayWidth, displayHeight))
                 screen.blit(new, (0,0))
                 subY += 1/6
+=======
+        
+        #transition
+        if transition:
+            if transitionY <= 32:
+                drawTransition(transitionSurf, transitionY, (255,255,255))
+                new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
+                screen.blit(new, (0,0))
+                transitionY += 1/6
+            elif transitionY > 32:
+                if subY <= 32:
+                    #the transition surf has a black color key, so drawing in black removes the color
+                    drawTransition(transitionSurf, subY, (0,0,0))
+                    new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
+                    screen.blit(new, (0,0))
+                    subY += 1/6
+            else:
+                transition = False
+                transitionY = 0
+                subY = 0
+
+>>>>>>> 9d418b7fc4e65e9725d1b4d1767ebe8f40c9a37d
 
         pygame.display.update()
     bossMusic.stop()
+    bulletHellSound.stop()
