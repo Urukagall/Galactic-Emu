@@ -17,16 +17,17 @@ class Button():
 		self.function = function
 		self.newImg = newImg
 		self.infoText = main_font.render(infoText, True, (175, 187, 242))
-		self.infoTextRect = self.infoText.get_rect(center=(self.x_pos, self.y_pos - 75))
-		self.PriceText = main_font.render("Price:" + str(self.price), True, (175, 187, 242))
-		self.PriceTextRect = self.PriceText.get_rect(center=(self.x_pos, self.y_pos - 50))
+		self.infoTextRect = self.infoText.get_rect(center=(self.x_pos, self.y_pos - 50))
+		self.priceText = main_font.render("Price:" + str(self.price), True, (175, 187, 242))
+		self.priceTextRect = self.priceText.get_rect(center=(self.x_pos, self.y_pos - 50))
 
 	def update(self, screen):
 		screen.blit(self.image, self.rect)
 		screen.blit(self.text, self.text_rect)
 		if self.price != None:
-			screen.blit(self.PriceText, self.PriceTextRect)
-
+			self.PriceText = main_font.render("Price:" + str(self.price), True, (175, 187, 242))
+			self.PriceTextRect = self.PriceText.get_rect(center=(self.x_pos, self.y_pos - 50))
+			screen.blit(self.priceText, self.priceTextRect)
 
 	def checkForInput(self, position, player):
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
@@ -38,10 +39,6 @@ class Button():
 			# If the Button don't need money return True
 			elif not(self.isShopping):
 				return True
-		return False
-			# img = pygame.image.load("img/emeu.jpg")
-			# img = pygame.transform.scale(img, (50, 50))
-			# player.bulletHandler.img = img
 
 	def changeColor(self, position, screen):
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):

@@ -3,14 +3,15 @@ import sys
 
 from Class.button import Button
 
-buttonSurface = pygame.image.load("img/button.png")
+from Functions.jsonReader import *
+
+buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
-
 # Upgrade Button Bullet 1
-SPEED_BULLET_BUTTON = Button(buttonSurface, 510, 550, "Speed", True, 10, None, buttonSurface, "Increase the speed of the bullet")
+SPEED_BULLET_BUTTON = Button(buttonSurface, 510, 550, "Speed", True, get("Upgrade.json", "bulletSpeedPrice1")[get("Upgrade.json", "bulletSpeedLevel1")], None, buttonSurface, "Increase the speed of the bullet")
 DAMAGE_BUTTON = Button(buttonSurface, 760, 550, "Damage", True, 10, None, buttonSurface, "Increase the damage of the bullet")
 CANONS_BUTTON = Button(buttonSurface, 510, 700, "Canons", True, 20, None, buttonSurface, "Shoot more bullet")
 FIRERATE_BUTTON = Button(buttonSurface, 760, 700, "Firerate", True, 30, None, buttonSurface, "Increase the firerate of the bullet")
@@ -42,7 +43,6 @@ def shopBullet(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         SCREEN.blit(MENU_UPGRADE_1, MENU_UPGRADE_1_RECT)
         SCREEN.blit(MENU_UPGRADE_2, MENU_UPGRADE_2_RECT)
-
         for button in [RESUME_BUTTON, SPEED_BULLET_2_BUTTON, DAMAGE_2_BUTTON, CANONS_2_BUTTON, FIRERATE_2_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
@@ -55,7 +55,8 @@ def shopBullet(SCREEN, BG, player, main_menu, gameManager, shop):
                 if RESUME_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
                 if SPEED_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    print("faut mettre un truc")
+                    post("Upgrade.json" ,"bulletSpeedLevel1" ,get("Upgrade.json" ,"bulletSpeedLevel1")+1)
+                    SPEED_BULLET_BUTTON.price = get("Upgrade.json", "bulletSpeedPrice1")[get("Upgrade.json", "bulletSpeedLevel1")]
                 if DAMAGE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     print("faut mettre un truc")
                 if CANONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):

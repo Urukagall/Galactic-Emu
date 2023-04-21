@@ -7,7 +7,7 @@ from Functions.shopConsumable import shopConsumable
 from Functions.shopShip import shopShip
 
 
-buttonSurface = pygame.image.load("img/button.png")
+buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
@@ -31,7 +31,7 @@ for line in textHowToPlay.split('\n'):
 
 
 
-def howToPlay(SCREEN, BG, player, main_menu, gameManager):
+def howToPlay(SCREEN, BG, player, main_menu):
     running = True
     while running:
         SCREEN.blit(BG, (0, 0))

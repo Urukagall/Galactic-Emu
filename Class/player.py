@@ -5,8 +5,8 @@ from Class.particle import Particle
 
 class Player():
     def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile, imgPrecise):
-        self.X = 960
-        self.Y = 1000
+        self.X = 800
+        self.Y = 500
         self.basicSpeed = basicSpeed
         self.slowSpeed = slowSpeed
         self.speed = basicSpeed
@@ -40,8 +40,8 @@ class Player():
 
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
         self.missileHandler = BulletHandler(self.bulletSpeed, self.missileArrayNumber, self.angleBetweenMissileArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
-        self.preciseHandler = BulletHandler(self.bulletSpeed, self.arrayNumber+1, self.angleBetweenArrays/2, self.projectileList, self.preciseImg, isHoming=False,isPlayer = True)
-
+        self.preciseHandler = BulletHandler(self.bulletSpeed, self.arrayNumber+1, self.angleBetweenArrays/2, self.projectileList, self.preciseImg, isHoming=False, isPlayer=True)
+        
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
             self.X = self.X + math.sqrt(1/2) * self.speed * veloX
@@ -70,7 +70,7 @@ class Player():
         else:
             print("You lost")
         
-    def updateMoney(self,gain): 
+    def updateMoney(self,gain):
         self.money += gain
     
     def shoot(self, shift):
