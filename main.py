@@ -12,7 +12,10 @@ from Functions.enemiesPattern import *
 from Functions.options import gameOptions
 from Functions.shop import shop
 from Functions.play import *
+from Functions.credits import credits
+from Functions.howToPlay import howToPlay
 
+pygame.init()
 # Logo windows
 icon = pygame.image.load("img/emeu.jpg")
 pygame.display.set_icon(icon)
@@ -50,9 +53,14 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 
 gameManager = GameManager()
 
+menuMusic = pygame.mixer.Sound("sound/menu_music.ogg")
+menuMusic.set_volume(0.2 * gameManager.sound)
+
 def main_menu():
     running = True
     while running:
+        if menuMusic.get_num_channels() == 0:
+                menuMusic.play(-1)
         SCREEN.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -60,14 +68,16 @@ def main_menu():
         MENU_TEXT = get_font(100).render("MAIN MENU", True, "#b68f40")
         MENU_RECT = MENU_TEXT.get_rect(center=(960, 100))
 
-        PLAY_BUTTON = Button(buttonSurface, 960, 400, "Play", False, None, play, buttonSurface)
-        SHOP_BUTTON = Button(buttonSurface, 960, 550, "Shop", False, None, gameOptions, buttonSurface)
-        OPTIONS_BUTTON = Button(buttonSurface, 960, 700, "Options", False, None, gameOptions, buttonSurface)
-        QUIT_BUTTON = Button(buttonSurface, 960, 850, "Quit", False, None, None, buttonSurface)
+        PLAY_BUTTON = Button(buttonSurface, 960, 250, "Play", False, None, play, buttonSurface)
+        SHOP_BUTTON = Button(buttonSurface, 960, 400, "Shop", False, None, gameOptions, buttonSurface)
+        OPTIONS_BUTTON = Button(buttonSurface, 960, 550, "Options", False, None, gameOptions, buttonSurface)
+        HOW_TO_PLAY_BUTTON = Button(buttonSurface, 960, 700, "How to play", False, None, play, buttonSurface)
+        CREDITS_BUTTON = Button(buttonSurface, 960, 850, "Credits", False, None, None, buttonSurface)
+        QUIT_BUTTON = Button(buttonSurface, 960, 1000, "Quit", False, None, None, buttonSurface)
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
-        for button in [PLAY_BUTTON, OPTIONS_BUTTON, SHOP_BUTTON, QUIT_BUTTON]:
+        for button in [PLAY_BUTTON, OPTIONS_BUTTON, SHOP_BUTTON, QUIT_BUTTON, HOW_TO_PLAY_BUTTON, CREDITS_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
         
@@ -77,11 +87,16 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    menuMusic.stop()
                     play(missile, classicBullet, projectileList, player, gameManager)
                 if SHOP_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     gameOptions(SCREEN, BG, player, main_menu, gameManager)
+                if HOW_TO_PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    howToPlay(SCREEN, BG, player, main_menu, gameManager)
+                if CREDITS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    credits(SCREEN, BG, player, main_menu, gameManager)
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     running = False
                     pygame.quit()
