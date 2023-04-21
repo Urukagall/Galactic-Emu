@@ -1,20 +1,11 @@
 import pygame
 import time
 
-#
-# Object class for bypassing dot notation object
-#
 class Object():
 	pass
 		
-#
-# Current transition
-# @var string|bool
 transition = False
 
-#
-# Current transition data
-# @var object|bool
 transition_data = False
 
 inited = False
