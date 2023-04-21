@@ -10,8 +10,14 @@ from Class.score import Score
 from Class.button import Button
 from Class.boss import Boss
 
+
 from Functions.enemiesPattern import *
 from Functions.transition import *
+
+def drawTransition(surf, y, color):
+    for x in range(16):
+        pygame.draw.rect(surf, color, (x,16-y,1,y))
+        y -= 1
 
 def darken(image, percent = 50):
     '''Creates a darkened copy of an image, darkened by percent (50% by default)'''
@@ -20,6 +26,14 @@ def darken(image, percent = 50):
     dark.fill((0,0,0,percent/100*255))
     newImg.blit(dark, (0,0))
     return newImg
+
+def rotate(image, rect, angle):
+    """Rotate the image while keeping its center."""
+    # Rotate the original image without modifying it.
+    new_image = pygame.transform.rotate(image, angle)
+    # Get a new rect with the center of the old rect.
+    rect = new_image.get_rect(center=rect.center)
+    return new_image, rect
 
 def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     pygame.init()
@@ -41,6 +55,12 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     bossBase = pygame.transform.scale(bossBase, (1920, 1080))
 
     backGround = levelBackground
+
+    transition = False
+    transitionY = 0
+    subY = 0
+    transitionSurf = pygame.Surface((16, 9))
+    transitionSurf.set_colorkey((0,0,0))
 
     #Pre-requisite for the screen scrolling
     trueScroll = 0 
@@ -177,14 +197,6 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
     # Font importe
     font = pygame.font.Font(None, 36)
 
-    def rotate(image, rect, angle):
-        """Rotate the image while keeping its center."""
-        # Rotate the original image without modifying it.
-        new_image = pygame.transform.rotate(image, angle)
-        # Get a new rect with the center of the old rect.
-        rect = new_image.get_rect(center=rect.center)
-        return new_image, rect
-
     while running:
         oldDamage = boss.health 
         # run the game at a constant 60fps
@@ -201,10 +213,13 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         # Play music in Loop
         
         if bossFight:
+            transition = True
+            backGround = bossBase
             bulletHellSound.stop()
             if bossMusic.get_num_channels() == 0:
                 bossMusic.play()
         else:
+            backGround = levelBackground
             if bulletHellSound.get_num_channels() == 0:
                 bulletHellSound.play()
         
@@ -217,11 +232,6 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         if shaking:
             scroll += random.randint(0, screenShake) - screenShake/2
 
-        if bossFight:
-            transition = True 
-            backGround = bossBase
-        else:
-            backGround = levelBackground
         # background scroll
         for i in range(0, tilesHeight):
             for j in range(0, tilesWidth):
@@ -430,5 +440,25 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
         if pressed[pygame.K_LSHIFT]:
             pygame.draw.rect(screen, (0,255,0), playerRect)
         
+        #transition
+        if transition:
+            if transitionY <= 32:
+                drawTransition(transitionSurf, transitionY, (255,255,255))
+                new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
+                screen.blit(new, (0,0))
+                transitionY += 1/6
+            elif transitionY > 32:
+                if subY <= 32:
+                    #the transition surf has a black color key, so drawing in black removes the color
+                    drawTransition(transitionSurf, subY, (0,0,0))
+                    new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
+                    screen.blit(new, (0,0))
+                    subY += 1/6
+            else:
+                transition = False
+                transitionY = 0
+                subY = 0
+
+
         pygame.display.update()
     bossMusic.stop()
