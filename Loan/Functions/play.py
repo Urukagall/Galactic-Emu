@@ -223,6 +223,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
                 screen.blit(backGround, (j*backGround.get_width(), i*backGround.get_height() - trueScroll))
         #bossfight background
         if bossFight:
+            updateScreen()
             screen.blit(bossBase, bossBaseCoordinates)
             if bossBaseCoordinates.x < -3*bossBase.get_width()/4:
                 bossBaseFacing = "right"
