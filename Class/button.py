@@ -17,15 +17,15 @@ class Button():
 		self.function = function
 		self.newImg = newImg
 		self.infoText = main_font.render(infoText, True, (175, 187, 242))
-		self.infoText_rect = self.infoText.get_rect(center=(self.x_pos, self.y_pos - 75))
+		self.infoTextRect = self.infoText.get_rect(center=(self.x_pos, self.y_pos - 75))
 		self.PriceText = main_font.render("Price:" + str(self.price), True, (175, 187, 242))
-		self.PriceText_rect = self.PriceText.get_rect(center=(self.x_pos, self.y_pos - 50))
+		self.PriceTextRect = self.PriceText.get_rect(center=(self.x_pos, self.y_pos - 50))
 
 	def update(self, screen):
 		screen.blit(self.image, self.rect)
 		screen.blit(self.text, self.text_rect)
 		if self.price != None:
-			screen.blit(self.PriceText, self.PriceText_rect)
+			screen.blit(self.PriceText, self.PriceTextRect)
 
 
 	def checkForInput(self, position, player):
@@ -47,7 +47,7 @@ class Button():
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
 			self.text = main_font.render(self.text_input, True, (16,37,161))
 			if self.infoText != None:
-				screen.blit(self.infoText, self.infoText_rect)
+				screen.blit(self.infoText, self.infoTextRect)
 		else:
 			self.text = main_font.render(self.text_input, True, "white")
 
