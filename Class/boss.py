@@ -164,7 +164,6 @@ class Boss():
             self.timeBetweenShots.append(BH1[0])
             self.timeBetweenShots.append(BH2[0])
             self.timeBetweenShots.append(BH3[0])
-            self.projectileList.clear()
         elif self.patternNum == 3:
             BH1 = [0.5, 2, 8, 45, bulletBlue, False, -3]
             BH2 = [1, 8, 3, 10, bigBallRed, True, 0]
