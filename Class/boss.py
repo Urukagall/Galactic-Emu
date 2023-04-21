@@ -172,7 +172,7 @@ class Boss():
             self.timeBetweenShots.append(BH2[0])
         elif self.patternNum == 1:
             BH1 = [0.5, 2, 8, 45, bulletGreen, False, -3]
-            BH2 = [0.5, 5, 8, 10, ballPurple, False, -3]
+            BH2 = [0.5, 5, 8, 10, bigBallPurple, False, -3]
             BH3 = [3, 15, 3, 10, carreauRed, True, 0]
             self.BHdata.append(BH1)
             self.BHdata.append(BH2)
