@@ -6,8 +6,7 @@ from Class.button import Button
 buttonSurface = pygame.image.load("img/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
-RESUME_BUTTON = Button(buttonSurface, 960, 400, "Return", False, None, None, buttonSurface)
-QUIT_BUTTON = Button(buttonSurface, 960, 850, "Quit", False, None, None, buttonSurface)
+RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
 
 # Upgrade Button Ship
@@ -40,7 +39,7 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
-        for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON, QUIT_BUTTON]:
+        for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
         
@@ -51,8 +50,4 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if RESUME_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
-                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    running = False
-                    pygame.quit()
-                    sys.exit()
         pygame.display.update()
