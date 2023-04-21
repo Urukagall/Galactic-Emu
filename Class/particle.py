@@ -58,3 +58,27 @@ class Particle():
         
         surf.set_colorkey((0,0,0))
         return surf
+    
+
+
+
+
+
+# import pygame
+# from pygame import PixelArray
+
+# def wipe(screen, clacks, rate, old, new): 
+#     print("Starting Transition!")
+
+
+#     screen.blit(old, (0,0))
+
+#     screen_arr = pygame.PixelArray(screen)
+#     new_arr = pygame.PixelArray(new)
+
+
+#     for i in range(rate):
+#         screen_arr[i::rate] = new_arr[i::rate]
+
+#         pygame.display.flip()
+#         clacks.clock.tick(rate)

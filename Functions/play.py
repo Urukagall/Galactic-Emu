@@ -11,6 +11,7 @@ from Class.button import Button
 from Class.boss import Boss
 
 from Functions.enemiesPattern import *
+from Functions.transition import *
 
 def darken(image, percent = 50):
     '''Creates a darkened copy of an image, darkened by percent (50% by default)'''
@@ -222,6 +223,7 @@ def play(missileA, bulletBlueA, projectileListA, playerA, gameManager):
                 screen.blit(backGround, (j*backGround.get_width(), i*backGround.get_height() - trueScroll))
         #bossfight background
         if bossFight:
+            transition = True 
             screen.blit(bossBase, bossBaseCoordinates)
             if bossBaseCoordinates.x < -3*bossBase.get_width()/4:
                 bossBaseFacing = "right"
