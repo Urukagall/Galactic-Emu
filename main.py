@@ -12,7 +12,7 @@ from Functions.enemiesPattern import *
 from Functions.options import gameOptions
 from Functions.shop import shop
 from Functions.play import *
-from Functions.credits import credit
+from Functions.credits import credits
 from Functions.howToPlay import howToPlay
 
 pygame.init()
@@ -72,12 +72,12 @@ def main_menu():
         SHOP_BUTTON = Button(buttonSurface, 960, 400, "Shop", False, None, gameOptions, buttonSurface)
         OPTIONS_BUTTON = Button(buttonSurface, 960, 550, "Options", False, None, gameOptions, buttonSurface)
         HOW_TO_PLAY_BUTTON = Button(buttonSurface, 960, 700, "How to play", False, None, play, buttonSurface)
-        CREDIT_BUTTON = Button(buttonSurface, 960, 850, "Credit", False, None, None, buttonSurface)
+        CREDITS_BUTTON = Button(buttonSurface, 960, 850, "Credits", False, None, None, buttonSurface)
         QUIT_BUTTON = Button(buttonSurface, 960, 1000, "Quit", False, None, None, buttonSurface)
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
-        for button in [PLAY_BUTTON, OPTIONS_BUTTON, SHOP_BUTTON, QUIT_BUTTON, HOW_TO_PLAY_BUTTON, CREDIT_BUTTON]:
+        for button in [PLAY_BUTTON, OPTIONS_BUTTON, SHOP_BUTTON, QUIT_BUTTON, HOW_TO_PLAY_BUTTON, CREDITS_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
         
@@ -95,8 +95,8 @@ def main_menu():
                     gameOptions(SCREEN, BG, player, main_menu, gameManager)
                 if HOW_TO_PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     howToPlay(SCREEN, BG, player, main_menu, gameManager)
-                if CREDIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    credit(SCREEN, BG, player, main_menu, gameManager)
+                if CREDITS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    credits(SCREEN, BG, player, main_menu, gameManager)
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     running = False
                     pygame.quit()

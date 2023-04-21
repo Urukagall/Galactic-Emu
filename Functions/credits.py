@@ -19,7 +19,7 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 MENU_TEXT = get_font(100).render("CREDITS", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
 
-textHowToPlay = "Programmers:\n\n\nAlix Loan\nBoisseau Romain\nCoulon Noham\nJorge-Afonso Dani\nMartinan Victor\n\n\nArtists:\n\n\nPascal Léo\nMalfre Hugo\n\n\nBusiness:\n\n\nAudette Luke\nPrivat Florian\nDeconinck Amaury\n\n\nMusic:\nRionnet Rémi\nCone24"
+textHowToPlay = "Programmers:\n\nAlix Loan\nBoisseau Romain\nCoulon Noham\nJorge-Afonso Dani\nMartinan Victor\n\n\nArtists:\n\nPascal Léo\nMalfre Hugo\n\n\nBusiness:\n\nAudette Luke\nPrivat Florian\nDeconinck Amaury\n\n\nMusic:\n\nRionnet Rémi\nCone24"
 
 # La police et la taille du texte
 font = pygame.font.Font(None, 36)
@@ -31,7 +31,7 @@ for line in textHowToPlay.split('\n'):
 
 
 
-def credit(SCREEN, BG, player, main_menu, gameManager):
+def credits(SCREEN, BG, player, main_menu, gameManager):
     running = True
     while running:
         SCREEN.blit(BG, (0, 0))
