@@ -12,6 +12,8 @@ from Functions.enemiesPattern import *
 from Functions.options import gameOptions
 from Functions.shop import shop
 from Functions.play import *
+from Functions.credit import credit
+from Functions.howToPlay import howToPlay
 
 # Logo windows
 icon = pygame.image.load("img/emeu.jpg")
@@ -60,14 +62,16 @@ def main_menu():
         MENU_TEXT = get_font(100).render("MAIN MENU", True, "#b68f40")
         MENU_RECT = MENU_TEXT.get_rect(center=(960, 100))
 
-        PLAY_BUTTON = Button(buttonSurface, 960, 400, "Play", False, None, play, buttonSurface)
-        SHOP_BUTTON = Button(buttonSurface, 960, 550, "Shop", False, None, gameOptions, buttonSurface)
-        OPTIONS_BUTTON = Button(buttonSurface, 960, 700, "Options", False, None, gameOptions, buttonSurface)
-        QUIT_BUTTON = Button(buttonSurface, 960, 850, "Quit", False, None, None, buttonSurface)
+        PLAY_BUTTON = Button(buttonSurface, 960, 250, "Play", False, None, play, buttonSurface)
+        SHOP_BUTTON = Button(buttonSurface, 960, 400, "Shop", False, None, gameOptions, buttonSurface)
+        OPTIONS_BUTTON = Button(buttonSurface, 960, 550, "Options", False, None, gameOptions, buttonSurface)
+        HOW_TO_PLAY_BUTTON = Button(buttonSurface, 960, 700, "How to play", False, None, play, buttonSurface)
+        CREDIT_BUTTON = Button(buttonSurface, 960, 850, "Credit", False, None, None, buttonSurface)
+        QUIT_BUTTON = Button(buttonSurface, 960, 1000, "Quit", False, None, None, buttonSurface)
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
-        for button in [PLAY_BUTTON, OPTIONS_BUTTON, SHOP_BUTTON, QUIT_BUTTON]:
+        for button in [PLAY_BUTTON, OPTIONS_BUTTON, SHOP_BUTTON, QUIT_BUTTON, HOW_TO_PLAY_BUTTON, CREDIT_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
         
@@ -82,6 +86,10 @@ def main_menu():
                     shop(SCREEN, BG, player, main_menu, gameManager)
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     gameOptions(SCREEN, BG, player, main_menu, gameManager)
+                if HOW_TO_PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    howToPlay(SCREEN, BG, player, main_menu, gameManager)
+                if CREDIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    credit(SCREEN, BG, player, main_menu, gameManager)
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     running = False
                     pygame.quit()
