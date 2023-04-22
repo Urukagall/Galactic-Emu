@@ -496,6 +496,8 @@ def play(player, gameManager):
         
         #transition
         if transition:
+            invincible = True
+            invincibleCountdown = 5
             if transitionY <= 32:
                 drawTransition(transitionSurf, transitionY, (255,255,255))
                 new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
