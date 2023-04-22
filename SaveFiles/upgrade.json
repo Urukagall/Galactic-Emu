@@ -7,7 +7,7 @@
         25
     ],
     "bulletSpeedPrice": [
-        0,
+        100,
         150,
         250,
         350,
@@ -66,49 +66,49 @@
         100,
         150,
         250,
-        400,
+        350,
         -1
     ],
     "missileDamageLevel": 0,
     "missileDamageUpgrade": [
-        10,
-        15,
-        20,
-        25
+        2,
+        3,
+        4,
+        5
     ],
     "missileDamagePrice": [
-        100,
         150,
-        250,
-        400,
+        200,
+        300,
+        500,
         -1
     ],
     "missileCanonsLevel": 0,
     "missileCanonsUpgrade": [
-        10,
-        15,
-        20,
-        25
+        2,
+        3,
+        4,
+        5
     ],
     "missileCanonsPrice": [
-        100,
-        150,
         250,
-        400,
+        350,
+        450,
+        600,
         -1
     ],
     "missileFirerateLevel": 0,
     "missileFirerateUpgrade": [
-        10,
-        15,
-        20,
-        25
+        8,
+        6,
+        4,
+        2
     ],
     "missileFireratePrice": [
-        100,
         150,
         250,
-        400,
+        350,
+        500,
         -1
     ]
 }

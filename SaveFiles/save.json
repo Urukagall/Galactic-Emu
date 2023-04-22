@@ -1,1 +1,14 @@
-{"Money" : 0}
+{
+    "Money": 0,
+    "speed": 10,
+    "lives": 5,
+    "cooldownDash": 60,
+    "bulletSpeed": 5,
+    "arrayNumber": 1,
+    "bulletDamage": 1,
+    "timeBetweenShots": 10,
+    "missileSpeed": 5,
+    "missileArrayNumber": 1,
+    "missileDamage": 1,
+    "timeBetweenMissiles": 20
+}
