@@ -3,11 +3,10 @@ import sys
 
 from Class.button import Button
 
-buttonSurface = pygame.image.load("img/button.png")
+buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
-
 
 # Upgrade Button Ship
 LIVE_BUTTON = Button(buttonSurface, 510, 550, "Live", False, None, None, buttonSurface)
@@ -36,7 +35,7 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
-        
+
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 

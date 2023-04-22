@@ -7,7 +7,7 @@ from Functions.shopConsumable import shopConsumable
 from Functions.shopShip import shopShip
 
 
-buttonSurface = pygame.image.load("img/button.png")
+buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 1000, "Return", False, None, None, buttonSurface)
@@ -16,22 +16,24 @@ RESUME_BUTTON = Button(buttonSurface, 960, 1000, "Return", False, None, None, bu
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
-MENU_TEXT = get_font(100).render("CREDITS", True, "#b68f40")
+MENU_TEXT = get_font(100).render("CREDIT", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
 
-textCredits = "Programmers:\n\nAlix Loan\nBoisseau Romain\nCoulon Noham\nJorge-Afonso Dany\nMartinan Victor\n\n\nArtists:\n\nPascal Léo\nMalfre Hugo --Demuynck\n\n\nBusiness:\n\nAudette Luke\nPrivat Florian\nDeconinck Amaury\n\n\nMusic:\n\nRionnet Rémi\nAphinity"
+
+textCredit = "Programmers:\n\nAlix Loan\nBoisseau Romain\nCoulon Noham\nJorge-Afonso Dany\nMartinan Victor\n\n\nArtists:\n\nPascal Léo\nMalfre--Demuynck Hugo \n\n\nBusiness:\n\nAudette Luke\nPrivat Florian\nDeconinck Amaury\n\n\nMusic:\n\nRionnet Rémi\nAphinity"
 
 # La police et la taille du texte
 font = pygame.font.Font(None, 36)
 
 # La liste des surfaces de texte pour chaque ligne
-textCreditsSurface = []
-for line in textCredits.split('\n'):
-    textCreditsSurface.append(get_font(20).render(line, True, "#b68f40"))
+textCreditSurface = []
+for line in textCredit.split('\n'):
+    textCreditSurface.append(get_font(20).render(line, True, "#b68f40"))
 
 
 
-def credits(SCREEN, BG, player, main_menu, gameManager):
+
+def credits(SCREEN, BG, player, main_menu):
     running = True
     while running:
         SCREEN.blit(BG, (0, 0))
@@ -43,7 +45,9 @@ def credits(SCREEN, BG, player, main_menu, gameManager):
         y = 300
 
         # Blit chaque surface de texte sur l'écran à des positions différentes
-        for text in textCreditsSurface:
+
+        for text in textCreditSurface:
+
             SCREEN.blit(text, (x, y))
             y += text.get_height()
 
@@ -53,7 +57,7 @@ def credits(SCREEN, BG, player, main_menu, gameManager):
         for button in [RESUME_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
-        
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

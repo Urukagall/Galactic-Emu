@@ -3,11 +3,10 @@ import sys
 
 from Class.button import Button
 
-buttonSurface = pygame.image.load("img/button.png")
+buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
-
 
 # Upgrade Button Ship
 LIVE_BUTTON = Button(buttonSurface, 510, 550, "Live", False, None, None, buttonSurface, "Increase the number of live")
@@ -28,7 +27,7 @@ MENU_TEXT = get_font(100).render("SHIP SHOP", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
 MENU_UPGRADE = get_font(30).render("Upgrade", True, "#b68f40")
 MENU_UPGRADE_RECT = MENU_UPGRADE.get_rect(center=(960, 480))
-        
+
 def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
     running = True
     while running:
