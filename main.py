@@ -32,9 +32,13 @@ missileWidth = missile.get_width()
 #Import bullets 
 classicBullet =  pygame.image.load("img/bullets/bullet.png")
 classicBullet = pygame.transform.scale(classicBullet, (classicBullet.get_width()*2, classicBullet.get_height()*2))
+
+# Import Carreau modele
 carreauBlue =  pygame.image.load("img/bullets/carreau.png")
 carreauBlue = pygame.transform.scale(carreauBlue, (carreauBlue.get_width()*2, carreauBlue.get_height()*2))
 
+
+    
 #projectileList & CD
 projectileList = []
 
@@ -47,15 +51,28 @@ pygame.display.set_caption("Menu")
 BG = pygame.image.load("img/assets/background.png")
 BG = pygame.transform.scale(BG, (1920, 1080))
 
-def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font.ttf", size)
-
 gameManager = GameManager()
 
 menuMusic = pygame.mixer.Sound("sound/menu_music.ogg")
 menuMusic.set_volume(0.2 * gameManager.sound)
 
-player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, classicBullet, missile, carreauBlue)
+def darken(image, percent = 50):
+    '''Creates a  darkened copy of an image, darkened by percent (50% by default)'''
+    newImg = image.copy()
+    dark = pygame.Surface(newImg.get_size()).convert_alpha()
+    newImg.set_colorkey((0,0,0))
+    dark.fill((0,0,0,percent/100*255))
+    newImg.blit(dark, (0,0))
+    return newImg
+
+darkCarreau = darken(carreauBlue,45).convert_alpha()
+darkBullet = darken(classicBullet).convert_alpha()
+darkMissile = darken(missile,60).convert_alpha()
+
+player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
+
+def get_font(size): # Returns Press-Start-2P in the desired size
+    return pygame.font.Font("font.ttf", size)
 
 def main_menu():
     earntMoney = 0

@@ -1,5 +1,5 @@
 {
-    "bulletSpeedLevel": 1,
+    "bulletSpeedLevel": 0,
     "bulletSpeedUpgrade": [
         10,
         15,
