@@ -18,7 +18,7 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 
 
 
-def gameOptions(SCREEN, BG, player, main_menu, gameManager):
+def gameOptions(SCREEN, BG, player, main_menu, gameManager, menuMusic):
     running = True
     while running:
         SCREEN.blit(BG, (0, 0))
@@ -45,7 +45,9 @@ def gameOptions(SCREEN, BG, player, main_menu, gameManager):
                 if SOUNDMORE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     if gameManager.sound < 1:
                         gameManager.changeSound(gameManager.sound + 0.1)
+                        menuMusic.set_volume(0.2 * gameManager.sound)
                 if SOUNDLESS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     if gameManager.sound > 0.01:
                         gameManager.changeSound(gameManager.sound - 0.1)
+                        menuMusic.set_volume(0.2 * gameManager.sound)
         pygame.display.update()

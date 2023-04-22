@@ -111,7 +111,7 @@ def main_menu():
                 if SHOP_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    gameOptions(SCREEN, BG, player, main_menu, gameManager)
+                    gameOptions(SCREEN, BG, player, main_menu, gameManager, menuMusic)
                 if HOW_TO_PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     howToPlay(SCREEN, BG, player, main_menu)
                 if CREDITS_BUTTON.checkForInput(MENU_MOUSE_POS, player):

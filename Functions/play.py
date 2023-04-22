@@ -59,7 +59,7 @@ def play(player, gameManager):
 
     #Import boss' base asset
     bossBase = pygame.image.load("img/assets/base-bg.png").convert()
-    bossBase = pygame.transform.scale(bossBase, (2140, 2140))
+    bossBase = pygame.transform.scale(bossBase, (1920, 1080))
 
 
     backGround = levelBackGround
@@ -211,7 +211,7 @@ def play(player, gameManager):
     supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
     spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left", 3)
     miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballYellow)
-    enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
+    enemyList  = []
     #enemyList = []
     onScreenEnemiesList = []
 
