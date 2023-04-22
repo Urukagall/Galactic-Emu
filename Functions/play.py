@@ -28,6 +28,7 @@ def darken(image, percent = 50):
     '''Creates a  darkened copy of an image, darkened by percent (50% by default)'''
     newImg = image.copy()
     dark = pygame.Surface(newImg.get_size()).convert_alpha()
+    newImg.set_colorkey((0,0,0))
     dark.fill((0,0,0,percent/100*255))
     newImg.blit(dark, (0,0))
     return newImg
@@ -59,8 +60,7 @@ def play(player, gameManager):
     #Import boss' base asset
     bossBase = pygame.image.load("img/assets/base-bg.png").convert()
     bossBase = pygame.transform.scale(bossBase, (2140, 2140))
-    bossBaseCoordinates = pygame.Vector2(0,0)
-    bossBaseFacing = "right"
+
 
     backGround = levelBackGround
 
@@ -69,12 +69,6 @@ def play(player, gameManager):
     transitionY = 0
     subY = 0
     transitionSurf = pygame.Surface((16,9))
-    transitionSurf.set_colorkey((0,0,0))
-
-    transition = False
-    transitionY = 0
-    subY = 0
-    transitionSurf = pygame.Surface((16, 9))
     transitionSurf.set_colorkey((0,0,0))
 
     #Pre-requisite for the screen scrolling
@@ -174,9 +168,6 @@ def play(player, gameManager):
 
     #projectileList & CD
     projectileList = []
-    missileCooldown = 0
-    bulletCoolDown = 0
-    ultimateCooldown = 0
     scoreTime = 0
 
     particleList = []
@@ -189,14 +180,14 @@ def play(player, gameManager):
     playerShield = pygame.image.load("img/ships/playerShield.png").convert_alpha()
     playerShield = pygame.transform.scale(playerShield, (50, 50))
     invincible = False
-    timeInvincible = 0 #in seconds
+    timeInvincible = 3 #in seconds
     invincibleCountdown = 0
 
-    darkCarreau = darken(carreauBlue)
-    darkBullet = darken(bulletBlue)
-    darkMissile = darken(missileBlue)
+    darkCarreau = darken(carreauBlue,45).convert_alpha()
+    darkBullet = darken(bulletBlue).convert_alpha()
+    darkMissile = darken(missileBlue,60).convert_alpha()
 
-    player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, bulletBlue, missileBlue, carreauBlue)
+    player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
 
     #Load different images for enemies
     imgRailgun = pygame.image.load("img/ships/railgun.png").convert_alpha()
@@ -211,7 +202,7 @@ def play(player, gameManager):
     imgMiniBoss = pygame.transform.scale(imgMiniBoss, (50,50))
 
     #Create Enemy
-    enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100]]
+    enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 0]]
     bozo = Enemy(True, 100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left")
     railgun = Enemy(True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left")
     supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
@@ -226,6 +217,7 @@ def play(player, gameManager):
     bossImg = pygame.image.load("img/ships/boss1.png").convert_alpha()
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
     boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
+    enemyList.append(boss)
     #onScreenEnemiesList.append(boss)
     bossFight = False
 
@@ -266,7 +258,6 @@ def play(player, gameManager):
         # Play music in Loop
         
         if bossFight:
-            transition = True
             backGround = bossBase
             bulletHellSound.stop()
             if bossMusic.get_num_channels() == 0:
@@ -289,27 +280,6 @@ def play(player, gameManager):
             for j in range(0, tilesWidth):
                 screen.blit(backGround, (j*backGround.get_width(), i*backGround.get_height() - trueScroll))
 
-        if bossFight:
-            screen.blit(bossBase, bossBaseCoordinates)
-            if bossBaseCoordinates.x < -3*bossBase.get_width()/4:
-                bossBaseFacing = "right"
-            elif bossBaseCoordinates.x > displayWidth - bossBase.get_width()/4:
-                bossBaseFacing = "left"
-
-            if bossBaseFacing == "right":
-                bossBaseCoordinates.x += 1
-            else:
-                bossBaseCoordinates.x -= 1
-
-            if bossBaseCoordinates.y < -3*bossBase.get_height()/4:
-                bossBaseFacing = "down"
-            elif bossBaseCoordinates.y > displayHeight - bossBase.get_height()/4:
-                bossBaseFacing = "up"
-
-            if bossBaseFacing == "down":
-                bossBaseCoordinates.y += 1
-            else:
-                bossBaseCoordinates.y -= 1
         
         trueScroll += 1
         # reset scroll
@@ -366,9 +336,14 @@ def play(player, gameManager):
         #Add enemies at the right time
         if enemyDelayList != [] and enemyDelayList[0][2] <= 0 and enemyList  != []:
             if enemyList[0] == boss:
-                bossFight = True
-            onScreenEnemiesList.append(enemyList.pop(0))
-            enemyDelayList.pop(0)
+                if onScreenEnemiesList == []:
+                    transition = True
+                    if bossFight:
+                        onScreenEnemiesList.append(enemyList.pop(0))
+                        enemyDelayList.pop(0)
+            else:
+                onScreenEnemiesList.append(enemyList.pop(0))
+                enemyDelayList.pop(0)
 
         playerBullets = pygame.surface.Surface((displayWidth, displayHeight))
         enemyBullets = pygame.surface.Surface((displayWidth, displayHeight))
@@ -518,20 +493,6 @@ def play(player, gameManager):
 
         if pressed[pygame.K_LSHIFT]:
             pygame.draw.rect(screen, (0,255,0), playerRect)
-
-        #Transition
-        if transition:
-            if transitionY <= 32:
-                drawTransition(transitionSurf, transitionY, (255,255,255))
-                new = pygame.transform.scale(transitionSurf, (displayWidth, displayHeight))
-                screen.blit(new, (0,0))
-                transitionY += 1/6
-        elif transitionY > 32:
-            if subY <= 32:
-                drawTransition(transitionSurf, subY, (0,0,0))
-                new = pygame.transform.scale(transitionSurf, (displayWidth, displayHeight))
-                screen.blit(new, (0,0))
-                subY += 1/6
         
         #transition
         if transition:
@@ -541,12 +502,18 @@ def play(player, gameManager):
                 screen.blit(new, (0,0))
                 transitionY += 1/6
             elif transitionY > 32:
+                bossFight = True
+                projectileList.clear()
                 if subY <= 32:
                     #the transition surf has a black color key, so drawing in black removes the color
                     drawTransition(transitionSurf, subY, (0,0,0))
                     new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
                     screen.blit(new, (0,0))
                     subY += 1/6
+                elif subY >= 32:
+                    transition = False
+                    transitionY = 0
+                    subY = 0
             else:
                 transition = False
                 transitionY = 0
