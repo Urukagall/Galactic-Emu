@@ -55,8 +55,9 @@ gameManager = GameManager()
 menuMusic = pygame.mixer.Sound("sound/menu_music.ogg")
 menuMusic.set_volume(0.2 * gameManager.sound)
 
+player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, classicBullet, missile, carreauBlue)
+
 def main_menu():
-    player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, classicBullet, missile, carreauBlue)
     earntMoney = 0
     running = True
     while running:

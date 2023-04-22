@@ -189,14 +189,17 @@ def play(player, gameManager):
     playerShield = pygame.image.load("img/ships/playerShield.png").convert_alpha()
     playerShield = pygame.transform.scale(playerShield, (50, 50))
     invincible = False
-    timeInvincible = 0 #in seconds
+    timeInvincible = 3 #in seconds
     invincibleCountdown = 0
 
     darkCarreau = darken(carreauBlue)
     darkBullet = darken(bulletBlue)
     darkMissile = darken(missileBlue)
 
-    player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, bulletBlue, missileBlue, carreauBlue)
+    # player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, bulletBlue, missileBlue, carreauBlue)
+
+    player.projectileList = projectileList
+    player.redefined()
 
     #Load different images for enemies
     imgRailgun = pygame.image.load("img/ships/railgun.png").convert_alpha()
@@ -514,6 +517,8 @@ def play(player, gameManager):
             screen.blit(loseMainText, (800, 500))
             loseMinText = font.render(f'stats back to default ones.', True, (255, 255, 255))
             screen.blit(loseMinText, (800, 550))
+            bulletHellSound.stop()
+            bossMusic.stop()
             return player.money
 
         if pressed[pygame.K_LSHIFT]:
@@ -555,3 +560,4 @@ def play(player, gameManager):
         pygame.display.update()
     bossMusic.stop()
     bulletHellSound.stop()
+    return player.money
