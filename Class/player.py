@@ -18,28 +18,42 @@ class Player():
         self.timeDash = timeDash
         self.lives = lives
         self.money = 0
+
+        # Bullet Stats
         self.bulletImg = imgBullet
+        self.bulletSpeed = 5
+        self.arrayNumber = 1
+        self.angleBetweenArrays = 10
+        self.bulletDamage = 1
+        self.timeBetweenShots = 10  #60 = 1sec
+        self.cooldown = self.timeBetweenShots
+        
+        # Missile Stats
         self.missileImg = imgMissile
+        self.missileSpeed = 5
+        self.missileArrayNumber = 1
+        self.angleBetweenMissileArrays = 30
+        self.missileDamage = 1
+        self.timeBetweenMissiles = 20  #60 = 1sec
+        self.missileCooldown = self.timeBetweenMissiles
+
+        # Ultimate Stats
+        self.timeBetweenUltimates = 60
+        self.ultimateDmg = 50
+        self.ultimateCooldown = self.timeBetweenUltimates
+
         self.preciseImg = imgPrecise
 
 
         self.projectileList = projectileList
-        self.arrayNumber = 3
-        self.bulletSpeed = 25
-        self.angleBetweenArrays = 10
-        self.angleBetweenMissileArrays = 30
-        self.missileArrayNumber = 2
-        #60 = 1sec
-        self.timeBetweenShots = 1
-        self.cooldown = self.timeBetweenShots
-        self.timeBetweenMissiles = 2
-        self.missileCooldown = self.timeBetweenMissiles
-        self.timeBetweenUltimates = 60
-        self.ultimateCooldown = self.timeBetweenUltimates
-        self.ultimateDmg = 50
 
-        self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True)
-        self.missileHandler = BulletHandler(self.bulletSpeed, self.missileArrayNumber, self.angleBetweenMissileArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True)
+        self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True,damage=self.bulletDamage)
+        self.missileHandler = BulletHandler(self.missileSpeed, self.missileArrayNumber, self.angleBetweenMissileArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True,damage=self.missileDamage)
+        self.preciseHandler = BulletHandler(self.bulletSpeed, self.arrayNumber+1, self.angleBetweenArrays/2, self.projectileList, self.preciseImg, isHoming=False, isPlayer=True)
+        
+    def redefined (self):
+        self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True,damage=self.bulletDamage)
+        self.missileHandler = BulletHandler(self.missileSpeed, self.missileArrayNumber, self.angleBetweenMissileArrays, self.projectileList, self.missileImg, isHoming=True,isPlayer = True,damage=self.missileDamage)
         self.preciseHandler = BulletHandler(self.bulletSpeed, self.arrayNumber+1, self.angleBetweenArrays/2, self.projectileList, self.preciseImg, isHoming=False, isPlayer=True)
         
     def move(self, veloX, veloY):

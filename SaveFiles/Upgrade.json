@@ -1,1 +1,114 @@
-{"bulletSpeedLevel1": 1, "bulletSpeedUpgrade1": [10, 15, 20, 25, 30], "bulletSpeedPrice1": [0, 150, 250, 400, 600]}
+{
+    "bulletSpeedLevel": 0,
+    "bulletSpeedUpgrade": [
+        10,
+        15,
+        20,
+        25
+    ],
+    "bulletSpeedPrice": [
+        0,
+        150,
+        250,
+        350,
+        -1
+    ],
+    "bulletDamageLevel": 0,
+    "bulletDamageUpgrade": [
+        2,
+        3,
+        4,
+        5
+    ],
+    "bulletDamagePrice": [
+        150,
+        200,
+        300,
+        500,
+        -1
+    ],
+    "bulletCanonsLevel": 0,
+    "bulletCanonsUpgrade": [
+        2,
+        3,
+        4,
+        5
+    ],
+    "bulletCanonsPrice": [
+        250,
+        350,
+        450,
+        600,
+        -1
+    ],
+    "bulletFirerateLevel": 0,
+    "bulletFirerateUpgrade": [
+        8,
+        6,
+        4,
+        2
+    ],
+    "bulletFireratePrice": [
+        150,
+        250,
+        350,
+        500,
+        -1
+    ],
+    "missileSpeedLevel": 0,
+    "missileSpeedUpgrade": [
+        10,
+        15,
+        20,
+        25
+    ],
+    "missileSpeedPrice": [
+        100,
+        150,
+        250,
+        400,
+        -1
+    ],
+    "missileDamageLevel": 0,
+    "missileDamageUpgrade": [
+        10,
+        15,
+        20,
+        25
+    ],
+    "missileDamagePrice": [
+        100,
+        150,
+        250,
+        400,
+        -1
+    ],
+    "missileCanonsLevel": 0,
+    "missileCanonsUpgrade": [
+        10,
+        15,
+        20,
+        25
+    ],
+    "missileCanonsPrice": [
+        100,
+        150,
+        250,
+        400,
+        -1
+    ],
+    "missileFirerateLevel": 0,
+    "missileFirerateUpgrade": [
+        10,
+        15,
+        20,
+        25
+    ],
+    "missileFireratePrice": [
+        100,
+        150,
+        250,
+        400,
+        -1
+    ]
+}
