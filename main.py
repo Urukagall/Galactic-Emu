@@ -14,6 +14,8 @@ from Functions.shop import shop
 from Functions.play import *
 from Functions.credits import credits
 from Functions.howToPlay import howToPlay
+from Functions.saveReader import saveReader
+from SaveFiles.templatePaste import templatePaste
 
 pygame.init()
 
@@ -71,6 +73,12 @@ darkMissile = darken(missile,60).convert_alpha()
 
 player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
 
+# take the template file to copy to the main json files
+templatePaste()
+
+# Take the save from the save.json
+saveReader(player)
+
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
@@ -111,7 +119,7 @@ def main_menu():
                 if SHOP_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    gameOptions(SCREEN, BG, player, main_menu, gameManager)
+                    gameOptions(SCREEN, BG, player, main_menu, gameManager, menuMusic)
                 if HOW_TO_PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     howToPlay(SCREEN, BG, player, main_menu)
                 if CREDITS_BUTTON.checkForInput(MENU_MOUSE_POS, player):

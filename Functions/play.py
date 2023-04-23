@@ -41,6 +41,9 @@ def rotate(image, rect, angle):
         rect = newImage.get_rect(center=rect.center)
         return newImage, rect
 
+def get_font(size): # Returns Press-Start-2P in the desired size
+    return pygame.font.Font("font.ttf", size)
+
 def play(player, gameManager):
     pygame.init()
     clock = pygame.time.Clock()
@@ -59,7 +62,7 @@ def play(player, gameManager):
 
     #Import boss' base asset
     bossBase = pygame.image.load("img/assets/base-bg.png").convert()
-    bossBase = pygame.transform.scale(bossBase, (2140, 2140))
+    bossBase = pygame.transform.scale(bossBase, (1920, 1080))
 
 
     backGround = levelBackGround
@@ -175,6 +178,10 @@ def play(player, gameManager):
     screenShake = 40
 
     #Redefine player & its bullets luminosity
+    imgPlayerAvatar = pygame.image.load("img/avatar/playerAvatar.png").convert_alpha()
+    imgPlayerAvatar = pygame.transform.scale(imgPlayerAvatar, (150, 150))
+    imgPlayerAvatarDamage = pygame.image.load("img/avatar/playerAvatarDamage.png").convert_alpha()
+    imgPlayerAvatarDamage = pygame.transform.scale(imgPlayerAvatarDamage, (150, 150))
     imgPlayer = pygame.image.load("img/ships/player.png").convert_alpha()
     imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
     playerShield = pygame.image.load("img/ships/playerShield.png").convert_alpha()
@@ -182,6 +189,8 @@ def play(player, gameManager):
     invincible = False
     timeInvincible = 3 #in seconds
     invincibleCountdown = 0
+    damageAvatarCountdown = 0
+    isPlaying = False
 
     # darkCarreau = darken(carreauBlue,45).convert_alpha()
     # darkBullet = darken(bulletBlue).convert_alpha()
@@ -211,14 +220,16 @@ def play(player, gameManager):
     supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
     spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left", 3)
     miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballYellow)
-    enemyList  = [bozo, railgun, bozo, spyral, bozo, supressor, miniboss]
-    #enemyList = []
+    enemyList  = [bozo, railgun, supressor, spyral, miniboss ]
+    # enemyList = []
     onScreenEnemiesList = []
 
     #create boss
     bossSize = 300
     bossImg = pygame.image.load("img/ships/boss1.png").convert_alpha()
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
+    bossImgAvatar = pygame.image.load("img/avatar/colonelSandersAvatar.png").convert_alpha()
+    bossImgAvatar = pygame.transform.scale(bossImgAvatar, (150, 150))
     boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
     enemyList.append(boss)
     #onScreenEnemiesList.append(boss)
@@ -244,13 +255,33 @@ def play(player, gameManager):
 
     # Font importe
     font = pygame.font.Font(None, 36)
+    
+    # Dialogue phase 1
+    textDialogueBossPhase = "Hello Mister \nYou'r so beautiful, I think I love you\nSo I need to beat you to take you\n"
+    textDialoguePhase = 0
+    textDialoguePhaseBoss = 0
+    textDialogue = "Hello\nI am under the water\nPlease help me\n"
+    textDialogueBoss = "\nHello \nSorry Lady, I have to many other woman\nTry It\n"
+    textDialogueSurface = []
+    textDialogueSurfaceBoss = []
+    space_pressed = False
+    
+    for line in textDialogue.split('\n'):
+        textDialogueSurface.append(get_font(20).render(line, True, "#b68f40"))
+        
+    for line in textDialogueBoss.split('\n'):
+        textDialogueSurfaceBoss.append(get_font(20).render(line, True, "#b68f40"))
 
     while running:
         oldDamage = boss.health
         # run the game at a constant 60fps
         clock.tick(60)
 
-        
+        # Dialogue phase 1
+        textDialogueRect = textDialogueSurface[textDialoguePhase].get_rect(center=(600, 1000))
+        if bossFight:
+            textDialogueRectBoss = textDialogueSurfaceBoss[textDialoguePhaseBoss].get_rect(center=(1320, 80))
+            
         #Close window on Escape press
         for events in pygame.event.get():
             if events.type == pygame.QUIT:
@@ -330,7 +361,27 @@ def play(player, gameManager):
             velX = -1
         else :
             velX = 0
-            
+        
+        if pressed[pygame.K_SPACE] and textDialoguePhase < len(textDialogueSurface) - 1 and not(space_pressed):
+            if bossFight:
+                if textDialoguePhaseBoss <= textDialoguePhase:
+                    textDialoguePhaseBoss +=1
+                else:
+                    textDialoguePhase +=1
+            else:
+                textDialoguePhase +=1
+            space_pressed = True
+        elif textDialoguePhase >= len(textDialogueSurface) - 1:
+            isPlaying = True
+            if bossFight:
+                textDialoguePhaseBoss = len(textDialogueSurfaceBoss) -1
+        if not pressed[pygame.K_SPACE]:
+            space_pressed = False
+        if textDialoguePhase < len(textDialogueSurface) - 1:
+            projectileList.clear()
+            invincible = True
+            invincibleCountdown = 60
+        
         player.move(velX, velY)
         playerHitbox = pygame.Rect(0,0, player.size/8, player.size/8)
         # center the hitbox on the ship's cockpit
@@ -342,6 +393,12 @@ def play(player, gameManager):
                 if onScreenEnemiesList == []:
                     transition = True
                     if bossFight:
+                        textDialogue = textDialogueBossPhase
+                        textDialoguePhase = 0
+                        textDialoguePhaseBoss = 0
+                        textDialogueSurface = []
+                        for line in textDialogue.split('\n'):
+                            textDialogueSurface.append(get_font(20).render(line, True, "#b68f40"))
                         onScreenEnemiesList.append(enemyList.pop(0))
                         enemyDelayList.pop(0)
             else:
@@ -362,6 +419,7 @@ def play(player, gameManager):
                 #pygame.draw.rect(screen, (255,0,0), bulletRect)
                 if playerRect.colliderect(bulletRect) and not invincible:
                     player.getHit()
+                    damageAvatarCountdown = 120
                     invincibleCountdown = timeInvincible * 60
                     invincible = True
                     projectileList.pop(projectileList.index(bullet))
@@ -405,6 +463,7 @@ def play(player, gameManager):
                 if not invincible:
                     player.getHit()
                     invincibleCountdown = timeInvincible * 60
+                    damageAvatarCountdown = 120
                     invincible = True
                 if enemy.__class__.__name__ == "Enemy":
                     score.score_increment(10)
@@ -447,12 +506,15 @@ def play(player, gameManager):
         player.missileCooldown -= 1
         player.ultimateCooldown -= 1
 
+        if damageAvatarCountdown > 0:
+            damageAvatarCountdown -= 1
+
         if invincibleCountdown > 0:
             invincibleCountdown -= 1
         else: 
             invincible = False
 
-        if enemyDelayList != []:
+        if enemyDelayList != [] and isPlaying:
             enemyDelayList[0][2] -= 1
 
         #Score grows automatically
@@ -478,7 +540,21 @@ def play(player, gameManager):
         screen.blit(ultimateText, (10, 50))
         ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
         screen.blit(ultimateText, (10, 70))
+        screen.blit(textDialogueSurface[textDialoguePhase], textDialogueRect)
+        if bossFight:
+            print(len(textDialogueSurfaceBoss), textDialoguePhaseBoss)
+            screen.blit(textDialogueSurfaceBoss[textDialoguePhaseBoss], textDialogueRectBoss)
+        
+        # Display the hero avatar
+        if damageAvatarCountdown > 0:
+            screen.blit(imgPlayerAvatarDamage,(0 ,displayHeight - imgPlayerAvatar.get_height()))
+        else:
+            screen.blit(imgPlayerAvatar,(0 ,displayHeight - imgPlayerAvatar.get_height()))
 
+        # Display the Boss avatar
+        if bossFight:
+            screen.blit(bossImgAvatar,(displayWidth - bossImgAvatar.get_width() , 0))
+        
         currentDamage = boss.health
         deltaD = oldDamage - currentDamage
         deltaText = font.render(f'DPS : {deltaD * 60}', True, (255, 0, 0))

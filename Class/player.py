@@ -21,7 +21,7 @@ class Player():
 
         # Bullet Stats
         self.bulletImg = imgBullet
-        self.bulletSpeed = 5
+        self.bulletSpeed = 10
         self.arrayNumber = 1
         self.angleBetweenArrays = 10
         self.bulletDamage = 1
@@ -30,7 +30,7 @@ class Player():
         
         # Missile Stats
         self.missileImg = imgMissile
-        self.missileSpeed = 5
+        self.missileSpeed = 10
         self.missileArrayNumber = 1
         self.angleBetweenMissileArrays = 30
         self.missileDamage = 1
