@@ -2,7 +2,7 @@
     "money": 1000000,
     "speed": 10,
     "lives": 5,
-    "cooldownDash": 60,
+    "cooldownDash": 120,
     "bulletSpeed": 10,
     "arrayNumber": 1,
     "bulletDamage": 1,
@@ -12,6 +12,5 @@
     "missileDamage": 1,
     "timeBetweenMissiles": 20,
     "secondaryWeapon1": "None",
-    "secondaryWeapon2": "None",
-    "spiralAttack": "False"
+    "secondaryWeapon2": "None"
 }

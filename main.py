@@ -6,6 +6,7 @@ import pygame.time
 from Class.player import Player
 from Class.button import Button
 from Class.gameManager import GameManager
+from Functions.jsonReader import *
 
 #Import Patterns
 from Functions.enemiesPattern import *
@@ -41,7 +42,6 @@ carreauBlue =  pygame.image.load("img/bullets/carreau.png")
 carreauBlue = pygame.transform.scale(carreauBlue, (carreauBlue.get_width()*2, carreauBlue.get_height()*2))
 
 
-    
 #projectileList & CD
 projectileList = []
 
@@ -63,7 +63,7 @@ darkCarreau = darken(carreauBlue,45).convert_alpha()
 darkBullet = darken(classicBullet).convert_alpha()
 darkMissile = darken(missile,60).convert_alpha()
 
-player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
+player = Player(10, 5, 50, 1920, 1080, 30, 120, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
 
 # take the template file to copy to the main json files
 templatePaste()
