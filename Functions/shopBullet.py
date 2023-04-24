@@ -4,7 +4,6 @@ import sys
 from Class.button import Button
 from Functions.jsonReader import *
 
-from Functions.jsonReader import *
 
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
