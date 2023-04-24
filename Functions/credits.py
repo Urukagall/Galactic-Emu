@@ -16,6 +16,7 @@ RESUME_BUTTON = Button(buttonSurface, 960, 1000, "Return", False, None, None, bu
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
+
 MENU_TEXT = get_font(100).render("CREDIT", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
 

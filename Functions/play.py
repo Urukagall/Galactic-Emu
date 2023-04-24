@@ -301,10 +301,6 @@ def play(player, gameManager):
                 if events.key == pygame.K_m:
                     screen.blit(bossImgAvatar,(displayWidth - bossImgAvatar.get_width() , 0))
                     paused = not paused
-                    
-                    
-                
-
         if paused == True:
             
             continue

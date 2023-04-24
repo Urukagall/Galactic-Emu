@@ -50,6 +50,8 @@ imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 SCREEN = pygame.display.set_mode((1920, 1080))
 pygame.display.set_caption("Menu") 
 
+Captain = pygame.image.load("img/avatar/playerAvatar.png")
+
 BG = pygame.image.load("img/assets/background.png")
 BG = pygame.transform.scale(BG, (1920, 1080))
 
@@ -89,6 +91,7 @@ def main_menu():
         if menuMusic.get_num_channels() == 0:
             menuMusic.play(-1)
         SCREEN.blit(BG, (0, 0))
+        SCREEN.blit(Captain, (1450, 60))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
