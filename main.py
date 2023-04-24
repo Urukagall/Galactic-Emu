@@ -83,7 +83,6 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
 def main_menu():
-    earntMoney = 0
     running = True
     while running:
         if menuMusic.get_num_channels() == 0:
@@ -115,7 +114,7 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     menuMusic.stop()
-                    earntMoney = play(player, gameManager)
+                    play(player, gameManager)
                 if SHOP_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
@@ -129,6 +128,5 @@ def main_menu():
                     pygame.quit()
                     sys.exit()
         pygame.display.update()
-        player.money = earntMoney
         
 main_menu()

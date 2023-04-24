@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from Class.button import Button
+from Functions.jsonReader import *
 
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
@@ -9,7 +10,7 @@ buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
 # Upgrade Button Ship
-AUTOCANON_BUTTON = Button(buttonSurface, 510, 550, "Autocanon", False, None, None, buttonSurface, "A high firerate suspended canon")
+AUTOCANON_BUTTON = Button(buttonSurface, 510, 550, "Autocanon", True, 100, None, buttonSurface, "A high firerate suspended canon")
 DASH_BUTTON = Button(buttonSurface, 760, 550, "Dash Cooldown", False, None, None, buttonSurface)
 SPIRAL_BUTTON = Button(buttonSurface, 510, 700, "Special Spiral", False, None, None, buttonSurface)
 SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", False, None, None, buttonSurface)
@@ -36,6 +37,8 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
         for button in [RESUME_BUTTON, DASH_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, AUTOCANON_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
+            if AUTOCANON_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                post("save.json", "secondaryWeapon1", "autocanon")
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
