@@ -16,6 +16,7 @@ from Functions.play import *
 from Functions.credits import credits
 from Functions.howToPlay import howToPlay
 from Functions.saveReader import saveReader
+from Functions.darken import darken
 from SaveFiles.templatePaste import templatePaste
 
 pygame.init()
@@ -57,15 +58,6 @@ gameManager = GameManager()
 
 menuMusic = pygame.mixer.Sound("sound/menu_music.ogg")
 menuMusic.set_volume(0.2 * gameManager.sound)
-
-def darken(image, percent = 50):
-    '''Creates a  darkened copy of an image, darkened by percent (50% by default)'''
-    newImg = image.copy()
-    dark = pygame.Surface(newImg.get_size()).convert_alpha()
-    newImg.set_colorkey((0,0,0))
-    dark.fill((0,0,0,percent/100*255))
-    newImg.blit(dark, (0,0))
-    return newImg
 
 darkCarreau = darken(carreauBlue,45).convert_alpha()
 darkBullet = darken(classicBullet).convert_alpha()
@@ -128,5 +120,4 @@ def main_menu():
                     pygame.quit()
                     sys.exit()
         pygame.display.update()
-        
 main_menu()

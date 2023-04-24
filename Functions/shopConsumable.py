@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from Class.button import Button
+from Functions.jsonReader import *
 
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
@@ -9,16 +10,10 @@ buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
 # Upgrade Button Ship
-MINI_GUN_BUTTON = Button(buttonSurface, 510, 550, "Mini-Gun", True, 150, None, buttonSurface, "A high firerate suspended canon")
-DASH_BUTTON = Button(buttonSurface, 760, 550, "Dash Cooldown", False, None, None, buttonSurface)
-SPIRAL_BUTTON = Button(buttonSurface, 510, 700, "Special Spiral", False, None, None, buttonSurface)
+AUTOCANON_BUTTON = Button(buttonSurface, 510, 550, "Autocanon", True, 100, None, buttonSurface, "A high firerate suspended canon")
+SHOTGUN_BUTTON = Button(buttonSurface, 760, 550, "Shotgun", True, 150, None, buttonSurface, "Slow firerate but wide angle")
+PHOENIX_BUTTON = Button(buttonSurface, 510, 700, "Phoenix", True, 250, None, buttonSurface, "A strong and fast missile")
 SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", False, None, None, buttonSurface)
-
-# Upgrade Button bullet
-SPEED_BULLET_BUTTON = Button(buttonSurface, 1160, 550, "Speed", False, None, None, buttonSurface)
-DAMAGE_BUTTON = Button(buttonSurface, 1410, 550, "Damage", False, None, None, buttonSurface)
-CANONS_BUTTON = Button(buttonSurface, 1160, 700, "Canons", False, None, None, buttonSurface)
-FIRERATE_BUTTON = Button(buttonSurface, 1410, 700, "Firerate", False, None, None, buttonSurface)
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
@@ -39,9 +34,15 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
-        for button in [RESUME_BUTTON, MINI_GUN_BUTTON, DASH_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON]:
+        for button in [RESUME_BUTTON, SHOTGUN_BUTTON, PHOENIX_BUTTON, SPEED_BUTTON, AUTOCANON_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
+            if AUTOCANON_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                post("save.json", "secondaryWeapon1", "autocanon")
+            elif SHOTGUN_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                post("save.json", "secondaryWeapon2", "shotgun")
+            elif PHOENIX_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                post("save.json", "secondaryWeapon2", "phoenix")
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

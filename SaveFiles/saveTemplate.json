@@ -10,5 +10,7 @@
     "missileSpeed": 10,
     "missileArrayNumber": 1,
     "missileDamage": 1,
-    "timeBetweenMissiles": 20
+    "timeBetweenMissiles": 20,
+    "secondaryWeapon1": "None",
+    "secondaryWeapon2": "None"
 }

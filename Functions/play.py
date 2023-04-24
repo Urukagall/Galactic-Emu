@@ -231,7 +231,7 @@ def play(player, gameManager):
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
     bossImgAvatar = pygame.image.load("img/avatar/colonelSandersAvatar.png").convert_alpha()
     bossImgAvatar = pygame.transform.scale(bossImgAvatar, (150, 150))
-    boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
+    boss = Boss(10000, 0.5, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
     enemyList.append(boss)
     #onScreenEnemiesList.append(boss)
     bossFight = False
@@ -258,11 +258,11 @@ def play(player, gameManager):
     font = pygame.font.Font(None, 36)
     
     # Dialogue phase 1
-    textDialogueBossPhase = "Hello Mister \nYou'r so beautiful, I think I love you\nSo I need to beat you to take you\n"
+    textDialogueBossPhase = "Hello mister \nYou're beautiful, I think I love you\nSo I need to beat you to take you\n"
     textDialoguePhase = 0
     textDialoguePhaseBoss = 0
-    textDialogue = "Hello\nI am under the water\nPlease help me\n"
-    textDialogueBoss = "\nHello \nSorry Lady, I have to many other woman\nTry It\n"
+    textDialogue = "Hello,\nI am under the water\nPlease help me\n"
+    textDialogueBoss = "\nHello \nSorry lady, I have to many other women\nTry it\n"
     textDialogueSurface = []
     textDialogueSurfaceBoss = []
     space_pressed = False
@@ -272,6 +272,8 @@ def play(player, gameManager):
         
     for line in textDialogueBoss.split('\n'):
         textDialogueSurfaceBoss.append(get_font(20).render(line, True, "#b68f40"))
+
+    paused = False
 
     while running:
         oldDamage = boss.health
@@ -285,6 +287,11 @@ def play(player, gameManager):
             elif events.type == pygame.KEYDOWN:
                 if events.key == pygame.K_ESCAPE:
                     running=False
+                if events.key == pygame.K_m:
+                    paused = not paused
+
+        if paused == True:
+            continue
         # Play music in Loop
         
         if bossFight:
@@ -463,6 +470,7 @@ def play(player, gameManager):
 
         #Add a bullet to the projectileList list on press
         if pressed[pygame.K_w]:
+            player.updateSecondaries()
             if player.cooldown <= 0:
                 shift = True
                 if player.speed != player.slowSpeed:
@@ -547,7 +555,6 @@ def play(player, gameManager):
 
         screen.blit(textDialogueSurface[textDialoguePhase], textDialogueRect)
         if bossFight:
-            print(len(textDialogueSurfaceBoss), textDialoguePhaseBoss)
             screen.blit(textDialogueSurfaceBoss[textDialoguePhaseBoss], textDialogueRectBoss)
         
         # Display the hero avatar
@@ -569,7 +576,7 @@ def play(player, gameManager):
         screen.blit(bossHPText, (10, 100))
 
         if player.lives == 0:
-            loseMainText = font.render(f'You died... how unfortunate,', True, (255, 255, 255))
+            loseMainText = font.render(f'¶‡?) 8;8) 9‡(;... -8); 95048?(8?¢,', True, (255, 255, 255))
             screen.blit(loseMainText, (800, 500))
             loseMinText = font.render(f'stats back to default ones.', True, (255, 255, 255))
             screen.blit(loseMinText, (800, 550))
