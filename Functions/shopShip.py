@@ -2,16 +2,21 @@ import pygame
 import sys
 
 from Class.button import Button
+from Functions.jsonReader import *
 
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
+'''if get("save.json", "spiralAttack") == "False":
+    spiralText = "Activate Spiral"
+else:
+    spiralText = "Deactivate Spiral"'''
+
 # Upgrade Button Ship
 LIVE_BUTTON = Button(buttonSurface, 510, 550, "Live", False, None, None, buttonSurface, "Increase the number of live")
 DASH_BUTTON = Button(buttonSurface, 760, 550, "Dash Cooldown", False, None, None, buttonSurface, "Increase the dash cooldown timer")
-SPIRAL_BUTTON = Button(buttonSurface, 510, 700, "Special Spiral", False, None, None, buttonSurface, "Acquire the spiral attack")
 SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", False, None, None, buttonSurface, "Increase the speed when normal movement and decrease it when slow movement")
 
 # Upgrade Button bullet
@@ -38,9 +43,11 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
-        for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON]:
+        for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SPEED_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
+            
+                    
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

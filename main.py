@@ -18,7 +18,7 @@ from Functions.saveReader import saveReader
 from Functions.darken import darken
 from SaveFiles.templatePaste import templatePaste
 
-pygame.init()
+pygame.init()  
 
 # Logo windows
 icon = pygame.image.load("img/emeu.jpg")

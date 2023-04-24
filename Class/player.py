@@ -71,6 +71,7 @@ class Player():
         #secondary (optionnal) weapons
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 5, 10, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
+        self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber*2, 360/(self.arrayNumber), self.projectileList, self.ballBlue, 5, False, True, self.bulletDamage)
 
 
     def redefined(self):
@@ -81,6 +82,7 @@ class Player():
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 10, 5, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.phoenixHandler = BulletHandler(self.missileSpeed*2, 1, 0, self.projectileList, self.aim54, 0, True, True, self.missileDamage*10)
+        self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber*2, 360/(self.arrayNumber), self.projectileList, self.ballBlue, 5, False, True, self.bulletDamage)
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
@@ -105,6 +107,9 @@ class Player():
         self.preciseHandler.move(self.X+self.size/4, self.Y+self.size/4)
         if self.secondaryWeapon1 == "autocanon":
             self.autocanonHandler.move(self.X, self.Y+self.size/2)
+        elif self.secondaryWeapon1 == "spiral":
+            self.spiralHandler.move(self.X, self.Y+self.size/2)
+
         if self.secondaryWeapon2 == "shotgun":
             self.shotgunHandler.move(self.X+self.size, self.Y+self.size/2)
         elif self.secondaryWeapon2 == "phoenix":
@@ -124,6 +129,7 @@ class Player():
         if shift:
             self.preciseHandler.update(direction)
         self.bulletHandler.update(direction)
+        self.spiralHandler.update(direction)
 
     def updateSecondaries(self):
         direction = (0, -1)
@@ -133,6 +139,7 @@ class Player():
                 self.autocanonHandler.update(direction)
             else:
                 self.autocanonCooldown -= 1
+
         if self.secondaryWeapon2 == "shotgun":
             if self.shotgunCooldown <= 0:
                 self.shotgunCooldown = self.timeBewteenShotgunShots

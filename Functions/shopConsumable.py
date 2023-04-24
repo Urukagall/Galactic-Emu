@@ -13,7 +13,7 @@ RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, but
 AUTOCANON_BUTTON = Button(buttonSurface, 510, 550, "Autocanon", True, 100, None, buttonSurface, "A high firerate suspended canon")
 SHOTGUN_BUTTON = Button(buttonSurface, 760, 550, "Shotgun", True, 150, None, buttonSurface, "Slow firerate but wide angle")
 PHOENIX_BUTTON = Button(buttonSurface, 510, 700, "Phoenix", True, 250, None, buttonSurface, "A strong and fast missile")
-SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", False, None, None, buttonSurface)
+SPIRAL_BUTTON = Button(buttonSurface, 760, 700, "Spiral", True, 50, None, buttonSurface, "Shoots bullets all arround your ship")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
@@ -34,7 +34,7 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
-        for button in [RESUME_BUTTON, SHOTGUN_BUTTON, PHOENIX_BUTTON, SPEED_BUTTON, AUTOCANON_BUTTON]:
+        for button in [RESUME_BUTTON, SHOTGUN_BUTTON, PHOENIX_BUTTON, SPIRAL_BUTTON, AUTOCANON_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
             if AUTOCANON_BUTTON.checkForInput(MENU_MOUSE_POS, player):
@@ -43,6 +43,8 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
                 post("save.json", "secondaryWeapon2", "shotgun")
             elif PHOENIX_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                 post("save.json", "secondaryWeapon2", "phoenix")
+            elif SPIRAL_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                post("save.json", "secondaryWeapon1", "spiral")
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
