@@ -9,8 +9,6 @@ from Class.player import Player
 from Class.enemy import Enemy
 from Class.score import Score
 
-#Import Patterns
-
 
 #Init the pygame & clock
 pygame.init()
@@ -49,7 +47,10 @@ bulletCoolDown = 0
 scoreTime = 0
 
 #Create Player
-player = Player(10, 5, 50, pygame.transform.scale(pygame.image.load("img/emeu.jpg").convert(), (50, 50)), displayWidth, displayHeight, 30, 60, 15, 100)
+imgPlayer = pygame.image.load("img/emeu.jpg").convert()
+imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
+
+player = Player(10, 5, 50, displayWidth, displayHeight, 30, 60, 15, 100)
 
 #Create Enemy
 imgEnemy = pygame.image.load("img/enemy.png").convert()
@@ -103,34 +104,59 @@ while running:
         player.speed = player.dashSpeed
     elif timerDash[0] == 0: 
         player.speed = player.basicSpeed
-    elif timerDash[0] > 0:
+    
+    
+    if timerDash[0] > 0:
         timerDash[0] -= 1
     elif timerDash[0] == 0 and timerDash[1] > 0:
         timerDash[1] -= 1
 
-    #PLAYER Y movement
+     #PLAYER Y movement
     if pressed[pygame.K_z]:
-        player.move(0,-1)
+        velY = -1
     elif pressed[pygame.K_s]:
-        player.move(0,1)
+        velY = 1
     else :
-        playerYVelocity = 0
-
+        velY = 0
     # PLAYER X movement
     if pressed[pygame.K_d]:
-        player.move(1,0)
+        velX = 1
     elif pressed[pygame.K_q]:
-        player.move(-1,0)
+        velX = -1
     else :
-        playerXVelocity = 0
+        velX = 0
+        
+    player.move(velX, velY)
 
     # Change each bullet location depending on velocity
     for bullet in bullets:
-        bullet.y -= bullet.velocity
+        if bullet.isHoming == True:
+            if len(enemyList) == 0:
+                bullet.move(0, -1)
+                screen.blit(bullet.image, (bullet.x, bullet.y))
+            else:
+                dx = enemyList[0].x - bullet.x
+                dy = enemyList[0].y - bullet.y
+
+                distance = math.sqrt((dx ** 2) + (dy ** 2))
+
+                # Déplacer le missile vers la cible avec une vitesse constante
+                bullet.move((dx / distance), (dy / distance))
+                
+                # Calculer l'angle de rotation nécessaire pour pointer vers l'ennemi
+                angle_radians = math.atan2(dy, dx)
+                angle_degrees = math.degrees(angle_radians)
+
+                # Faire pivoter l'image du missile de l'angle calculé
+                rotated_image = pygame.transform.rotate(bullet.image, -angle_degrees - 90)
+
+                # Afficher l'image tournée
+                screen.blit(rotated_image, (bullet.x, bullet.y))
+        else:
+            bullet.move(0, -1)
     
     #Enemy
     for enemy in enemyList:
-        
         rect = pygame.Rect(enemy.x, enemy.y, enemy.size, enemy.size)
         screen.blit(enemy.image, (enemy.x, enemy.y))
         if enemy.y > enemy.displayHeight:
@@ -141,8 +167,8 @@ while running:
         for bullet in bullets:
             bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.width, bullet.width)
             if rect.colliderect(bulletRect):
-                enemy.takeDmg(10)
-                score.score_increment(10)
+                enemy.takeDmg(bullet.damage)
+                score.score_increment(bullet.damage)
                 bullets.pop(bullets.index(bullet))
 
             if(enemy.health <= 0):
@@ -159,11 +185,11 @@ while running:
     #Add a bullet to the bullets list on press
     if pressed[pygame.K_p]:
          if pygame.time.get_ticks() - bulletCoolDown >= 250:
-            bullets.append(Projectile(player.X, player.Y, classicBulletWidth, classicBullet))
+            bullets.append(Projectile(player.X, player.Y, classicBulletWidth, classicBullet, 10, 5, False, displayWidth, displayHeight))
             bulletCoolDown = pygame.time.get_ticks()
     if pressed[pygame.K_o]:
         if pygame.time.get_ticks() - missileCooldown >= 500:
-            bullets.append(Projectile(player.X, player.Y, missileWidth, missile))
+            bullets.append(Projectile(player.X, player.Y, missileWidth, missile, 10, 10, True, displayWidth, displayHeight))
             missileCooldown = pygame.time.get_ticks()
 
     #Score grows automatically
@@ -172,12 +198,13 @@ while running:
         scoreTime = pygame.time.get_ticks()
         
     #Draw player model on screen
-    screen.blit(player.img, (player.X, player.Y))
+    screen.blit(imgPlayer, (player.X, player.Y))
     
     #Draw each missile model on screen
     for bullet in bullets:
-        if bullet.y > 0 & bullet.y < 1920 :
-            screen.blit(bullet.image, (bullet.x, bullet.y))
+        if bullet.y > 0 - bullet.width and bullet.y < displayHeight and bullet.x > 0 - bullet.width and bullet.x < displayWidth:  
+            if bullet.isHoming == False:
+                screen.blit(bullet.image, (bullet.x, bullet.y))
         else:
             bullets.pop(bullets.index(bullet))
 
