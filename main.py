@@ -48,7 +48,7 @@ imgPlayer = pygame.image.load("img/ships/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
 SCREEN = pygame.display.set_mode((1920, 1080))
-pygame.display.set_caption("Menu")  
+pygame.display.set_caption("Menu") 
 
 BG = pygame.image.load("img/assets/background.png")
 BG = pygame.transform.scale(BG, (1920, 1080))

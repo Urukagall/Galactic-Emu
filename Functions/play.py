@@ -262,6 +262,7 @@ def play(player, gameManager):
     textDialoguePhaseBoss = 0
     textDialogue = "Hello\nI am under the water\nPlease help me\n"
     textDialogueBoss = "\nHello \nSorry Lady, I have to many other woman\nTry It\n"
+    
     textDialogueSurface = []
     textDialogueSurfaceBoss = []
     space_pressed = False
@@ -272,7 +273,13 @@ def play(player, gameManager):
     for line in textDialogueBoss.split('\n'):
         textDialogueSurfaceBoss.append(get_font(20).render(line, True, "#b68f40"))
 
+    paused = False
+
     while running:
+
+        pressed = pygame.key.get_pressed()
+
+  
         oldDamage = boss.health
         # run the game at a constant 60fps
         clock.tick(60)
@@ -289,6 +296,18 @@ def play(player, gameManager):
             elif events.type == pygame.KEYDOWN:
                 if events.key == pygame.K_ESCAPE:
                     running=False
+                
+                #pause     
+                if events.key == pygame.K_m:
+                    screen.blit(bossImgAvatar,(displayWidth - bossImgAvatar.get_width() , 0))
+                    paused = not paused
+                    
+                    
+                
+
+        if paused == True:
+            
+            continue
         # Play music in Loop
         
         if bossFight:
@@ -321,7 +340,7 @@ def play(player, gameManager):
             trueScroll = 0
 
         # Slow movement and dash
-        pressed = pygame.key.get_pressed()
+       
 
         if pressed[pygame.K_LSHIFT]:
             if pressed[pygame.K_SPACE] and timerDash[1] == 0:
