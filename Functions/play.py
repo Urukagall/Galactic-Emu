@@ -20,11 +20,6 @@ def drawTransition(surf, y, color):
         pygame.draw.rect(surf, color, (x,16-y,1,y))
         y -= 1
 
-def drawTransition(surf, y, color):
-    for x in range(16):
-        pygame.draw.rect(surf, color, (x, 16 - y, 1, y))
-        y -= 1
-
 def darken(image, percent = 50):
     '''Creates a  darkened copy of an image, darkened by percent (50% by default)'''
     newImg = image.copy()
