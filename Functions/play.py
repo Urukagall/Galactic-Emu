@@ -230,7 +230,7 @@ def play(player, gameManager):
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
     bossImgAvatar = pygame.image.load("img/avatar/colonelSandersAvatar.png").convert_alpha()
     bossImgAvatar = pygame.transform.scale(bossImgAvatar, (150, 150))
-    boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
+    boss = Boss(10000, 0.5, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
     enemyList.append(boss)
     #onScreenEnemiesList.append(boss)
     bossFight = False
@@ -493,6 +493,7 @@ def play(player, gameManager):
 
         #Add a bullet to the projectileList list on press
         if pressed[pygame.K_w]:
+            player.updateSecondaries()
             if player.cooldown <= 0:
                 shift = True
                 if player.speed != player.slowSpeed:
