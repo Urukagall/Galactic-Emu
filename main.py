@@ -48,6 +48,11 @@ projectileList = []
 imgPlayer = pygame.image.load("img/ships/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
+imgEmeu = pygame.image.load("img/avatar/heros-comesback.png")
+# imgEmeu = pygame.transform.scale(imgEmeu, (50, 50))
+imgColonel = pygame.image.load("img/avatar/colonel.png")
+# imgColonel = pygame.transform.scale(imgColonel, (50, 50))
+
 SCREEN = pygame.display.set_mode((1920, 1080))
 pygame.display.set_caption("Menu")  
 
@@ -80,6 +85,8 @@ def main_menu():
         if menuMusic.get_num_channels() == 0:
             menuMusic.play(-1)
         SCREEN.blit(BG, (0, 0))
+        SCREEN.blit(imgEmeu, (-100,300))
+        SCREEN.blit(imgColonel, (1000,300))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
