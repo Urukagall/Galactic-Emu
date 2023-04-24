@@ -9,7 +9,7 @@ buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
 # Upgrade Button Ship
-LIVE_BUTTON = Button(buttonSurface, 510, 550, "Live", False, None, None, buttonSurface)
+MINI_GUN_BUTTON = Button(buttonSurface, 510, 550, "Mini-Gun", True, 150, None, buttonSurface, "A high firerate suspended canon")
 DASH_BUTTON = Button(buttonSurface, 760, 550, "Dash Cooldown", False, None, None, buttonSurface)
 SPIRAL_BUTTON = Button(buttonSurface, 510, 700, "Special Spiral", False, None, None, buttonSurface)
 SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", False, None, None, buttonSurface)
@@ -39,7 +39,7 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
-        for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON]:
+        for button in [RESUME_BUTTON, MINI_GUN_BUTTON, DASH_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
         

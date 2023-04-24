@@ -6,6 +6,7 @@ import pygame.time
 from Class.player import Player
 from Class.button import Button
 from Class.gameManager import GameManager
+from Functions.jsonReader import *
 
 #Import Patterns
 from Functions.enemiesPattern import *
@@ -40,7 +41,6 @@ carreauBlue =  pygame.image.load("img/bullets/carreau.png")
 carreauBlue = pygame.transform.scale(carreauBlue, (carreauBlue.get_width()*2, carreauBlue.get_height()*2))
 
 
-    
 #projectileList & CD
 projectileList = []
 
@@ -71,7 +71,7 @@ darkCarreau = darken(carreauBlue,45).convert_alpha()
 darkBullet = darken(classicBullet).convert_alpha()
 darkMissile = darken(missile,60).convert_alpha()
 
-player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
+player = Player(10, 5, 50, 1920, 1080, 30, 120, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
 
 # take the template file to copy to the main json files
 templatePaste()
@@ -83,7 +83,6 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
 def main_menu():
-    earntMoney = 0
     running = True
     while running:
         if menuMusic.get_num_channels() == 0:
@@ -115,7 +114,7 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     menuMusic.stop()
-                    earntMoney = play(player, gameManager)
+                    play(player, gameManager)
                 if SHOP_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS, player):
@@ -129,6 +128,5 @@ def main_menu():
                     pygame.quit()
                     sys.exit()
         pygame.display.update()
-        player.money = earntMoney
         
 main_menu()

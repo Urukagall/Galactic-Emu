@@ -39,7 +39,7 @@ class Button():
 	def checkForInput(self, position, player):
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
 			# If you have the money to buy return True
-			if self.isShopping and (self.price <= player.money or self.price == None):
+			if self.isShopping and (self.price <= player.money or self.price == None) and self.price != -1:
 				player.updateMoney(-self.price)
 				# self.function(player, self.newImg)
 				return True
