@@ -24,4 +24,4 @@ def postAll (fileName, value):
     data = value
 
     with open('SaveFiles/' + str(fileName), 'w') as f:
-        json.dump(data, f, indent=4, separators=(',', ': '))  
+        json.dump(data, f, indent=4, separators=(',', ': '))
