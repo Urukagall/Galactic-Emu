@@ -7,6 +7,12 @@ from Functions.jsonReader import *
 
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
+bulletNumberUp = pygame.image.load("img/assets/buttonAmelioration/bullet_number_up.png")
+bulletNumberUp = pygame.transform.scale(bulletNumberUp, (bulletNumberUp.get_width()/3, bulletNumberUp.get_height()/3))
+bulletSpeedUp = pygame.image.load("img/assets/buttonAmelioration/bullet_speed_up.png")
+bulletSpeedUp = pygame.transform.scale(bulletSpeedUp, (bulletSpeedUp.get_width()/1.3, bulletSpeedUp.get_height()/1.3))
+bulletFirerateUp = pygame.image.load("img/assets/buttonAmelioration/fire_rate_up.png")
+bulletFirerateUp = pygame.transform.scale(bulletFirerateUp, (bulletFirerateUp.get_width()/1.3, bulletFirerateUp.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
@@ -63,6 +69,7 @@ def shopBullet(SCREEN, BG, player, main_menu, gameManager, shop):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if RESUME_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shop(SCREEN, BG, player, main_menu, gameManager)
+                    
                 if SPEED_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.bulletSpeed = shopping("bullet", "Speed", SPEED_BULLET_BUTTON, "bulletSpeed")
                     
