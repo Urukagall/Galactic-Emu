@@ -20,6 +20,8 @@ class Player():
         self.timeDash = timeDash
         self.lives = lives
         self.money = 0
+        self.timeInvincible = 3
+        self.dashInvulnerability = 0
         self.secondaryWeapon1 = get("save.json", "secondaryWeapon1")
         self.secondaryWeapon2 = get("save.json", "secondaryWeapon2")
 
@@ -130,12 +132,15 @@ class Player():
         if shift:
             self.preciseHandler.update(direction)
         self.bulletHandler.update(direction)
-        self.spiralHandler.update(direction)
+        if self.secondaryWeapon1 == "spiral":
+            self.spiralHandler.update(direction)
 
     def updateSecondaries(self):
         direction = (0, -1)
         if self.secondaryWeapon1 == "autocanon":
+            print("b")
             if self.autocanonCooldown <= 0:
+                print("a")
                 self.autocanonCooldown = self.timeBewteenAutocanonShots
                 self.autocanonHandler.update(direction)
             else:

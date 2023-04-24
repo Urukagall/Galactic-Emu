@@ -152,5 +152,19 @@
         550,
         700,
         -1
+    ],
+    "playerShieldLevel": 0,
+    "playerShieldUpgrade": [
+        5,
+        10,
+        15,
+        20
+    ],
+    "playerShieldPrice": [
+        300,
+        450,
+        550,
+        700,
+        -1
     ]
 }

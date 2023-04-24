@@ -183,7 +183,6 @@ def play(player, gameManager):
     playerShield = pygame.image.load("img/ships/playerShield.png").convert_alpha()
     playerShield = pygame.transform.scale(playerShield, (50, 50))
     invincible = False
-    timeInvincible = 3 #in seconds
     invincibleCountdown = 0
     damageAvatarCountdown = 0
     isPlaying = False
@@ -284,11 +283,14 @@ def play(player, gameManager):
                     running=False
                 if events.key == pygame.K_m:
                     paused = not paused
-
-        if paused == True:
+        
+        if paused:
+            pausedText = get_font(100).render("MAIN MENU", True, "#b68f40")
+            pausedRect = pausedText.get_rect(center=(960, 100))
+            screen.blit(pausedText,pausedRect)
             continue
         # Play music in Loop
-        
+        print("a")
         if bossFight:
             backGround = bossBase
             bulletHellSound.stop()
@@ -334,7 +336,8 @@ def play(player, gameManager):
             invincible = True
             timerDash[1] = player.cooldownDash
             timerDash[0] = player.timeDash
-            invincibleCountdown = timerDash[0] + 10
+            invincibleCountdown = timerDash[0] + player.dashInvulnerability
+            print(player.dashInvulnerability)
             player.speed = player.dashSpeed
         elif timerDash[0] == 0: 
             player.speed = player.basicSpeed
@@ -400,7 +403,7 @@ def play(player, gameManager):
                 if playerRect.colliderect(bulletRect) and not invincible:
                     player.getHit()
                     damageAvatarCountdown = 120
-                    invincibleCountdown = timeInvincible * 60
+                    invincibleCountdown = player.timeInvincible * 60
                     invincible = True
                     projectileList.pop(projectileList.index(bullet))
             else:
@@ -441,7 +444,7 @@ def play(player, gameManager):
                         break
             if enemyRect.colliderect(playerRect) and not invincible:
                 player.getHit()
-                invincibleCountdown = timeInvincible * 60
+                invincibleCountdown = player.timeInvincible * 60
                 damageAvatarCountdown = 120
                 invincible = True
                 if enemy.__class__.__name__ == "Enemy":
@@ -609,6 +612,10 @@ def play(player, gameManager):
                 transition = False
                 transitionY = 0
                 subY = 0
+     
+        pausedText = get_font(100).render("MAIN MENU", True, "#b68f40")
+        pausedRect = pausedText.get_rect(center=(960, 100))
+        screen.blit(pausedText,pausedRect)
 
         pygame.display.update()
     saveReader(player)
