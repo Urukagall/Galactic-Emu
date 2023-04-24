@@ -9,6 +9,7 @@ from Class.enemy import Enemy
 from Class.score import Score
 from Class.button import Button
 from Class.boss import Boss
+from Functions.saveReader import saveReader
 
 
 from Functions.enemiesPattern import *
@@ -278,11 +279,6 @@ def play(player, gameManager):
         oldDamage = boss.health
         # run the game at a constant 60fps
         clock.tick(60)
-
-        # Dialogue phase 1
-        textDialogueRect = textDialogueSurface[textDialoguePhase].get_rect(center=(600, 1000))
-        if bossFight:
-            textDialogueRectBoss = textDialogueSurfaceBoss[textDialoguePhaseBoss].get_rect(center=(1320, 80))
             
         #Close window on Escape press
         for events in pygame.event.get():
@@ -369,25 +365,7 @@ def play(player, gameManager):
         else :
             velX = 0
         
-        if pressed[pygame.K_SPACE] and textDialoguePhase < len(textDialogueSurface) - 1 and not(space_pressed):
-            if bossFight:
-                if textDialoguePhaseBoss <= textDialoguePhase:
-                    textDialoguePhaseBoss +=1
-                else:
-                    textDialoguePhase +=1
-            else:
-                textDialoguePhase +=1
-            space_pressed = True
-        elif textDialoguePhase >= len(textDialogueSurface) - 1:
-            isPlaying = True
-            if bossFight:
-                textDialoguePhaseBoss = len(textDialogueSurfaceBoss) -1
-        if not pressed[pygame.K_SPACE]:
-            space_pressed = False
-        if textDialoguePhase < len(textDialogueSurface) - 1:
-            projectileList.clear()
-            invincible = True
-            invincibleCountdown = 60
+        
         
         player.move(velX, velY)
         playerHitbox = pygame.Rect(0,0, player.size/8, player.size/8)
@@ -466,12 +444,11 @@ def play(player, gameManager):
                         score.score_increment(enemy.score)
                         #the enemy pops itself out of onScreenEnemiesList
                         break
-            if enemyRect.colliderect(playerRect):
-                if not invincible:
-                    player.getHit()
-                    invincibleCountdown = timeInvincible * 60
-                    damageAvatarCountdown = 120
-                    invincible = True
+            if enemyRect.colliderect(playerRect) and not invincible:
+                player.getHit()
+                invincibleCountdown = timeInvincible * 60
+                damageAvatarCountdown = 120
+                invincible = True
                 if enemy.__class__.__name__ == "Enemy":
                     score.score_increment(10)
                     onScreenEnemiesList.pop(onScreenEnemiesList.index(enemy))
@@ -548,6 +525,34 @@ def play(player, gameManager):
         screen.blit(ultimateText, (10, 50))
         ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
         screen.blit(ultimateText, (10, 70))
+        
+        
+        # Dialogue phase 1
+        textDialogueRect = textDialogueSurface[textDialoguePhase].get_rect(center=(600, 1000))
+        if bossFight:
+            textDialogueRectBoss = textDialogueSurfaceBoss[textDialoguePhaseBoss].get_rect(center=(1320, 80))
+        
+        if pressed[pygame.K_SPACE] and textDialoguePhase < len(textDialogueSurface) - 1 and not(space_pressed):
+            if bossFight:
+                if textDialoguePhaseBoss <= textDialoguePhase:
+                    textDialoguePhaseBoss +=1
+                else:
+                    textDialoguePhase +=1
+            else:
+                textDialoguePhase +=1
+            space_pressed = True
+        elif textDialoguePhase >= len(textDialogueSurface) - 1:
+            isPlaying = True
+            if bossFight:
+                textDialoguePhaseBoss = len(textDialogueSurfaceBoss) -1
+        if not pressed[pygame.K_SPACE]:
+            space_pressed = False
+        if textDialoguePhase < len(textDialogueSurface) - 1:
+            projectileList.clear()
+            invincible = True
+            invincibleCountdown = 60
+
+
         screen.blit(textDialogueSurface[textDialoguePhase], textDialogueRect)
         if bossFight:
             screen.blit(textDialogueSurfaceBoss[textDialoguePhaseBoss], textDialogueRectBoss)
@@ -577,6 +582,7 @@ def play(player, gameManager):
             screen.blit(loseMinText, (800, 550))
             bulletHellSound.stop()
             bossMusic.stop()
+            saveReader(player)
             return player.money
 
         if pressed[pygame.K_LSHIFT]:
@@ -610,6 +616,7 @@ def play(player, gameManager):
                 subY = 0
 
         pygame.display.update()
+    saveReader(player)
     bossMusic.stop()
     bulletHellSound.stop()
     return player.money
