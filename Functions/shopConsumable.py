@@ -11,7 +11,7 @@ RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, but
 
 # Upgrade Button Ship
 AUTOCANON_BUTTON = Button(buttonSurface, 510, 550, "Autocanon", True, 100, None, buttonSurface, "A high firerate suspended canon")
-DASH_BUTTON = Button(buttonSurface, 760, 550, "Dash Cooldown", False, None, None, buttonSurface)
+SHOTGUN_BUTTON = Button(buttonSurface, 760, 550, "Shotgun", True, 150, None, buttonSurface, "Slow firerate but wide angle")
 SPIRAL_BUTTON = Button(buttonSurface, 510, 700, "Special Spiral", False, None, None, buttonSurface)
 SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", False, None, None, buttonSurface)
 
@@ -34,11 +34,13 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
-        for button in [RESUME_BUTTON, DASH_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, AUTOCANON_BUTTON]:
+        for button in [RESUME_BUTTON, SHOTGUN_BUTTON, SPIRAL_BUTTON, SPEED_BUTTON, AUTOCANON_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
             if AUTOCANON_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                 post("save.json", "secondaryWeapon1", "autocanon")
+            elif SHOTGUN_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                post("save.json", "secondaryWeapon2", "shotgun")
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

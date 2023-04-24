@@ -11,5 +11,6 @@
     "missileArrayNumber": 1,
     "missileDamage": 1,
     "timeBetweenMissiles": 20,
-    "secondaryWeapon1": "autocanon"
+    "secondaryWeapon1": "autocanon",
+    "secondaryWeapon2": "shotgun"
 }

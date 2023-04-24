@@ -3,6 +3,7 @@ import pygame
 from Class.bulletHandler import BulletHandler
 from Class.particle import Particle
 from Functions.jsonReader import *
+from Functions.darken import darken
 
 class Player():
     def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile, imgPrecise):
@@ -20,6 +21,7 @@ class Player():
         self.lives = lives
         self.money = 0
         self.secondaryWeapon1 = get("save.json", "secondaryWeapon1")
+        self.secondaryWeapon2 = get("save.json", "secondaryWeapon2")
 
         # Bullet Stats
         self.bulletImg = imgBullet
@@ -47,8 +49,11 @@ class Player():
         #Secondary weapons
         self.ballBlue = pygame.image.load("img/bullets/ball.png").convert_alpha()
         self.ballBlue = pygame.transform.scale(self.ballBlue, (self.ballBlue.get_width(), self.ballBlue.get_height()))
+        self.ballBlue = darken(self.ballBlue).convert_alpha()
         self.timeBewteenAutocanonShots = 1
         self.autocanonCooldown = self.timeBewteenAutocanonShots
+        self.timeBewteenShotgunShots = 60
+        self.shotgunCooldown = self.timeBewteenShotgunShots
 
         self.preciseImg = imgPrecise
 
@@ -60,6 +65,7 @@ class Player():
         self.preciseHandler = BulletHandler(self.bulletSpeed, self.arrayNumber+1, self.angleBetweenArrays/2, self.projectileList, self.preciseImg, isHoming=False, isPlayer=True)
         #secondary (optionnal) weapons
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
+        self.shotgunHandler = BulletHandler(self.bulletSpeed, 5, 10, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
 
 
     def redefined(self):
@@ -68,6 +74,7 @@ class Player():
         self.preciseHandler = BulletHandler(self.bulletSpeed, self.arrayNumber+1, self.angleBetweenArrays/2, self.projectileList, self.preciseImg, isHoming=False, isPlayer=True)
         #secondary (optionnal) weapons
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
+        self.shotgunHandler = BulletHandler(self.bulletSpeed, 10, 5, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
@@ -91,7 +98,9 @@ class Player():
         self.missileHandler.move(self.X+self.size/4, self.Y+self.size/4)
         self.preciseHandler.move(self.X+self.size/4, self.Y+self.size/4)
         if self.secondaryWeapon1 == "autocanon":
-            self.autocanonHandler.move(self.X, self.Y+self.size/4)
+            self.autocanonHandler.move(self.X, self.Y+self.size/2)
+        if self.secondaryWeapon2 == "shotgun":
+            self.shotgunHandler.move(self.X+self.size, self.Y+self.size/2)
     
     def getHit(self):
         if self.lives > 0:
@@ -116,6 +125,12 @@ class Player():
                 self.autocanonHandler.update(direction)
             else:
                 self.autocanonCooldown -= 1
+        if self.secondaryWeapon2 == "shotgun":
+            if self.shotgunCooldown <= 0:
+                self.shotgunCooldown = self.timeBewteenShotgunShots
+                self.shotgunHandler.update(direction)
+            else:
+                self.shotgunCooldown -= 1
 
     def shootHoming(self):
         direction = (0,-1)
