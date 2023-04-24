@@ -50,10 +50,15 @@ class Player():
         self.ballBlue = pygame.image.load("img/bullets/ball.png").convert_alpha()
         self.ballBlue = pygame.transform.scale(self.ballBlue, (self.ballBlue.get_width(), self.ballBlue.get_height()))
         self.ballBlue = darken(self.ballBlue).convert_alpha()
+        self.aim54 = pygame.image.load("img/bullets/aim54.png").convert_alpha()
+        self.aim54 = pygame.transform.scale(self.aim54, (self.aim54.get_width()*2, self.aim54.get_height()*2))
+        self.aim54 = darken(self.aim54).convert_alpha()
         self.timeBewteenAutocanonShots = 1
         self.autocanonCooldown = self.timeBewteenAutocanonShots
         self.timeBewteenShotgunShots = 60
         self.shotgunCooldown = self.timeBewteenShotgunShots
+        self.timeBewteenPhoenixShots = self.timeBetweenMissiles * 5
+        self.phoenixCooldown = self.timeBewteenPhoenixShots
 
         self.preciseImg = imgPrecise
 
@@ -75,6 +80,7 @@ class Player():
         #secondary (optionnal) weapons
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 10, 5, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
+        self.phoenixHandler = BulletHandler(self.missileSpeed*2, 1, 0, self.projectileList, self.aim54, 0, True, True, self.missileDamage*10)
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
@@ -101,6 +107,8 @@ class Player():
             self.autocanonHandler.move(self.X, self.Y+self.size/2)
         if self.secondaryWeapon2 == "shotgun":
             self.shotgunHandler.move(self.X+self.size, self.Y+self.size/2)
+        elif self.secondaryWeapon2 == "phoenix":
+            self.phoenixHandler.move(self.X+self.size, self.Y+self.size/2)
     
     def getHit(self):
         if self.lives > 0:
@@ -131,6 +139,12 @@ class Player():
                 self.shotgunHandler.update(direction)
             else:
                 self.shotgunCooldown -= 1
+        elif self.secondaryWeapon2 == "phoenix":
+            if self.phoenixCooldown <= 0:
+                self.phoenixCooldown = self.timeBewteenPhoenixShots
+                self.phoenixHandler.update(direction)
+            else:
+                self.phoenixCooldown -= 1
 
     def shootHoming(self):
         direction = (0,-1)
