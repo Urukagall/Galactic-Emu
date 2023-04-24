@@ -207,7 +207,7 @@ def play(player, gameManager):
     imgSpyral = pygame.image.load("img/ships/spyral.png").convert_alpha()
     imgSpyral = pygame.transform.scale(imgSpyral, (50,50))
     imgMiniBoss = pygame.image.load("img/ships/mini_boss.png").convert_alpha()
-    imgMiniBoss = pygame.transform.scale(imgMiniBoss, (50,50))
+    imgMiniBoss = pygame.transform.scale(imgMiniBoss, (100,100))
 
     #Create Enemy
     enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 0]]
