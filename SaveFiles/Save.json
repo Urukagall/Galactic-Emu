@@ -4,13 +4,14 @@
     "lives": 5,
     "cooldownDash": 120,
     "bulletSpeed": 10,
-    "arrayNumber": 1,
+    "arrayNumber": 5,
     "bulletDamage": 1,
     "timeBetweenShots": 10,
     "missileSpeed": 10,
     "missileArrayNumber": 1,
     "missileDamage": 1,
     "timeBetweenMissiles": 20,
-    "secondaryWeapon1": "None",
-    "secondaryWeapon2": "None"
+    "secondaryWeapon1": "spiral",
+    "secondaryWeapon2": "None",
+    "spiralAttack": "False"
 }

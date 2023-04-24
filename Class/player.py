@@ -50,6 +50,7 @@ class Player():
         self.ballBlue = pygame.image.load("img/bullets/ball.png").convert_alpha()
         self.ballBlue = pygame.transform.scale(self.ballBlue, (self.ballBlue.get_width(), self.ballBlue.get_height()))
         self.ballBlue = darken(self.ballBlue).convert_alpha()
+        self.spiralImg = darken(self.bulletImg, 49).convert_alpha()
         self.aim54 = pygame.image.load("img/bullets/aim54.png").convert_alpha()
         self.aim54 = pygame.transform.scale(self.aim54, (self.aim54.get_width()*2, self.aim54.get_height()*2))
         self.aim54 = darken(self.aim54).convert_alpha()
@@ -71,7 +72,7 @@ class Player():
         #secondary (optionnal) weapons
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 5, 10, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
-        self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber*2, 360/(self.arrayNumber), self.projectileList, self.ballBlue, 5, False, True, self.bulletDamage)
+        self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber*2, 360/(self.arrayNumber), self.projectileList, self.spiralImg, 5, False, True, self.bulletDamage)
 
 
     def redefined(self):
@@ -82,7 +83,7 @@ class Player():
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 10, 5, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.phoenixHandler = BulletHandler(self.missileSpeed*2, 1, 0, self.projectileList, self.aim54, 0, True, True, self.missileDamage*10)
-        self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber*2, 360/(self.arrayNumber), self.projectileList, self.ballBlue, 5, False, True, self.bulletDamage)
+        self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, 360/(self.arrayNumber), self.projectileList, self.spiralImg, 5, False, True, self.bulletDamage)
 
     def move(self, veloX, veloY):
         if veloX != 0 and veloY != 0:
