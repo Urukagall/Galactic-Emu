@@ -10,7 +10,7 @@ class BulletHandler():
     X = 0
     Y = 0
 
-    def __init__(self, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, img, rotation=0,isHoming = False, isPlayer = False):
+    def __init__(self, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, img, rotation=0,isHoming = False, isPlayer = False, damage = 1):
         self.bulletSpeed = bulletSpeed
         self.arrayNumber = arrayNumber
         self.angleBetweenArrays = angleBetweenArrays

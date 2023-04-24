@@ -1,17 +1,15 @@
 import pygame
 import sys
-
 from Class.button import Button
 from Functions.shopBullet import shopBullet
 from Functions.shopConsumable import shopConsumable
 from Functions.shopShip import shopShip
 
 
-buttonSurface = pygame.image.load("img/button.png")
+buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 700, "Return", False, None, None, buttonSurface)
-
 
 # Upgrade Button Ship
 SHIP_BUTTON = Button(buttonSurface, 660, 550, "Ship Upgrade", False, None, None, buttonSurface)
@@ -37,11 +35,10 @@ def shop(SCREEN, BG, player, main_menu, gameManager):
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        
+
 
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
-
         for button in [RESUME_BUTTON, SHIP_BUTTON, BULLET_BUTTON, CONSUMABLE_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
