@@ -21,6 +21,7 @@ class BulletHandler():
         self.isPlayer = isPlayer
         self.isHoming = isHoming
         self.rotation = rotation
+        self.damage = damage
 
         self.angleOffset = 0
         
@@ -46,7 +47,7 @@ class BulletHandler():
             destX = math.cos(radians)
             destY = math.sin(radians)
             arrayDirection = (destX, destY)
-            bullet = Projectile(self.X, self.Y, bulletWidth, self.img, arrayDirection, 1, self.isHoming, 1920, 1080, self.bulletSpeed, self.isPlayer)
+            bullet = Projectile(self.X, self.Y, bulletWidth, self.img, arrayDirection, self.damage, self.isHoming, 1920, 1080, self.bulletSpeed, self.isPlayer)
             self.projectileList.append(bullet)
             self.rotation += self.rotationIncrement
         

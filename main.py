@@ -70,7 +70,7 @@ darkMissile = darken(missile,60).convert_alpha()
 
 player = Player(10, 5, 50, 1920, 1080, 30, 120, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
 
-textEpilepsy = "Warning\n\nThis game has been identified \nby epilepsy action\nto potentially trigger seizure for people with\n photosensitive epilepsy."
+textEpilepsy = "Warning\n\nThis game contains lots of projectiles and colors\nwhich results in flashing lights.\n\nIt might trigger seizure for people with\n photosensitive epilepsy."
 textEpilepsySurface = []
 textEpilepsyRect = []
 for line in textEpilepsy.split('\n'):

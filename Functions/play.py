@@ -202,6 +202,8 @@ def play(player, gameManager):
     imgRailgun = pygame.transform.scale(imgRailgun, (50, 50))
     imgBozo = pygame.image.load("img/ships/bozo.png").convert_alpha()
     imgBozo = pygame.transform.scale(imgBozo, (50, 50))
+    imgMiniBozo = pygame.image.load("img/ships/bozo.png").convert_alpha()
+    imgMiniBozo = pygame.transform.scale(imgBozo, (10, 10))
     imgSupressor = pygame.image.load("img/ships/supressor.png").convert_alpha()
     imgSupressor = pygame.transform.scale(imgSupressor, (50,50))
     imgSpyral = pygame.image.load("img/ships/spyral.png").convert_alpha()
@@ -210,13 +212,14 @@ def play(player, gameManager):
     imgMiniBoss = pygame.transform.scale(imgMiniBoss, (100,100))
 
     #Create Enemy
-    enemyDelayList = [[0, 0, 50], [0, 0, 100], [0, 0, 50], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 100], [0, 0, 0]]
-    bozo = Enemy(True, 100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left")
-    railgun = Enemy(True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left")
-    supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
-    spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left", 3)
-    miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballYellow)
-    enemyList  = [ ]
+    enemyDelayList = [[10, 300, 0], [1870,300,0],[10,300,60],[1870,300,0],[10,300,60],[1870,300,0]]
+    miniBozo = Enemy(True, 10, 0.5, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left", 10)
+    bozo = Enemy(True, 100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left", 20)
+    railgun = Enemy(True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left", 50)
+    supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left",30, 0, 10, 1, 0, 2, bigBallRed)
+    spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left",30, 3)
+    miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left",150, 3, 1, 3, 10, 3, ballYellow)
+    enemyList  = [miniBozo, miniBozo, miniBozo, miniBozo, miniBozo, miniBozo]
     # enemyList = []
     onScreenEnemiesList = []
 
@@ -441,6 +444,9 @@ def play(player, gameManager):
                         enemyDelayList.pop(0)
             else:
                 onScreenEnemiesList.append(enemyList.pop(0))
+                onScreenEnemiesList[len(onScreenEnemiesList)-1].x = enemyDelayList[0][0]
+                onScreenEnemiesList[len(onScreenEnemiesList)-1].y = enemyDelayList[0][1]
+                print(onScreenEnemiesList[-1].x, onScreenEnemiesList[-1].y)
                 enemyDelayList.pop(0)
 
         playerBullets = pygame.surface.Surface((displayWidth, displayHeight))
@@ -489,11 +495,10 @@ def play(player, gameManager):
                     bulletRect = pygame.Rect(bullet.x, bullet.y, bullet.size, bullet.size)
                     if enemyRect.colliderect(bulletRect):
                         projectileList.pop(projectileList.index(bullet))
-                        enemy.takeDmg(bullet.damage, onScreenEnemiesList)
+                        enemy.takeDmg(bullet.damage, onScreenEnemiesList, player)
                         score.score_increment(10)
                         
                     if(enemy.health <= 0):
-                        player.money += 10
                         score.score_increment(enemy.score)
                         #the enemy pops itself out of onScreenEnemiesList
                         break
@@ -519,7 +524,7 @@ def play(player, gameManager):
             
             if(particle.doDamage):
                 for enemy in onScreenEnemiesList:
-                    enemy.takeDmg(player.ultimateDmg, onScreenEnemiesList)
+                    enemy.takeDmg(player.ultimateDmg, onScreenEnemiesList, player)
 
         #Add a bullet to the projectileList list on press
         if pressed[pygame.K_w]:

@@ -139,9 +139,7 @@ class Player():
     def updateSecondaries(self):
         direction = (0, -1)
         if self.secondaryWeapon1 == "autocanon":
-            print("b")
             if self.autocanonCooldown <= 0:
-                print("a")
                 self.autocanonCooldown = self.timeBewteenAutocanonShots
                 self.autocanonHandler.update(direction)
             else:
