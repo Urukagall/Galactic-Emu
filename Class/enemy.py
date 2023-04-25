@@ -4,7 +4,7 @@ import pygame, math
 
 class Enemy():
 
-    def __init__(self,aimAtPlayer,health, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg1, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, bulletRotation=0, bulletSpeed2 = 0, arrayNumber2 = 0, angleBetweenArrays2 = 0, timeBetweenShots2=0, bulletImg2=[], aimAtPlayer2=True, bulletRotation2 = 0,  pattern=firstPattern):
+    def __init__(self,aimAtPlayer,health, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg1, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, money = 10, bulletRotation=0, bulletSpeed2 = 0, arrayNumber2 = 0, angleBetweenArrays2 = 0, timeBetweenShots2=0, bulletImg2=[], aimAtPlayer2=True, bulletRotation2 = 0,  pattern=firstPattern):
         self.health = health
         self.speed = speed
         self.x = x
@@ -27,6 +27,8 @@ class Enemy():
         self.bulletImg1 = bulletImg1
         self.BHList = []
         
+        self.money = money
+
         self.bulletRotation = bulletRotation
         self.bulletRotation2 = bulletRotation2
             
@@ -49,10 +51,11 @@ class Enemy():
         for bulletHandler in self.BHList:   
             bulletHandler.move(self.x + self.size/2, self.y + self.size/2)
 
-    def takeDmg(self, dmg, enemyList):
+    def takeDmg(self, dmg, enemyList, player):
         self.health -= dmg
         if(self.health <= 0):
             enemyList.pop(enemyList.index(self))
+            player.money += self.money
     
     def update(self, player):
         #move

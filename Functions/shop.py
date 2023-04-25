@@ -15,7 +15,7 @@ RESUME_BUTTON = Button(buttonSurface, 960, 700, "Return", False, None, None, but
 SHIP_BUTTON = Button(buttonSurface, 660, 550, "Ship Upgrade", False, None, None, buttonSurface)
 
 # Consumable Button
-CONSUMABLE_BUTTON = Button(buttonSurface, 960, 550, "Consumable", False, None, None, buttonSurface)
+CONSUMABLE_BUTTON = Button(buttonSurface, 960, 550, "Power-Up", False, None, None, buttonSurface)
 
 # Upgrade Button bullet
 BULLET_BUTTON = Button(buttonSurface, 1260, 550, "Bullet Upgrade", False, None, None, buttonSurface)
@@ -31,13 +31,13 @@ MENU_UPGRADE_RECT = MENU_UPGRADE.get_rect(center=(960, 480))
 def shop(SCREEN, BG, player, main_menu, gameManager):
     running = True
     while running:
+        MENU_MONEY = get_font(20).render("Money:" + str(player.money), True, "#b68f40")
         SCREEN.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-
-
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
+        SCREEN.blit(MENU_MONEY, (50,50))
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
         for button in [RESUME_BUTTON, SHIP_BUTTON, BULLET_BUTTON, CONSUMABLE_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)

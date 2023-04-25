@@ -51,6 +51,7 @@ def shopping(stat, button, statSaveName):
 def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
     running = True
     while running:
+        MENU_MONEY = get_font(20).render("Money:" + str(player.money), True, "#b68f40")
         SCREEN.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -58,6 +59,8 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
+        SCREEN.blit(MENU_MONEY, (50,50))
+        
         for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SHIELD_BUTTON, SPEED_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
@@ -74,14 +77,18 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
                     
                 if LIVE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.lives = shopping("Live", LIVE_BUTTON, "money")
+                    post("save.json", "money", player.money - LIVE_BUTTON.price)
                     
                 if SPEED_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.basicSpeed = shopping("Speed", SPEED_BUTTON, "speed")
+                    post("save.json", "money", player.money - SPEED_BUTTON.price)
                     
                 if DASH_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.cooldownDash = shopping("Dash", DASH_BUTTON, "cooldownDash")
+                    post("save.json", "money", player.money - DASH_BUTTON.price)
                     
                 if SHIELD_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.dashInvulnerability = shopping("Shield", SHIELD_BUTTON, "dashInvulnerability")
+                    post("save.json", "money", player.money - SHIELD_BUTTON.price)
                     
         pygame.display.update()
