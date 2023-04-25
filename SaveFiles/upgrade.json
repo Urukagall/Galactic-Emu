@@ -55,7 +55,7 @@
         500,
         -1
     ],
-    "missileSpeedLevel": 0,
+    "missileSpeedLevel": 4,
     "missileSpeedUpgrade": [
         10,
         15,
@@ -83,7 +83,7 @@
         500,
         -1
     ],
-    "missileCanonsLevel": 0,
+    "missileCanonsLevel": 4,
     "missileCanonsUpgrade": [
         2,
         3,
@@ -97,7 +97,7 @@
         600,
         -1
     ],
-    "missileFirerateLevel": 0,
+    "missileFirerateLevel": 4,
     "missileFirerateUpgrade": [
         8,
         6,
@@ -111,7 +111,7 @@
         500,
         -1
     ],
-    "playerLiveLevel": 0,
+    "playerLiveLevel": 4,
     "playerLiveUpgrade": [
         6,
         7,
@@ -125,7 +125,7 @@
         500,
         -1
     ],
-    "playerSpeedLevel": 0,
+    "playerSpeedLevel": 4,
     "playerSpeedUpgrade": [
         11,
         12,

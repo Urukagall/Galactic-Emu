@@ -1,6 +1,6 @@
 {
-    "money": 1000000,
-    "speed": 10,
+    "money": 977801,
+    "speed": 15,
     "lives": 5,
     "cooldownDash": 120,
     "dashInvulnerability": 0,
@@ -8,11 +8,10 @@
     "arrayNumber": 1,
     "bulletDamage": 5,
     "timeBetweenShots": 10,
-    "missileSpeed": 10,
-    "missileArrayNumber": 1,
+    "missileSpeed": 25,
+    "missileArrayNumber": 5,
     "missileDamage": 5,
-    "timeBetweenMissiles": 20,
-    "secondaryWeapon1": "None",
-    "secondaryWeapon2": "None",
-    "spiralAttack": "False"
+    "timeBetweenMissiles": 2,
+    "secondaryWeapon1": "spiral",
+    "secondaryWeapon2": "phoenix"
 }

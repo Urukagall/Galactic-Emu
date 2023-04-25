@@ -75,6 +75,7 @@ class Player():
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 5, 10, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber*2, 360/(self.arrayNumber), self.projectileList, self.spiralImg, 5, False, True, self.bulletDamage)
+        self.phoenixHandler = BulletHandler(self.missileSpeed*2, 1, 0, self.projectileList, self.aim54, 0, True, True, self.missileDamage*20)
 
 
     def redefined(self):
@@ -84,7 +85,7 @@ class Player():
         #secondary (optionnal) weapons
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 10, 5, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
-        self.phoenixHandler = BulletHandler(self.missileSpeed*2, 1, 0, self.projectileList, self.aim54, 0, True, True, self.missileDamage*10)
+        self.phoenixHandler = BulletHandler(self.missileSpeed*2, 1, 0, self.projectileList, self.aim54, 0, True, True, self.missileDamage*20)
         self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, 360/(self.arrayNumber), self.projectileList, self.spiralImg, 5, False, True, self.bulletDamage)
 
     def move(self, veloX, veloY):

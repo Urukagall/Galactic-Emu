@@ -53,6 +53,7 @@ def shopping(projectile, stat, button, statSaveName):
 def shopBullet(SCREEN, BG, player, main_menu, gameManager, shop):
     running = True
     while running:
+        MENU_MONEY = get_font(20).render("Money:" + str(player.money), True, "#b68f40")
         SCREEN.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -60,6 +61,9 @@ def shopBullet(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         SCREEN.blit(MENU_UPGRADE_1, MENU_UPGRADE_1_RECT)
         SCREEN.blit(MENU_UPGRADE_2, MENU_UPGRADE_2_RECT)
+        
+        SCREEN.blit(MENU_MONEY, (50,50))
+        
         for button in [RESUME_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BULLET_BUTTON, CANONS_BULLET_BUTTON, FIRERATE_BULLET_BUTTON, SPEED_MISSILE_BUTTON, DAMAGE_MISSILE_BUTTON, CANONS_MISSILE_BUTTON, FIRERATE_MISSILE_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
@@ -74,26 +78,34 @@ def shopBullet(SCREEN, BG, player, main_menu, gameManager, shop):
                     
                 if SPEED_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.bulletSpeed = shopping("bullet", "Speed", SPEED_BULLET_BUTTON, "bulletSpeed")
+                    post("save.json", "money", player.money - SPEED_BULLET_BUTTON.price)
                     
                 if DAMAGE_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.bulletDamage = shopping("bullet", "Damage", DAMAGE_BULLET_BUTTON, "bulletDamage")
+                    post("save.json", "money", player.money - DAMAGE_BULLET_BUTTON.price)
                     
                 if CANONS_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.arrayNumber = shopping("bullet", "Canons", CANONS_BULLET_BUTTON, "arrayNumber")
+                    post("save.json", "money", player.money - CANONS_BULLET_BUTTON.price)
                     
                 if FIRERATE_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.timeBetweenShots = shopping("bullet", "Firerate", FIRERATE_BULLET_BUTTON, "timeBetweenShots")
+                    post("save.json", "money", player.money - FIRERATE_BULLET_BUTTON.price)
                     
                 if SPEED_MISSILE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.missileSpeed = shopping("missile", "Speed", SPEED_MISSILE_BUTTON, "missileSpeed")
+                    post("save.json", "money", player.money - SPEED_MISSILE_BUTTON.price)
                     
                 if DAMAGE_MISSILE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.missileDamage = shopping("missile", "Damage", DAMAGE_MISSILE_BUTTON, "missileDamage")
+                    post("save.json", "money", player.money - DAMAGE_MISSILE_BUTTON.price)
                     
                 if CANONS_MISSILE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.missileArrayNumber = shopping("missile", "Canons", CANONS_MISSILE_BUTTON, "missileArrayNumber")
+                    post("save.json", "money", player.money - CANONS_MISSILE_BUTTON.price)
                     
                 if FIRERATE_MISSILE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.timeBetweenMissiles = shopping("missile", "Firerate", FIRERATE_MISSILE_BUTTON, "timeBetweenMissiles")
+                    post("save.json", "money", player.money - FIRERATE_MISSILE_BUTTON.price)
                     
         pygame.display.update()
