@@ -233,7 +233,7 @@ def play(player, gameManager):
     supressor = [True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left",30, 0, 10, 1, 0, 2, bigBallRed]
     spyral = [False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left",30, 3]
     miniboss = [False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left",150, 3, 1, 3, 10, 3, ballYellow]
-    enemyDelayList = [[10, 300, 0], [1870,300,0],[10,300,60],[1870,300,0],[10,300,60],[1870,300,0], [displayWidth/4, 1, 160],[3*displayWidth/4, 1, 0], [0,0,0]]
+    enemyDelayList = [[10, 300, 1], [1870,300,0],[10,300,60],[1870,300,0],[10,300,60],[1870,300,0], [displayWidth/4, 1, 160],[3*displayWidth/4, 1, 0], [0,0,0]]
     enemyList  = [createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo),createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(bozo), createEnemy(bozo)]
     # enemyList = []
     onScreenEnemiesList = []
@@ -268,11 +268,11 @@ def play(player, gameManager):
     font = pygame.font.Font(None, 36)
     
     # Dialogue phase 1
-    textDialogueBossPhase = "Hello mister \nYou're beautiful, I think I love you\nSo I need to beat you to take you\n"
+    textDialogueBossPhase = "Here I come, Death Bucket \nCOLONEL SANDERERS!\nYOU TOOK EVERYTHING FROM ME!!!\nYou will be fried with this base!\n"
     textDialoguePhase = 0
     textDialoguePhaseBoss = 0
-    textDialogue = "Hello,\nI am under the water\nPlease help me\n"
-    textDialogueBoss = "\nHello \nSorry lady, I have to many other women\nTry it\n"
+    textDialogue = "\nGotta find the Australian base... \n...and destroy it.\n"
+    textDialogueBoss = "\nStop right there, Criminal Scum! \nYOU STOLE THE SECRET RECIP- uh, PLANS!\nI don't even know who you are\nTry me, little bird\n"
     textDialogueSurface = []
     textDialogueSurfaceBoss = []
     space_pressed = False
