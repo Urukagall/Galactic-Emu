@@ -361,6 +361,7 @@ def play(player, gameManager):
             continue
             
         if isDead:
+            player.lives = get("save.json","lives")
             deadRect = pygame.Surface((1920,1080)) 
             deadRect.set_alpha(128)               
             deadRect.fill((0,0,0))           
