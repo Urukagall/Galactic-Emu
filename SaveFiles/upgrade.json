@@ -27,7 +27,7 @@
         500,
         -1
     ],
-    "bulletCanonsLevel": 0,
+    "bulletCanonsLevel": 4,
     "bulletCanonsUpgrade": [
         2,
         3,
@@ -109,6 +109,48 @@
         250,
         350,
         500,
+        -1
+    ],
+    "playerLiveLevel": 0,
+    "playerLiveUpgrade": [
+        6,
+        7,
+        8,
+        10
+    ],
+    "playerLivePrice": [
+        150,
+        250,
+        350,
+        500,
+        -1
+    ],
+    "playerSpeedLevel": 0,
+    "playerSpeedUpgrade": [
+        11,
+        12,
+        13,
+        15
+    ],
+    "playerSpeedPrice": [
+        200,
+        250,
+        350,
+        500,
+        -1
+    ],
+    "playerDashLevel": 0,
+    "playerDashUpgrade": [
+        105,
+        90,
+        75,
+        60
+    ],
+    "playerDashPrice": [
+        300,
+        450,
+        550,
+        700,
         -1
     ]
 }

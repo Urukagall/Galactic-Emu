@@ -9,6 +9,7 @@ from Class.enemy import Enemy
 from Class.score import Score
 from Class.button import Button
 from Class.boss import Boss
+from Functions.saveReader import saveReader
 
 
 from Functions.enemiesPattern import *
@@ -230,7 +231,7 @@ def play(player, gameManager):
     bossImg = pygame.transform.scale(bossImg, (bossSize, bossSize))
     bossImgAvatar = pygame.image.load("img/avatar/colonelSandersAvatar.png").convert_alpha()
     bossImgAvatar = pygame.transform.scale(bossImgAvatar, (150, 150))
-    boss = Boss(10000, 1, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
+    boss = Boss(10000, 0.5, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
     enemyList.append(boss)
     #onScreenEnemiesList.append(boss)
     bossFight = False
@@ -257,12 +258,11 @@ def play(player, gameManager):
     font = pygame.font.Font(None, 36)
     
     # Dialogue phase 1
-    textDialogueBossPhase = "Hello Mister \nYou'r so beautiful, I think I love you\nSo I need to beat you to take you\n"
+    textDialogueBossPhase = "Hello mister \nYou're beautiful, I think I love you\nSo I need to beat you to take you\n"
     textDialoguePhase = 0
     textDialoguePhaseBoss = 0
-    textDialogue = "Hello\nI am under the water\nPlease help me\n"
-    textDialogueBoss = "\nHello \nSorry Lady, I have to many other woman\nTry It\n"
-    
+    textDialogue = "Hello,\nI am under the water\nPlease help me\n"
+    textDialogueBoss = "\nHello \nSorry lady, I have to many other women\nTry it\n"
     textDialogueSurface = []
     textDialogueSurfaceBoss = []
     space_pressed = False
@@ -276,18 +276,9 @@ def play(player, gameManager):
     paused = False
 
     while running:
-
-        pressed = pygame.key.get_pressed()
-
-  
         oldDamage = boss.health
         # run the game at a constant 60fps
         clock.tick(60)
-
-        # Dialogue phase 1
-        textDialogueRect = textDialogueSurface[textDialoguePhase].get_rect(center=(600, 1000))
-        if bossFight:
-            textDialogueRectBoss = textDialogueSurfaceBoss[textDialoguePhaseBoss].get_rect(center=(1320, 80))
             
         #Close window on Escape press
         for events in pygame.event.get():
@@ -296,17 +287,10 @@ def play(player, gameManager):
             elif events.type == pygame.KEYDOWN:
                 if events.key == pygame.K_ESCAPE:
                     running=False
-                
-                #pause     
                 if events.key == pygame.K_m:
-                    screen.blit(bossImgAvatar,(displayWidth - bossImgAvatar.get_width() , 0))
                     paused = not paused
-                    
-                    
-                
 
         if paused == True:
-            
             continue
         # Play music in Loop
         
@@ -340,7 +324,7 @@ def play(player, gameManager):
             trueScroll = 0
 
         # Slow movement and dash
-       
+        pressed = pygame.key.get_pressed()
 
         if pressed[pygame.K_LSHIFT]:
             if pressed[pygame.K_SPACE] and timerDash[1] == 0:
@@ -381,25 +365,7 @@ def play(player, gameManager):
         else :
             velX = 0
         
-        if pressed[pygame.K_SPACE] and textDialoguePhase < len(textDialogueSurface) - 1 and not(space_pressed):
-            if bossFight:
-                if textDialoguePhaseBoss <= textDialoguePhase:
-                    textDialoguePhaseBoss +=1
-                else:
-                    textDialoguePhase +=1
-            else:
-                textDialoguePhase +=1
-            space_pressed = True
-        elif textDialoguePhase >= len(textDialogueSurface) - 1:
-            isPlaying = True
-            if bossFight:
-                textDialoguePhaseBoss = len(textDialogueSurfaceBoss) -1
-        if not pressed[pygame.K_SPACE]:
-            space_pressed = False
-        if textDialoguePhase < len(textDialogueSurface) - 1:
-            projectileList.clear()
-            invincible = True
-            invincibleCountdown = 60
+        
         
         player.move(velX, velY)
         playerHitbox = pygame.Rect(0,0, player.size/8, player.size/8)
@@ -478,12 +444,11 @@ def play(player, gameManager):
                         score.score_increment(enemy.score)
                         #the enemy pops itself out of onScreenEnemiesList
                         break
-            if enemyRect.colliderect(playerRect):
-                if not invincible:
-                    player.getHit()
-                    invincibleCountdown = timeInvincible * 60
-                    damageAvatarCountdown = 120
-                    invincible = True
+            if enemyRect.colliderect(playerRect) and not invincible:
+                player.getHit()
+                invincibleCountdown = timeInvincible * 60
+                damageAvatarCountdown = 120
+                invincible = True
                 if enemy.__class__.__name__ == "Enemy":
                     score.score_increment(10)
                     onScreenEnemiesList.pop(onScreenEnemiesList.index(enemy))
@@ -505,6 +470,7 @@ def play(player, gameManager):
 
         #Add a bullet to the projectileList list on press
         if pressed[pygame.K_w]:
+            player.updateSecondaries()
             if player.cooldown <= 0:
                 shift = True
                 if player.speed != player.slowSpeed:
@@ -559,9 +525,36 @@ def play(player, gameManager):
         screen.blit(ultimateText, (10, 50))
         ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
         screen.blit(ultimateText, (10, 70))
+        
+        
+        # Dialogue phase 1
+        textDialogueRect = textDialogueSurface[textDialoguePhase].get_rect(center=(600, 1000))
+        if bossFight:
+            textDialogueRectBoss = textDialogueSurfaceBoss[textDialoguePhaseBoss].get_rect(center=(1320, 80))
+        
+        if pressed[pygame.K_SPACE] and textDialoguePhase < len(textDialogueSurface) - 1 and not(space_pressed):
+            if bossFight:
+                if textDialoguePhaseBoss <= textDialoguePhase:
+                    textDialoguePhaseBoss +=1
+                else:
+                    textDialoguePhase +=1
+            else:
+                textDialoguePhase +=1
+            space_pressed = True
+        elif textDialoguePhase >= len(textDialogueSurface) - 1:
+            isPlaying = True
+            if bossFight:
+                textDialoguePhaseBoss = len(textDialogueSurfaceBoss) -1
+        if not pressed[pygame.K_SPACE]:
+            space_pressed = False
+        if textDialoguePhase < len(textDialogueSurface) - 1:
+            projectileList.clear()
+            invincible = True
+            invincibleCountdown = 60
+
+
         screen.blit(textDialogueSurface[textDialoguePhase], textDialogueRect)
         if bossFight:
-            print(len(textDialogueSurfaceBoss), textDialoguePhaseBoss)
             screen.blit(textDialogueSurfaceBoss[textDialoguePhaseBoss], textDialogueRectBoss)
         
         # Display the hero avatar
@@ -583,12 +576,13 @@ def play(player, gameManager):
         screen.blit(bossHPText, (10, 100))
 
         if player.lives == 0:
-            loseMainText = font.render(f'You died... how unfortunate,', True, (255, 255, 255))
+            loseMainText = font.render(f'¶‡?) 8;8) 9‡(;... -8); 95048?(8?¢,', True, (255, 255, 255))
             screen.blit(loseMainText, (800, 500))
             loseMinText = font.render(f'stats back to default ones.', True, (255, 255, 255))
             screen.blit(loseMinText, (800, 550))
             bulletHellSound.stop()
             bossMusic.stop()
+            saveReader(player)
             return player.money
 
         if pressed[pygame.K_LSHIFT]:
@@ -622,6 +616,7 @@ def play(player, gameManager):
                 subY = 0
 
         pygame.display.update()
+    saveReader(player)
     bossMusic.stop()
     bulletHellSound.stop()
     return player.money
