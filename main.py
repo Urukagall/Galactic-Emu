@@ -82,40 +82,41 @@ saveReader(player)
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
-def main_menu():
+def main_menu(alert=True):
     isPaused = True
-    if isPaused:
+    if alert:
+        if isPaused:
 
-        pausedRect = pygame.Surface((1920,1080)) 
-        pausedRect.set_alpha(128)               
-        pausedRect.fill((0,0,0))           
-        SCREEN.blit(pausedRect, (0,0))
-        # La position de la première ligne de texte
-        x = 960
-        y = 300
+            pausedRect = pygame.Surface((1920,1080)) 
+            pausedRect.set_alpha(128)               
+            pausedRect.fill((0,0,0))           
+            SCREEN.blit(pausedRect, (0,0))
+            # La position de la première ligne de texte
+            x = 960
+            y = 300
 
-        # Blit chaque surface de texte sur l'écran à des positions différentes
+            # Blit chaque surface de texte sur l'écran à des positions différentes
 
-        for text in textEpilepsySurface:
+            for text in textEpilepsySurface:
 
-            SCREEN.blit(text, text.get_rect(center=(x, y)))
-            y += text.get_height()
+                SCREEN.blit(text, text.get_rect(center=(x, y)))
+                y += text.get_height()
 
-        epilepsyWarningText = get_font(90).render("EPILEPSY WARNING !!!", True, "#b68f40")
-        epilepsyRect = epilepsyWarningText.get_rect(center=(960, 100))
-        SCREEN.blit(epilepsyWarningText,epilepsyRect)
-        spaceText = get_font(20).render("press any key", True, "#b68f40")
-        spaceRect = spaceText.get_rect(center=(960, 950))
-        SCREEN.blit(spaceText,spaceRect)
-        
-        while True:
-            event = pygame.event.poll()
+            epilepsyWarningText = get_font(90).render("EPILEPSY WARNING !!!", True, "#b68f40")
+            epilepsyRect = epilepsyWarningText.get_rect(center=(960, 100))
+            SCREEN.blit(epilepsyWarningText,epilepsyRect)
+            spaceText = get_font(20).render("press any key", True, "#b68f40")
+            spaceRect = spaceText.get_rect(center=(960, 950))
+            SCREEN.blit(spaceText,spaceRect)
 
-            if event.type == pygame.KEYDOWN:
-                isPaused = False
-                break
-            
-            pygame.display.flip()
+            while True:
+                event = pygame.event.poll()
+
+                if event.type == pygame.KEYDOWN:
+                    isPaused = False
+                    break
+
+                pygame.display.flip()
     running = True
     while running:
         if menuMusic.get_num_channels() == 0:
