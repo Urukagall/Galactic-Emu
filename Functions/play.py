@@ -2,7 +2,7 @@ import pygame, sys
 import math
 import pygame.time
 import random
-import cv2
+# import cv2
 
 from Class.projectile import Projectile
 from Class.player import Player
