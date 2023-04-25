@@ -41,6 +41,20 @@ def rotate(image, rect, angle):
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
+def createEnemy(data, bulletRotation=0, bulletSpeed2=0, arrayNumber2=0,angleBetweenArrays2=0,timeBetweenShots2=0,bulletImg2=[],aimAtPlayer2=False,bulletRotation2=0,pattern = firstPattern):
+    '''money = data[15]
+    bulletRotation = data[16]
+    bulletSpeed2 = data[17]
+    arrayNumber2 = data[18]
+    angleBetweenArrays2 = data[19]
+    timeBetweenShots2 = data[20]
+    bulletImg2 = data[21]
+    aimAtPlayer2 = data[22]
+    bulletRotation2 = data[23]
+    pattern = data[24]'''
+    newEnemy = Enemy(data[0],data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15], data[16], data[17], bulletRotation, bulletSpeed2, arrayNumber2, angleBetweenArrays2, timeBetweenShots2, bulletImg2, aimAtPlayer2, bulletRotation2, pattern)
+    return newEnemy
+
 def play(player, gameManager):
     pygame.init()
     clock = pygame.time.Clock()
@@ -203,7 +217,7 @@ def play(player, gameManager):
     imgBozo = pygame.image.load("img/ships/bozo.png").convert_alpha()
     imgBozo = pygame.transform.scale(imgBozo, (50, 50))
     imgMiniBozo = pygame.image.load("img/ships/bozo.png").convert_alpha()
-    imgMiniBozo = pygame.transform.scale(imgBozo, (10, 10))
+    imgMiniBozo = pygame.transform.scale(imgBozo, (25, 25))
     imgSupressor = pygame.image.load("img/ships/supressor.png").convert_alpha()
     imgSupressor = pygame.transform.scale(imgSupressor, (50,50))
     imgSpyral = pygame.image.load("img/ships/spyral.png").convert_alpha()
@@ -212,17 +226,17 @@ def play(player, gameManager):
     imgMiniBoss = pygame.transform.scale(imgMiniBoss, (100,100))
 
     #Create Enemy
+    "[aimAtEnemy, HP, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, ||optionals from now|| money, bulletRotation, bulletSpeed2, arrayNumber2, angleBetweenArrays2, timeBetweenShots2, bulletImg2, aimAtPlayer2, bulletRotation2, pattern"
+    miniBozo = [True, 10, 0.5, 1200, 0, 50, displayWidth, displayHeight, 100, imgMiniBozo, bulletRed, 10, 1, 0, projectileList, 3, "left", 10]
+    bozo = [True, 100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left", 20]
+    railgun = [True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left", 50]
+    supressor = [True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left",30, 0, 10, 1, 0, 2, bigBallRed]
+    spyral = [False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left",30, 3]
+    miniboss = [False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left",150, 3, 1, 3, 10, 3, ballYellow]
     enemyDelayList = [[10, 300, 0], [1870,300,0],[10,300,60],[1870,300,0],[10,300,60],[1870,300,0]]
-    miniBozo = Enemy(True, 10, 0.5, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left", 10)
-    bozo = Enemy(True, 100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left", 20)
-    railgun = Enemy(True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left", 50)
-    supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left",30, 0, 10, 1, 0, 2, bigBallRed)
-    spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left",30, 3)
-    miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left",150, 3, 1, 3, 10, 3, ballYellow)
-    enemyList  = [miniBozo, miniBozo, miniBozo, miniBozo, miniBozo, miniBozo]
+    enemyList  = [createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo),createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo)]
     # enemyList = []
     onScreenEnemiesList = []
-
     #create boss
     bossSize = 300
     bossImg = pygame.image.load("img/ships/boss1.png").convert_alpha()
@@ -409,10 +423,9 @@ def play(player, gameManager):
                         onScreenEnemiesList.append(enemyList.pop(0))
                         enemyDelayList.pop(0)
             else:
+                
+                enemyList[0].x, enemyList[0].y = enemyDelayList[0][0], enemyDelayList[0][1]
                 onScreenEnemiesList.append(enemyList.pop(0))
-                onScreenEnemiesList[len(onScreenEnemiesList)-1].x = enemyDelayList[0][0]
-                onScreenEnemiesList[len(onScreenEnemiesList)-1].y = enemyDelayList[0][1]
-                print(onScreenEnemiesList[-1].x, onScreenEnemiesList[-1].y)
                 enemyDelayList.pop(0)
 
         playerBullets = pygame.surface.Surface((displayWidth, displayHeight))
