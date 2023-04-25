@@ -456,6 +456,7 @@ def play(player, gameManager):
                     if enemyRect.colliderect(bulletRect):
                         projectileList.pop(projectileList.index(bullet))
                         enemy.takeDmg(bullet.damage, onScreenEnemiesList)
+                        print(bullet.damage)
                         score.score_increment(10)
                         
                     if(enemy.health <= 0):

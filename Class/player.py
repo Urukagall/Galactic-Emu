@@ -75,7 +75,7 @@ class Player():
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 5, 10, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber*2, 360/(self.arrayNumber), self.projectileList, self.spiralImg, 5, False, True, self.bulletDamage)
-
+        self.phoenixHandler = BulletHandler(self.missileSpeed*2, 1, 0, self.projectileList, self.aim54, 0, True, True, self.missileDamage*10)
 
     def redefined(self):
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True,damage=self.bulletDamage)
@@ -138,9 +138,7 @@ class Player():
     def updateSecondaries(self):
         direction = (0, -1)
         if self.secondaryWeapon1 == "autocanon":
-            print("b")
             if self.autocanonCooldown <= 0:
-                print("a")
                 self.autocanonCooldown = self.timeBewteenAutocanonShots
                 self.autocanonHandler.update(direction)
             else:
