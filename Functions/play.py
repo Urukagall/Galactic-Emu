@@ -2,6 +2,7 @@ import pygame, sys
 import math
 import pygame.time
 import random
+import cv2
 
 from Class.projectile import Projectile
 from Class.player import Player
@@ -231,13 +232,11 @@ def play(player, gameManager):
     bossFight = False
 
     # Create Button
-    button_surface = pygame.image.load("img/assets/button.png").convert_alpha()
-    button_surface = pygame.transform.scale(button_surface, (200, 75))
 
-    button = Button(button_surface, 500, 500, "Change Weapon price:30", True, 30, Button.ChangeWeapon, imgBozo)
-    button2 = Button(button_surface, 900, 700, "Do nothing", False, 0, Button.ChangeWeapon, None)
+    buttonSurface = pygame.image.load("img/assets/button.png")
+    buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
+    MENU_BUTTON = Button(buttonSurface, 960, 1000, "Main Menu", False, None, None, buttonSurface)
 
-    buttonList = [button, button2]
 
     #Initialize dash coordinates
     timerDash = [0 , 0]
@@ -267,7 +266,8 @@ def play(player, gameManager):
     for line in textDialogueBoss.split('\n'):
         textDialogueSurfaceBoss.append(get_font(20).render(line, True, "#b68f40"))
 
-    paused = False
+    isPaused = False
+
 
     while running:
         oldDamage = boss.health
@@ -280,17 +280,39 @@ def play(player, gameManager):
                 running=False
             elif events.type == pygame.KEYDOWN:
                 if events.key == pygame.K_ESCAPE:
-                    running=False
-                if events.key == pygame.K_m:
-                    paused = not paused
-        
-        if paused:
-            pausedText = get_font(100).render("MAIN MENU", True, "#b68f40")
-            pausedRect = pausedText.get_rect(center=(960, 100))
-            screen.blit(pausedText,pausedRect)
+                    isPaused = not isPaused
+
+        # Paused screen
+        if isPaused:
+            pausedRect = pygame.Surface((1920,1080)) 
+            pausedRect.set_alpha(128)               
+            pausedRect.fill((0,0,0))           
+            screen.blit(pausedRect, (0,0))
+            pausedText = get_font(100).render("PAUSED", True, "#b68f40")
+            pausedTextRect = pausedText.get_rect(center=(960, 100))
+            screen.blit(pausedText,pausedTextRect)
+            
+            while True:
+                MENU_BUTTON.changeColor(pygame.mouse.get_pos(), screen)
+                MENU_BUTTON.update(screen)
+                event = pygame.event.poll()
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if MENU_BUTTON.checkForInput(pygame.mouse.get_pos(), player):
+                        running = False
+                        isPaused = False
+                        break
+
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        isPaused = False
+                        break
+                
+                pygame.display.flip()
+                clock.tick(60)
             continue
+
         # Play music in Loop
-        print("a")
         if bossFight:
             backGround = bossBase
             bulletHellSound.stop()
@@ -337,7 +359,6 @@ def play(player, gameManager):
             timerDash[1] = player.cooldownDash
             timerDash[0] = player.timeDash
             invincibleCountdown = timerDash[0] + player.dashInvulnerability
-            print(player.dashInvulnerability)
             player.speed = player.dashSpeed
         elif timerDash[0] == 0: 
             player.speed = player.basicSpeed
@@ -612,10 +633,6 @@ def play(player, gameManager):
                 transition = False
                 transitionY = 0
                 subY = 0
-     
-        pausedText = get_font(100).render("MAIN MENU", True, "#b68f40")
-        pausedRect = pausedText.get_rect(center=(960, 100))
-        screen.blit(pausedText,pausedRect)
 
         pygame.display.update()
     saveReader(player)
