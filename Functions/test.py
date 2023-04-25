@@ -1,27 +1,44 @@
 import cv2
+import pygame
 
-# Lecture de la vidéo
-cap = cv2.VideoCapture('video/Lake-91562.avi')
+# Initialise Pygame
+pygame.init()
 
-# Boucle jusqu'à la fin de la vidéo
-while cap.isOpened():
-    # Capture des images
+# Ouvre la vidéo avec OpenCV
+cap = cv2.VideoCapture("video/Lake-91562.avi")
+
+# Obtient les dimensions de la vidéo
+width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+# Initialise l'écran Pygame
+screen = pygame.display.set_mode((width, height))
+
+# Boucle principale
+while True:
+    # Lit une image de la vidéo avec OpenCV
     ret, frame = cap.read()
     
-    # Si la capture a réussi
-    if ret:
-        # Retourner la vidéo
-        frame = cv2.flip(frame, 180)
-
-        # Affichage de la vidéo
-        cv2.imshow('Video', frame)
-
-        # Attendre 25 millisecondes avant d'afficher l'image suivante
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-            break
-    else:
+    # Si la lecture est terminée, sort de la boucle
+    if not ret:
         break
-
-# Libération des ressources
+    
+    # Convertit l'image OpenCV en surface Pygame
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    frame = pygame.surfarray.make_surface(frame)
+    
+    # Affiche la surface sur l'écran Pygame
+    screen.blit(frame, (0, 0))
+    pygame.display.flip()
+    
+    # Vérifie les événements Pygame
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            cap.release()
+            pygame.quit()
+            quit()
+            
+# Libère les ressources
 cap.release()
-cv2.destroyAllWindows()
+pygame.quit()
+quit()

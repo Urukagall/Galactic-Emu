@@ -2,7 +2,7 @@ import pygame, sys
 import math
 import pygame.time
 import random
-# import cv2
+import cv2
 
 from Class.projectile import Projectile
 from Class.player import Player
@@ -271,6 +271,37 @@ def play(player, gameManager):
 
     isPaused = False
     isDead = False
+
+    
+    cap = cv2.VideoCapture("video/galactic_emu_intro_pixel.mp4")
+
+    while True:
+        clock.tick(30)
+        event = pygame.event.poll()
+        # Lit une image de la vidéo avec OpenCV
+        ret, frame = cap.read()
+        
+        # Si la lecture est terminée, sort de la boucle
+        if not ret:
+            cap.release()
+            break
+        
+        # Convertit l'image OpenCV en surface Pygame
+        frame = cv2.flip(frame, 90)
+        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.resize(frame, (1080, 1920))
+        frame = pygame.surfarray.make_surface(frame)
+        
+        # Affiche la surface sur l'écran Pygame
+        screen.blit(frame, (0, 0))
+        pygame.display.flip()
+        
+        # Vérifie les événements Pygame
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                cap.release()
+                break
 
     while running:
         oldDamage = boss.health
