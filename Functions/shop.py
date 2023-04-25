@@ -49,7 +49,7 @@ def shop(SCREEN, BG, player, main_menu, gameManager):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if RESUME_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    main_menu()
+                    main_menu(False)
                 if SHIP_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     shopShip(SCREEN, BG, player, main_menu, gameManager, shop)
                 if CONSUMABLE_BUTTON.checkForInput(MENU_MOUSE_POS, player):

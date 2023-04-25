@@ -13,7 +13,7 @@
         350,
         -1
     ],
-    "bulletDamageLevel": 0,
+    "bulletDamageLevel": 4,
     "bulletDamageUpgrade": [
         2,
         3,
@@ -69,7 +69,7 @@
         350,
         -1
     ],
-    "missileDamageLevel": 0,
+    "missileDamageLevel": 4,
     "missileDamageUpgrade": [
         2,
         3,
@@ -147,6 +147,20 @@
         60
     ],
     "playerDashPrice": [
+        300,
+        450,
+        550,
+        700,
+        -1
+    ],
+    "playerShieldLevel": 0,
+    "playerShieldUpgrade": [
+        5,
+        10,
+        15,
+        20
+    ],
+    "playerShieldPrice": [
         300,
         450,
         550,

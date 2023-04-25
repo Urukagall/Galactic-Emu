@@ -22,7 +22,7 @@ from SaveFiles.templatePaste import templatePaste
 pygame.init()  
 
 # Logo windows
-icon = pygame.image.load("img/emeu.jpg")
+icon = pygame.image.load("img/emeu.jpg") 
 pygame.display.set_icon(icon)
 
 buttonSurface = pygame.image.load("img/assets/button.png")
@@ -48,10 +48,13 @@ projectileList = []
 imgPlayer = pygame.image.load("img/ships/player.png")
 imgPlayer = pygame.transform.scale(imgPlayer, (50, 50))
 
-SCREEN = pygame.display.set_mode((1920, 1080))
-pygame.display.set_caption("Menu") 
+imgEmeu = pygame.image.load("img/avatar/heros-comesback.png")
+# imgEmeu = pygame.transform.scale(imgEmeu, (50, 50))
+imgColonel = pygame.image.load("img/avatar/colonel.png")
+# imgColonel = pygame.transform.scale(imgColonel, (50, 50))
 
-Captain = pygame.image.load("img/avatar/playerAvatar.png")
+SCREEN = pygame.display.set_mode((1920, 1080))
+pygame.display.set_caption("Menu")  
 
 BG = pygame.image.load("img/assets/background.png")
 BG = pygame.transform.scale(BG, (1920, 1080))
@@ -67,8 +70,11 @@ darkMissile = darken(missile,60).convert_alpha()
 
 player = Player(10, 5, 50, 1920, 1080, 30, 120, 15, 5, projectileList, darkBullet, darkMissile, darkCarreau)
 
-# take the template file to copy to the main json files
-templatePaste()
+textEpilepsy = "Warning\n\nThis game contains lots of projectiles and colors\nwhich results in flashing lights.\n\nIt might trigger seizure for people with\n photosensitive epilepsy."
+textEpilepsySurface = []
+textEpilepsyRect = []
+for line in textEpilepsy.split('\n'):
+    textEpilepsySurface.append(get_font(20).render(line, True, "#b68f40"))
 
 # Take the save from the save.json
 saveReader(player)
@@ -76,13 +82,48 @@ saveReader(player)
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
 
-def main_menu():
+def main_menu(alert=True):
+    isPaused = True
+    if alert:
+        if isPaused:
+
+            pausedRect = pygame.Surface((1920,1080)) 
+            pausedRect.set_alpha(128)               
+            pausedRect.fill((0,0,0))           
+            SCREEN.blit(pausedRect, (0,0))
+            # La position de la première ligne de texte
+            x = 960
+            y = 300
+
+            # Blit chaque surface de texte sur l'écran à des positions différentes
+
+            for text in textEpilepsySurface:
+
+                SCREEN.blit(text, text.get_rect(center=(x, y)))
+                y += text.get_height()
+
+            epilepsyWarningText = get_font(90).render("EPILEPSY WARNING !!!", True, "#b68f40")
+            epilepsyRect = epilepsyWarningText.get_rect(center=(960, 100))
+            SCREEN.blit(epilepsyWarningText,epilepsyRect)
+            spaceText = get_font(20).render("press any key", True, "#b68f40")
+            spaceRect = spaceText.get_rect(center=(960, 950))
+            SCREEN.blit(spaceText,spaceRect)
+
+            while True:
+                event = pygame.event.poll()
+
+                if event.type == pygame.KEYDOWN:
+                    isPaused = False
+                    break
+
+                pygame.display.flip()
     running = True
     while running:
         if menuMusic.get_num_channels() == 0:
-            menuMusic.play(-1)
+            menuMusic.play(-1)  
         SCREEN.blit(BG, (0, 0))
-        SCREEN.blit(Captain, (1450, 60))
+        SCREEN.blit(imgEmeu, (-100,300))
+        SCREEN.blit(imgColonel, (1000,300))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 

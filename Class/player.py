@@ -20,6 +20,8 @@ class Player():
         self.timeDash = timeDash
         self.lives = lives
         self.money = 0
+        self.timeInvincible = 3
+        self.dashInvulnerability = 0
         self.secondaryWeapon1 = get("save.json", "secondaryWeapon1")
         self.secondaryWeapon2 = get("save.json", "secondaryWeapon2")
 
@@ -73,7 +75,7 @@ class Player():
         self.autocanonHandler = BulletHandler(self.bulletSpeed, 1, 0, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.shotgunHandler = BulletHandler(self.bulletSpeed, 5, 10, self.projectileList, self.ballBlue, 0, False, True, self.bulletDamage)
         self.spiralHandler = BulletHandler(self.bulletSpeed, self.arrayNumber*2, 360/(self.arrayNumber), self.projectileList, self.spiralImg, 5, False, True, self.bulletDamage)
-
+        self.phoenixHandler = BulletHandler(self.missileSpeed*2, 1, 0, self.projectileList, self.aim54, 0, True, True, self.missileDamage*10)
 
     def redefined(self):
         self.bulletHandler = BulletHandler(self.bulletSpeed, self.arrayNumber, self.angleBetweenArrays, self.projectileList, self.bulletImg, isHoming=False,isPlayer = True,damage=self.bulletDamage)
@@ -130,7 +132,8 @@ class Player():
         if shift:
             self.preciseHandler.update(direction)
         self.bulletHandler.update(direction)
-        self.spiralHandler.update(direction)
+        if self.secondaryWeapon1 == "spiral":
+            self.spiralHandler.update(direction)
 
     def updateSecondaries(self):
         direction = (0, -1)

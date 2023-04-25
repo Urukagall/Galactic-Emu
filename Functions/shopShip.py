@@ -7,6 +7,14 @@ from Functions.jsonReader import *
 
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
+dash = pygame.image.load("img/assets/buttonAmelioration/dash.png")
+dash = pygame.transform.scale(dash, (200, 75))
+live = pygame.image.load("img/assets/buttonAmelioration/live.png")
+live = pygame.transform.scale(live, (200, 75))
+speed = pygame.image.load("img/assets/buttonAmelioration/speed.png")
+speed = pygame.transform.scale(speed, (200, 75))
+shield = pygame.image.load("img/assets/buttonAmelioration/shield.png")
+shield = pygame.transform.scale(shield, (200, 75))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
@@ -16,16 +24,11 @@ else:
     spiralText = "Deactivate Spiral"'''
 
 # Upgrade Button Ship
-LIVE_BUTTON = Button(buttonSurface, 510, 550, "Live", True, get("upgrade.json", "playerLivePrice")[get("upgrade.json", "playerLiveLevel")], None, buttonSurface, "Increase the number of live")
-DASH_BUTTON = Button(buttonSurface, 760, 550, "Dash Cooldown", True, get("upgrade.json", "playerDashPrice")[get("upgrade.json", "playerDashLevel")], None, buttonSurface, "Increase the dash cooldown timer")
-SHIELD_BUTTON = Button(buttonSurface, 510, 700, "Shield", True, get("upgrade.json", "playerLivePrice")[get("upgrade.json", "playerLiveLevel")], None, buttonSurface, "Increase invulnerability time")
-SPEED_BUTTON = Button(buttonSurface, 760, 700, "Speed", True, get("upgrade.json", "playerSpeedPrice")[get("upgrade.json", "playerSpeedLevel")], None, buttonSurface, "Increase the speed of the ship")
+LIVE_BUTTON = Button(live, 850, 550, "", True, get("upgrade.json", "playerLivePrice")[get("upgrade.json", "playerLiveLevel")], None, buttonSurface, "Increase the number of live")
+DASH_BUTTON = Button(dash, 1100, 550, "", True, get("upgrade.json", "playerDashPrice")[get("upgrade.json", "playerDashLevel")], None, buttonSurface, "Increase the dash cooldown timer")
+SHIELD_BUTTON = Button(shield, 850, 700, "", True, get("upgrade.json", "playerLivePrice")[get("upgrade.json", "playerLiveLevel")], None, buttonSurface, "Increase invulnerability time")
+SPEED_BUTTON = Button(speed, 1100, 700, "", True, get("upgrade.json", "playerSpeedPrice")[get("upgrade.json", "playerSpeedLevel")], None, buttonSurface, "Increase the speed of the ship")
 
-# Upgrade Button bullet
-SPEED_BULLET_BUTTON = Button(buttonSurface, 1160, 550, "Speed", False, None, None, buttonSurface, "Increase the number of live")
-DAMAGE_BUTTON = Button(buttonSurface, 1410, 550, "Damage", False, None, None, buttonSurface, "Increase the dash cooldown timer")
-CANONS_BUTTON = Button(buttonSurface, 1160, 700, "Canons", False, None, None, buttonSurface, "Acquire the spiral attack")
-FIRERATE_BUTTON = Button(buttonSurface, 1410, 700, "Firerate", False, None, None, buttonSurface, "Increase the speed when normal movement and decrease it when slow movement")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("font.ttf", size)
@@ -55,7 +58,7 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
-        for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SHIELD_BUTTON, SPEED_BUTTON, SPEED_BULLET_BUTTON, DAMAGE_BUTTON, CANONS_BUTTON, FIRERATE_BUTTON]:
+        for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SHIELD_BUTTON, SPEED_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
             button.update(SCREEN)
             
@@ -77,5 +80,8 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
                     
                 if DASH_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.cooldownDash = shopping("Dash", DASH_BUTTON, "cooldownDash")
+                    
+                if SHIELD_BUTTON.checkForInput(MENU_MOUSE_POS, player):
+                    player.dashInvulnerability = shopping("Shield", SHIELD_BUTTON, "dashInvulnerability")
                     
         pygame.display.update()

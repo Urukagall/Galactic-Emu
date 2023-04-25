@@ -41,7 +41,7 @@ def gameOptions(SCREEN, BG, player, main_menu, gameManager, menuMusic):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if RESUME_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    main_menu()
+                    return
                 if SOUNDMORE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     if gameManager.sound < 1:
                         gameManager.changeSound(gameManager.sound + 0.1)
