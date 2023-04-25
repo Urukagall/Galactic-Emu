@@ -112,7 +112,7 @@ def main_menu(alert=True):
             while True:
                 event = pygame.event.poll()
 
-                if event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
                     isPaused = False
                     break
 
