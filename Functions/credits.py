@@ -64,5 +64,5 @@ def credits(SCREEN, BG, player, main_menu):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if RESUME_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    main_menu()
+                    return
         pygame.display.update()
