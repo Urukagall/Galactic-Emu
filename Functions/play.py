@@ -201,6 +201,12 @@ def play(player, gameManager):
     invincibleCountdown = 0
     damageAvatarCountdown = 0
     isPlaying = False
+    imgHeart = pygame.image.load("img/assets/heart.png").convert_alpha()
+    imgHeart = pygame.transform.scale(imgHeart, (40, 40))
+    imgCoin = pygame.image.load("img/assets/coin.png").convert_alpha()
+    imgCoin = pygame.transform.scale(imgCoin, (40, 40))
+    imgUltimate = pygame.image.load("img/assets/ultimate.png").convert_alpha()
+    imgUltimate = pygame.transform.scale(imgUltimate, (40, 40))
 
     # darkCarreau = darken(carreauBlue,45).convert_alpha()
     # darkBullet = darken(bulletBlue).convert_alpha()
@@ -247,6 +253,7 @@ def play(player, gameManager):
     enemyList.append(boss)
     #onScreenEnemiesList.append(boss)
     bossFight = False
+    patternBoss = 1
 
     # Create Button
 
@@ -268,24 +275,25 @@ def play(player, gameManager):
     font = pygame.font.Font(None, 36)
     
     # Dialogue phase 1
-    textDialogueBossPhase = "Here I come, Death Bucket \nCOLONEL SANDERERS!\nYOU TOOK EVERYTHING FROM ME!!!\nYou will be fried with this base!\n"
+    textDialoguePlayer = ["\n\nGotta find the Australian base...\n\n...and destroy it.\n\n","Here I come, Death Bucket\n\nCOLONEL SANDERERS!\n\nYOU TOOK EVERYTHING FROM ME!!!\n\nYou will be fried with this base!\n\n","I think I can win this\n\nOH and what are you \ngonna do for that ?\n\n","What append, you are scared ?\n\nYou are calling me a chicken ?\nYou're gonna regret it\n\n","I'm close to the winning,\none last effort\n\n","What is that ?"]
     textDialoguePhase = 0
+    textDialogueBoss = ["\n\nStop right there, \nCriminal Scum!\n\nYOU STOLE THE SECRET \nRECIP- uh, PLANS!\n\nI don't even know who you are\n\nTry me, little bird\n\n", "\n\ndon't be so sure of that\n\nYou'll see it soon enough\n\n","\n\nAHAHAHAH. Little chicken, \nyou are going to be frie- euh killed\n\nWe will see that\n\n","\n\nARG !!! It's just luck, \nyou'r not gonna win this fight\n\n","\n\nYou'r gonna regret what you did.\nALL GUNS OUT !!!"]
     textDialoguePhaseBoss = 0
-    textDialogue = "\nGotta find the Australian base... \n...and destroy it.\n"
-    textDialogueBoss = "\nStop right there, Criminal Scum! \nYOU STOLE THE SECRET RECIP- uh, PLANS!\nI don't even know who you are\nTry me, little bird\n"
     textDialogueSurface = []
     textDialogueSurfaceBoss = []
     space_pressed = False
     
-    for line in textDialogue.split('\n'):
-        textDialogueSurface.append(get_font(20).render(line, True, "#b68f40"))
+    for line in textDialoguePlayer[0].split('\n\n'):
+        textDialogueSurface.append(line)
         
-    for line in textDialogueBoss.split('\n'):
-        textDialogueSurfaceBoss.append(get_font(20).render(line, True, "#b68f40"))
 
     isPaused = False
     isDead = False
 
+    # ssshhh secret
+    konami_code = [pygame.K_UP, pygame.K_UP, pygame.K_DOWN, pygame.K_DOWN,pygame.K_LEFT, pygame.K_RIGHT, pygame.K_LEFT, pygame.K_RIGHT,pygame.K_b, pygame.K_a]
+
+    touches_pressees = []
     
     cap = cv2.VideoCapture("video/galactic_emu_intro_pixel.mp4")
 
@@ -321,7 +329,6 @@ def play(player, gameManager):
         oldDamage = boss.health
         # run the game at a constant 60fps
         clock.tick(60)
-            
         #Close window on Escape press
         for events in pygame.event.get():
             if events.type == pygame.QUIT:
@@ -329,6 +336,22 @@ def play(player, gameManager):
             elif events.type == pygame.KEYDOWN:
                 if events.key == pygame.K_ESCAPE:
                     isPaused = not isPaused
+                if events.key == pygame.K_DOWN:
+                    touches_pressees.append(events.key)
+                if events.key == pygame.K_UP:
+                    touches_pressees.append(events.key)
+                if events.key == pygame.K_LEFT:
+                    touches_pressees.append(events.key)
+                if events.key == pygame.K_RIGHT:
+                    touches_pressees.append(events.key)
+                if events.key == pygame.K_a:
+                    touches_pressees.append(events.key)
+                if events.key == pygame.K_b:
+                    touches_pressees.append(events.key)
+        
+        if touches_pressees[-len(konami_code):] == konami_code:
+            invincible = True
+            invincibleCountdown = 10000
 
         # Paused screen
         if isPaused:
@@ -347,6 +370,7 @@ def play(player, gameManager):
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if MENU_BUTTON.checkForInput(pygame.mouse.get_pos(), player):
+                        post("save.json" ,"money",player.money)
                         running = False
                         isPaused = False
                         break
@@ -388,6 +412,7 @@ def play(player, gameManager):
                     if MENU_BUTTON.checkForInput(pygame.mouse.get_pos(), player):
                         running = False
                         isPaused = False
+                        post("save.json" ,"money",player.money)
                         return player.money
                 
                 pygame.display.flip()
@@ -480,12 +505,14 @@ def play(player, gameManager):
                 if onScreenEnemiesList == []:
                     transition = True
                     if bossFight:
-                        textDialogue = textDialogueBossPhase
+                        textDialogue = textDialoguePlayer[1]
                         textDialoguePhase = 0
                         textDialoguePhaseBoss = 0
                         textDialogueSurface = []
-                        for line in textDialogue.split('\n'):
-                            textDialogueSurface.append(get_font(20).render(line, True, "#b68f40"))
+                        for line in textDialogue.split('\n\n'):
+                            textDialogueSurface.append(line)
+                        for line in textDialogueBoss[0].split('\n\n'):
+                            textDialogueSurfaceBoss.append(line)
                         onScreenEnemiesList.append(enemyList.pop(0))
                         enemyDelayList.pop(0)
             else:
@@ -493,6 +520,21 @@ def play(player, gameManager):
                 enemyList[0].x, enemyList[0].y = enemyDelayList[0][0], enemyDelayList[0][1]
                 onScreenEnemiesList.append(enemyList.pop(0))
                 enemyDelayList.pop(0)
+
+        # Dialogue Boss pattern 
+
+        for i in range (4):
+            if boss.patternNum == i+2 and patternBoss != i+2:
+                patternBoss = i+2
+                textDialogue = textDialoguePlayer[i+2]
+                textDialoguePhase = 0
+                textDialoguePhaseBoss = 0
+                textDialogueSurface = []
+                textDialogueSurfaceBoss = []
+                for line in textDialogue.split('\n\n'):
+                    textDialogueSurface.append(line)
+                for line in textDialogueBoss[i+1].split('\n\n'):
+                    textDialogueSurfaceBoss.append(line)
 
         playerBullets = pygame.surface.Surface((displayWidth, displayHeight))
         enemyBullets = pygame.surface.Surface((displayWidth, displayHeight))
@@ -583,7 +625,7 @@ def play(player, gameManager):
             if player.missileCooldown <= 0 and not shift:
                 player.shootHoming()
                 player.missileCooldown = player.timeBetweenMissiles
-        if pressed[pygame.K_x]:
+        if pressed[pygame.K_x] and textDialoguePhase >= len(textDialogueSurface) - 1:
             if player.ultimateCooldown <= 0:
                 #play sfx
                 ultimateSound.play()
@@ -612,9 +654,9 @@ def play(player, gameManager):
             
         #Draw player model on screen
         if invincible:
-            screen.blit(playerShield, (player.X, player.Y))
+            screen.blit(player.imgShield, (player.X, player.Y))
         else:
-            screen.blit(imgPlayer, (player.X, player.Y))
+            screen.blit(player.img, (player.X, player.Y))
 
         screen.blit(playerBullets, (0,0), (0,0,displayWidth, displayHeight), pygame.BLEND_RGB_ADD)
         screen.blit(enemyBullets, (0,0), (0,0,displayWidth, displayHeight), pygame.BLEND_RGB_ADD)
@@ -622,18 +664,26 @@ def play(player, gameManager):
         #Write player's score & remaining lives 
         scoreText = font.render(f'Score: {score.score}', True, (255, 255, 255))
         screen.blit(scoreText, (10, 10))
-        livesText = font.render(f'Lives: {player.lives}', True, (255, 255, 255))
-        screen.blit(livesText, (10, 30))
-        ultimateText = font.render(f'Ultimate in: {math.ceil(player.ultimateCooldown/60)}', True, (255, 255, 255))
-        screen.blit(ultimateText, (10, 50))
-        ultimateText = font.render(f'Money: {player.money}', True, (255, 255, 255))
-        screen.blit(ultimateText, (10, 70))
         
         
-        # Dialogue phase 1
-        textDialogueRect = textDialogueSurface[textDialoguePhase].get_rect(center=(600, 1000))
+        # Dialogue phase 
+        x = 600
+        y = 1000
+        for line in textDialogueSurface[textDialoguePhase].split('\n'):
+            line = get_font(20).render(line, True, "#b68f40")
+            textDialogueRect = line.get_rect(center=(x, y))
+            screen.blit(line, textDialogueRect)
+            y += line.get_height()
+        # textDialogueRect = textDialogueSurface[textDialoguePhase].get_rect(center=(600, 1000))
         if bossFight:
-            textDialogueRectBoss = textDialogueSurfaceBoss[textDialoguePhaseBoss].get_rect(center=(1320, 80))
+            x = 1320
+            y = 80
+            for line in textDialogueSurfaceBoss[textDialoguePhaseBoss].split('\n'):
+                line = get_font(20).render(line, True, "#b68f40")
+                textDialogueRectBoss = line.get_rect(center=(x, y))
+                screen.blit(line, textDialogueRectBoss)
+                y += line.get_height()
+            # textDialogueRectBoss = textDialogueSurfaceBoss[textDialoguePhaseBoss].get_rect(center=(1320, 80))
         
         if pressed[pygame.K_SPACE] and textDialoguePhase < len(textDialogueSurface) - 1 and not(space_pressed):
             if bossFight:
@@ -656,9 +706,9 @@ def play(player, gameManager):
             invincibleCountdown = 60
 
 
-        screen.blit(textDialogueSurface[textDialoguePhase], textDialogueRect)
-        if bossFight:
-            screen.blit(textDialogueSurfaceBoss[textDialoguePhaseBoss], textDialogueRectBoss)
+        # screen.blit(textDialogueSurface[textDialoguePhase], textDialogueRect)
+        # if bossFight:
+        #     screen.blit(textDialogueSurfaceBoss[textDialoguePhaseBoss], textDialogueRectBoss)
         
         # Display the hero avatar
         if damageAvatarCountdown > 0:
@@ -666,6 +716,28 @@ def play(player, gameManager):
         else:
             screen.blit(imgPlayerAvatar,(0 ,displayHeight - imgPlayerAvatar.get_height()))
 
+        # Display the hearts
+        for i in range (player.lives):
+            if i < 5:
+                screen.blit(imgHeart,(i * 45 ,800))
+            if i >= 5:
+                screen.blit(imgHeart,((i - 5) * 45 ,850))
+
+        # Display the money
+
+        screen.blit(imgCoin,(0 ,725))
+        moneyText = font.render(str(player.money), True, (255, 255, 255))
+        screen.blit(moneyText, (60, 730))
+
+        # Display the ultimate timer
+        
+        screen.blit(imgUltimate,(0 ,675))
+        if math.ceil(player.ultimateCooldown/60) > 0:
+            ultimateText = font.render(str(math.ceil(player.ultimateCooldown/60)), True, (255, 255, 255))
+        else:
+            ultimateText = font.render("Ready", True, (255, 255, 255))
+        screen.blit(ultimateText, (60, 680))
+        
         # Display the Boss avatar
         if bossFight:
             screen.blit(bossImgAvatar,(displayWidth - bossImgAvatar.get_width() , 0))
@@ -681,7 +753,6 @@ def play(player, gameManager):
         if player.lives == 0:
             bulletHellSound.stop()
             bossMusic.stop()
-            post("save.json" ,"money",player.money)
             isDead = True
 
         if pressed[pygame.K_LSHIFT]:

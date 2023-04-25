@@ -4,6 +4,8 @@ import sys
 from Class.button import Button
 from Functions.jsonReader import *
 
+phoenix = pygame.image.load("img/assets/buttonAmelioration/phoenix.png")
+phoenix = pygame.transform.scale(phoenix, (200, 75))
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
@@ -21,9 +23,9 @@ else:
     SHOTGUN_BUTTON = Button(buttonSurface, 1150, 700, "Shotgun", True, 150, None, buttonSurface, "Slow firerate but wide angle")
     
 if get("save.json", "secondaryWeapon2") == "phoenix":
-    PHOENIX_BUTTON = Button(buttonSurface, 1150, 550, "Phoenix", True, -1, None, buttonSurface, "A strong and fast missile")
+    PHOENIX_BUTTON = Button(phoenix, 1150, 550, "", True, -1, None, buttonSurface, "A strong and fast missile")
 else:
-    PHOENIX_BUTTON = Button(buttonSurface, 1150, 550, "Phoenix", True, 250, None, buttonSurface, "A strong and fast missile")
+    PHOENIX_BUTTON = Button(phoenix, 1150, 550, "", True, 250, None, buttonSurface, "A strong and fast missile")
     
 if get("save.json", "secondaryWeapon1") == "spiral":
     SPIRAL_BUTTON = Button(buttonSurface, 800, 700, "Spiral", True, -1, None, buttonSurface, "Shoots bullets all arround your ship")
@@ -73,7 +75,6 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
                     shop(SCREEN, BG, player, main_menu, gameManager)
                 if AUTOCANON_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     post("save.json", "secondaryWeapon1", "autocanon")
-                    post("save.json", "money", player.money - AUTOCANON_BUTTON.price)
                     player.secondaryWeapon1 = "autocanon"
                     AUTOCANON_BUTTON.price = -1
                     if SPIRAL_BUTTON.price == -1:
@@ -81,7 +82,6 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
                         SPIRAL_BUTTON.isLevelMax = False
                 elif SHOTGUN_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     post("save.json", "secondaryWeapon2", "shotgun")
-                    post("save.json", "money", player.money - SHOTGUN_BUTTON.price)
                     player.secondaryWeapon2 = "shotgun"
                     SHOTGUN_BUTTON.price = -1
                     if PHOENIX_BUTTON.price == -1:
@@ -89,7 +89,6 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
                         PHOENIX_BUTTON.isLevelMax = False
                 elif PHOENIX_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     post("save.json", "secondaryWeapon2", "phoenix")
-                    post("save.json", "money", player.money - PHOENIX_BUTTON.price)
                     player.secondaryWeapon2 = "phoenix"
                     PHOENIX_BUTTON.price = -1
                     if SHOTGUN_BUTTON.price == -1:
@@ -97,7 +96,6 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
                         SHOTGUN_BUTTON.isLevelMax = False
                 elif SPIRAL_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     post("save.json", "secondaryWeapon1", "spiral")
-                    post("save.json", "money", player.money - SPIRAL_BUTTON.price)
                     player.secondaryWeapon1 = "spiral"
                     SPIRAL_BUTTON.price = -1
                     if AUTOCANON_BUTTON.price == -1:
