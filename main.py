@@ -22,7 +22,7 @@ from SaveFiles.templatePaste import templatePaste
 pygame.init()  
 
 # Logo windows
-icon = pygame.image.load("img/emeu.jpg")
+icon = pygame.image.load("img/emeu.jpg") 
 pygame.display.set_icon(icon)
 
 buttonSurface = pygame.image.load("img/assets/button.png")
