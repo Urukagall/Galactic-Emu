@@ -1,5 +1,5 @@
 {
-    "money": 999500,
+    "money": 100,
     "speed": 10,
     "lives": 5,
     "cooldownDash": 120,
@@ -13,5 +13,7 @@
     "missileDamage": 1,
     "timeBetweenMissiles": 20,
     "secondaryWeapon1": "None",
-    "secondaryWeapon2": "phoenix"
+    "secondaryWeapon2": "None",
+    "skin": "player.png",
+    "skinShield": "playerShield.png"
 }

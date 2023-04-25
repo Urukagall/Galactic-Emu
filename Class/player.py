@@ -6,7 +6,7 @@ from Functions.jsonReader import *
 from Functions.darken import darken
 
 class Player():
-    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile, imgPrecise):
+    def __init__(self, basicSpeed, slowSpeed, size, displayWidth, displayHeight, dashSpeed,cooldownDash,timeDash, lives, projectileList, imgBullet, imgMissile, imgPrecise, img, imgShield):
         self.X = 800
         self.Y = 500
         self.basicSpeed = basicSpeed
@@ -19,6 +19,8 @@ class Player():
         self.cooldownDash = cooldownDash
         self.timeDash = timeDash
         self.lives = lives
+        self.img = img
+        self.imgShield = imgShield
         self.money = 0
         self.timeInvincible = 3
         self.dashInvulnerability = 0
@@ -44,7 +46,7 @@ class Player():
         self.missileCooldown = self.timeBetweenMissiles
 
         # Ultimate Stats
-        self.timeBetweenUltimates = 60
+        self.timeBetweenUltimates = 1200
         self.ultimateDmg = 50
         self.ultimateCooldown = self.timeBetweenUltimates
 

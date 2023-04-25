@@ -78,34 +78,26 @@ def shopBullet(SCREEN, BG, player, main_menu, gameManager, shop):
                     
                 if SPEED_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.bulletSpeed = shopping("bullet", "Speed", SPEED_BULLET_BUTTON, "bulletSpeed")
-                    post("save.json", "money", player.money - SPEED_BULLET_BUTTON.price)
                     
                 if DAMAGE_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.bulletDamage = shopping("bullet", "Damage", DAMAGE_BULLET_BUTTON, "bulletDamage")
-                    post("save.json", "money", player.money - DAMAGE_BULLET_BUTTON.price)
                     
                 if CANONS_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.arrayNumber = shopping("bullet", "Canons", CANONS_BULLET_BUTTON, "arrayNumber")
-                    post("save.json", "money", player.money - CANONS_BULLET_BUTTON.price)
                     
                 if FIRERATE_BULLET_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.timeBetweenShots = shopping("bullet", "Firerate", FIRERATE_BULLET_BUTTON, "timeBetweenShots")
-                    post("save.json", "money", player.money - FIRERATE_BULLET_BUTTON.price)
                     
                 if SPEED_MISSILE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.missileSpeed = shopping("missile", "Speed", SPEED_MISSILE_BUTTON, "missileSpeed")
-                    post("save.json", "money", player.money - SPEED_MISSILE_BUTTON.price)
                     
                 if DAMAGE_MISSILE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.missileDamage = shopping("missile", "Damage", DAMAGE_MISSILE_BUTTON, "missileDamage")
-                    post("save.json", "money", player.money - DAMAGE_MISSILE_BUTTON.price)
                     
                 if CANONS_MISSILE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.missileArrayNumber = shopping("missile", "Canons", CANONS_MISSILE_BUTTON, "missileArrayNumber")
-                    post("save.json", "money", player.money - CANONS_MISSILE_BUTTON.price)
                     
                 if FIRERATE_MISSILE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.timeBetweenMissiles = shopping("missile", "Firerate", FIRERATE_MISSILE_BUTTON, "timeBetweenMissiles")
-                    post("save.json", "money", player.money - FIRERATE_MISSILE_BUTTON.price)
                     
         pygame.display.update()

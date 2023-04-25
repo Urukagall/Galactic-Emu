@@ -76,19 +76,15 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
                     shop(SCREEN, BG, player, main_menu, gameManager)
                     
                 if LIVE_BUTTON.checkForInput(MENU_MOUSE_POS, player):
-                    player.lives = shopping("Live", LIVE_BUTTON, "money")
-                    post("save.json", "money", player.money - LIVE_BUTTON.price)
+                    player.lives = shopping("Live", LIVE_BUTTON, "lives")
                     
                 if SPEED_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.basicSpeed = shopping("Speed", SPEED_BUTTON, "speed")
-                    post("save.json", "money", player.money - SPEED_BUTTON.price)
                     
                 if DASH_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.cooldownDash = shopping("Dash", DASH_BUTTON, "cooldownDash")
-                    post("save.json", "money", player.money - DASH_BUTTON.price)
                     
                 if SHIELD_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.dashInvulnerability = shopping("Shield", SHIELD_BUTTON, "dashInvulnerability")
-                    post("save.json", "money", player.money - SHIELD_BUTTON.price)
                     
         pygame.display.update()

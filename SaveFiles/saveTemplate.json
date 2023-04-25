@@ -13,5 +13,7 @@
     "missileDamage": 1,
     "timeBetweenMissiles": 20,
     "secondaryWeapon1": "None",
-    "secondaryWeapon2": "None"
+    "secondaryWeapon2": "None",
+    "skin": "player.png",
+    "skinShield": "playerShield.png"
 }
