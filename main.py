@@ -115,7 +115,6 @@ def main_menu(alert=True):
                 if event.type == pygame.KEYDOWN:
                     isPaused = False
                     break
-
                 pygame.display.flip()
     running = True
     while running:

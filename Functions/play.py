@@ -267,7 +267,7 @@ def play(player, gameManager):
         textDialogueSurfaceBoss.append(get_font(20).render(line, True, "#b68f40"))
 
     isPaused = False
-
+    isDead = False
 
     while running:
         oldDamage = boss.health
@@ -292,6 +292,7 @@ def play(player, gameManager):
             pausedTextRect = pausedText.get_rect(center=(960, 100))
             screen.blit(pausedText,pausedTextRect)
             
+
             while True:
                 MENU_BUTTON.changeColor(pygame.mouse.get_pos(), screen)
                 MENU_BUTTON.update(screen)
@@ -595,15 +596,20 @@ def play(player, gameManager):
         bossHPText = font.render(f'Boss HP: {boss.health}', True, (255, 255, 255))
         screen.blit(bossHPText, (10, 100))
 
+        #Dead
         if player.lives == 0:
-            loseMainText = font.render(f'¶‡?) 8;8) 9‡(;... -8); 95048?(8?¢,', True, (255, 255, 255))
-            screen.blit(loseMainText, (800, 500))
-            loseMinText = font.render(f'stats back to default ones.', True, (255, 255, 255))
-            screen.blit(loseMinText, (800, 550))
+            deadRect = pygame.Surface((1920,1080)) 
+            deadRect.set_alpha(128)               
+            deadRect.fill((0,0,0))           
+            screen.blit(deadRect, (0,0))
+            deadText = get_font(100).render("PAUSED", True, "#b68f40")
+            deadTextRect = deadText.get_rect(center=(960, 100))
+            screen.blit(deadText,deadTextRect)
             bulletHellSound.stop()
             bossMusic.stop()
             saveReader(player)
-            return player.money
+            isDead = True
+    
 
         if pressed[pygame.K_LSHIFT]:
             pygame.draw.rect(screen, (0,255,0), playerRect)
@@ -639,4 +645,4 @@ def play(player, gameManager):
     saveReader(player)
     bossMusic.stop()
     bulletHellSound.stop()
-    return player.money
+    return isDead
