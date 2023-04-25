@@ -13,7 +13,7 @@
         350,
         -1
     ],
-    "bulletDamageLevel": 0,
+    "bulletDamageLevel": 4,
     "bulletDamageUpgrade": [
         2,
         3,
@@ -69,7 +69,7 @@
         350,
         -1
     ],
-    "missileDamageLevel": 0,
+    "missileDamageLevel": 4,
     "missileDamageUpgrade": [
         2,
         3,

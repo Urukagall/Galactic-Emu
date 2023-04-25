@@ -2,7 +2,7 @@ import pygame, sys
 import math
 import pygame.time
 import random
-import cv2
+# import cv2
 
 from Class.projectile import Projectile
 from Class.player import Player
@@ -216,7 +216,7 @@ def play(player, gameManager):
     supressor = Enemy(True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left", 0, 10, 1, 0, 2, bigBallRed)
     spyral = Enemy(False, 150, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left", 3)
     miniboss = Enemy(False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left", 3, 1, 3, 10, 3, ballYellow)
-    enemyList  = [bozo, railgun, supressor, spyral, miniboss ]
+    enemyList  = [ ]
     # enemyList = []
     onScreenEnemiesList = []
 
@@ -495,11 +495,11 @@ def play(player, gameManager):
                 shift = True
                 if player.speed != player.slowSpeed:
                     shift = False
-                    if player.missileCooldown <= 0:
-                        player.shootHoming()
-                        player.missileCooldown = player.timeBetweenMissiles
                 player.cooldown = player.timeBetweenShots
                 player.shoot(shift)
+            if player.missileCooldown <= 0:
+                player.shootHoming()
+                player.missileCooldown = player.timeBetweenMissiles
         if pressed[pygame.K_x]:
             if player.ultimateCooldown <= 0:
                 #play sfx
