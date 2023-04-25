@@ -40,7 +40,7 @@ def firstPattern(Enemy):
     Enemy.patternStep += 1
     Enemy.bulletHandler.move(Enemy.x, Enemy.y)
 
-def miniBossPatern(Enemy, patternNum):
+def miniBossPatern(Enemy):
     if Enemy.health > 500:
         if Enemy.x <= 0:
             Enemy.facing = "right"
@@ -52,7 +52,7 @@ def miniBossPatern(Enemy, patternNum):
         elif Enemy.facing == "right":
             Enemy.move(1, 0)
     
-    if Enemy.health <= 500 and Enemy.health > 300:
+    if Enemy.health <= 500:
         if Enemy.x == 640 and Enemy.y == 0:
             Enemy.facing = "right"
         if Enemy.x == 1280 and Enemy.y == 0:
@@ -70,36 +70,6 @@ def miniBossPatern(Enemy, patternNum):
             Enemy.move(-1, 0)
         elif Enemy.facing == "up":
             Enemy.move(0, -1)
-
-    if Enemy.health <= 300 and Enemy.health > 0:
-        #Enemy.speed = 2
-        if Enemy.x == 0 and Enemy.y == 0:
-                Enemy.patternStep += 1
-
-        if Enemy.patternStep == 0:
-            if Enemy.x != 0 and Enemy.y != 0:
-                Enemy.move(Enemy.x + math.sqrt(1/2) * Enemy.speed, Enemy.y + math.sqrt(1/2) * Enemy.speed)
-            elif Enemy.x != 0 and Enemy.y == 0:
-                Enemy.move(-Enemy.speed, 0)
-            elif Enemy.x == 0 and Enemy.y != 0:
-                Enemy.move(0, -Enemy.speed)
-            
-        else:
-            if Enemy.x == 0 and Enemy.y == 0:
-                Enemy.facing = "dRight"
-            if Enemy.x == 1920 and Enemy.y == 1080:
-                Enemy.facing = "up"
-            if Enemy.x == 1920 and Enemy.y == 0:
-                Enemy.facing = "dLeft"
-            if Enemy.x == 0 and Enemy.y == 1080:
-                Enemy.facing = "up"
-
-            if Enemy.facing == "dRight":
-                Enemy.move(Enemy.x + math.sqrt(1/2) * Enemy.speed, Enemy.y + math.sqrt(1/2) * Enemy.speed)
-            elif Enemy.facing == "up":
-                Enemy.move(0, -1)
-            elif Enemy.facing == "dLeft":
-                Enemy.move(-(Enemy.x + math.sqrt(1/2) * Enemy.speed), Enemy.y + math.sqrt(1/2) * Enemy.speed)
 
 def bossPattern(Enemy, patternNum):
     if patternNum == 1:
