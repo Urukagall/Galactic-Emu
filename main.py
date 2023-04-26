@@ -28,6 +28,9 @@ pygame.display.set_icon(icon)
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
+logo = pygame.image.load("img/assets/logo.png")
+logo = pygame.transform.scale(logo, (logo.get_width()/1.3, logo.get_height()/1.3))
+
 #Import missile model
 missile = pygame.image.load("img/bullets/missile.png")
 missile = pygame.transform.scale(missile, (missile.get_width(), missile.get_height()))
@@ -142,7 +145,7 @@ def main_menu(alert=True):
         CREDITS_BUTTON = Button(buttonSurface, 960, 850, "Credit", False, None, credits, buttonSurface)
         QUIT_BUTTON = Button(buttonSurface, 960, 1000, "Quit", False, None, None, buttonSurface)
 
-        SCREEN.blit(MENU_TEXT, MENU_RECT)
+        SCREEN.blit(logo, (960 - (logo.get_width() / 2),0))
 
         for button in [PLAY_BUTTON, OPTIONS_BUTTON, SHOP_BUTTON, QUIT_BUTTON, HOW_TO_PLAY_BUTTON, CREDITS_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
