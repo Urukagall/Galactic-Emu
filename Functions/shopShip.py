@@ -15,6 +15,8 @@ speed = pygame.image.load("img/assets/buttonAmelioration/speed.png")
 speed = pygame.transform.scale(speed, (200, 75))
 shield = pygame.image.load("img/assets/buttonAmelioration/shield.png")
 shield = pygame.transform.scale(shield, (200, 75))
+imgCoin = pygame.image.load("img/assets/coin.png")
+imgCoin = pygame.transform.scale(imgCoin, (80, 40))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
@@ -24,10 +26,10 @@ else:
     spiralText = "Deactivate Spiral"'''
 
 # Upgrade Button Ship
-LIVE_BUTTON = Button(live, 850, 550, "", True, get("upgrade.json", "playerLivePrice")[get("upgrade.json", "playerLiveLevel")], None, buttonSurface, "Increase the number of live")
-DASH_BUTTON = Button(dash, 1100, 550, "", True, get("upgrade.json", "playerDashPrice")[get("upgrade.json", "playerDashLevel")], None, buttonSurface, "Increase the dash cooldown timer")
-SHIELD_BUTTON = Button(shield, 850, 700, "", True, get("upgrade.json", "playerLivePrice")[get("upgrade.json", "playerLiveLevel")], None, buttonSurface, "Increase invulnerability time")
-SPEED_BUTTON = Button(speed, 1100, 700, "", True, get("upgrade.json", "playerSpeedPrice")[get("upgrade.json", "playerSpeedLevel")], None, buttonSurface, "Increase the speed of the ship")
+LIVE_BUTTON = Button(live, 800, 550, "", True, get("upgrade.json", "playerLivePrice")[get("upgrade.json", "playerLiveLevel")], None, buttonSurface, "Increase the number of live")
+DASH_BUTTON = Button(dash, 1150, 550, "", True, get("upgrade.json", "playerDashPrice")[get("upgrade.json", "playerDashLevel")], None, buttonSurface, "Increase the dash cooldown timer")
+SHIELD_BUTTON = Button(shield, 800, 700, "", True, get("upgrade.json", "playerLivePrice")[get("upgrade.json", "playerLiveLevel")], None, buttonSurface, "Increase invulnerability time")
+SPEED_BUTTON = Button(speed, 1150, 700, "", True, get("upgrade.json", "playerSpeedPrice")[get("upgrade.json", "playerSpeedLevel")], None, buttonSurface, "Increase the speed of the ship")
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
@@ -51,7 +53,7 @@ def shopping(stat, button, statSaveName):
 def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
     running = True
     while running:
-        MENU_MONEY = get_font(20).render("Money:" + str(player.money), True, "#b68f40")
+        MENU_MONEY = get_font(20).render(str(player.money), True, "#b68f40")
         SCREEN.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -59,7 +61,8 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
         # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
-        SCREEN.blit(MENU_MONEY, (50,50))
+        SCREEN.blit(imgCoin,(0 ,50))
+        SCREEN.blit(MENU_MONEY, (100,60))
         
         for button in [RESUME_BUTTON, LIVE_BUTTON, DASH_BUTTON, SHIELD_BUTTON, SPEED_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
@@ -86,5 +89,8 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
                     
                 if SHIELD_BUTTON.checkForInput(MENU_MOUSE_POS, player):
                     player.dashInvulnerability = shopping("Shield", SHIELD_BUTTON, "dashInvulnerability")
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    shop(SCREEN, BG, player, main_menu, gameManager)
                     
         pygame.display.update()
