@@ -188,6 +188,16 @@ def play(player, gameManager):
     shaking = False
     screenShake = 40
 
+    imgPortraitPlayer = pygame.image.load("img/avatar/portraitPlayer.png").convert_alpha()
+    imgPortraitPlayer = pygame.transform.scale(imgPortraitPlayer, (158, 158))
+    imgPortraitBoss = pygame.image.load("img/avatar/portraitBoss.png").convert_alpha()
+    imgPortraitBoss = pygame.transform.scale(imgPortraitBoss, (158, 158))
+    imgDialogueBox = pygame.image.load("img/avatar/dialogueBox.png").convert_alpha()
+    imgDialogueBox = pygame.transform.scale(imgDialogueBox, (960, 158))
+    imgDialogueBoxBoss = pygame.image.load("img/avatar/dialogueBoxBoss.png").convert_alpha()
+    imgDialogueBoxBoss = pygame.transform.scale(imgDialogueBoxBoss, (960, 158))
+
+
     #Redefine player & its bullets luminosity
     imgPlayerAvatar = pygame.image.load("img/avatar/playerAvatar.png").convert_alpha()
     imgPlayerAvatar = pygame.transform.scale(imgPlayerAvatar, (150, 150))
@@ -204,7 +214,7 @@ def play(player, gameManager):
     imgHeart = pygame.image.load("img/assets/heart.png").convert_alpha()
     imgHeart = pygame.transform.scale(imgHeart, (40, 40))
     imgCoin = pygame.image.load("img/assets/coin.png").convert_alpha()
-    imgCoin = pygame.transform.scale(imgCoin, (40, 40))
+    imgCoin = pygame.transform.scale(imgCoin, (80, 40))
     imgUltimate = pygame.image.load("img/assets/ultimate.png").convert_alpha()
     imgUltimate = pygame.transform.scale(imgUltimate, (40, 40))
 
@@ -275,9 +285,9 @@ def play(player, gameManager):
     font = pygame.font.Font(None, 36)
     
     # Dialogue phase 1
-    textDialoguePlayer = ["\n\nGotta find the Australian base...\n\n...and destroy it.\n\n","Here I come, Death Bucket\n\nCOLONEL SANDERERS!\n\nYOU TOOK EVERYTHING FROM ME!!!\n\nYou will be fried with this base!\n\n","I think I can win this\n\nOH and what are you \ngonna do for that ?\n\n","What append, you are scared ?\n\nYou are calling me a chicken ?\nYou're gonna regret it\n\n","I'm close to the winning,\none last effort\n\n","What is that ?"]
+    textDialoguePlayer = ["\n\nGotta find the Australian base...\n\n...and destroy it.\n\n","Here I come, Death Bucket\n\nCOLONEL SANDERERS!\n\nYOU TOOK EVERYTHING FROM ME!!!\n\nYou will be fried with this base!\n\n","I think I can win this\n\nOH and what are you \ngonna do for that ?\n\n","What append, you are scared ?\n\nYou are calling me a chicken ?\nYou're gonna regret it\n\n","I'm close to the winning,\none last effort\n\n","What is that ?\n\n"]
     textDialoguePhase = 0
-    textDialogueBoss = ["\n\nStop right there, \nCriminal Scum!\n\nYOU STOLE THE SECRET \nRECIP- uh, PLANS!\n\nI don't even know who you are\n\nTry me, little bird\n\n", "\n\ndon't be so sure of that\n\nYou'll see it soon enough\n\n","\n\nAHAHAHAH. Little chicken, \nyou are going to be frie- euh killed\n\nWe will see that\n\n","\n\nARG !!! It's just luck, \nyou'r not gonna win this fight\n\n","\n\nYou'r gonna regret what you did.\nALL GUNS OUT !!!"]
+    textDialogueBoss = ["\n\nStop right there, \nCriminal Scum!\n\nYOU STOLE THE SECRET \nRECIP- uh, PLANS!\n\nI don't even know who you are\n\nTry me, little bird\n\n", "\n\ndon't be so sure of that\n\nYou'll see it soon enough\n\n","\n\nAHAHAHAH. Little chicken, \nyou are going to be frie- euh killed\n\nWe will see that\n\n","\n\nARG !!! It's just luck, \nyou'r not gonna win this fight\n\n","\n\nYou'r gonna regret what you did.\nALL GUNS OUT !!!\n\n"]
     textDialoguePhaseBoss = 0
     textDialogueSurface = []
     textDialogueSurfaceBoss = []
@@ -525,6 +535,7 @@ def play(player, gameManager):
 
         for i in range (4):
             if boss.patternNum == i+2 and patternBoss != i+2:
+                print("ça rentre")
                 patternBoss = i+2
                 textDialogue = textDialoguePlayer[i+2]
                 textDialoguePhase = 0
@@ -669,8 +680,14 @@ def play(player, gameManager):
         # Dialogue phase 
         x = 600
         y = 1000
+
+        if textDialoguePhase < len(textDialogueSurface) - 1:
+            screen.blit(imgDialogueBox,(158 ,displayHeight - imgPortraitPlayer.get_height()))
+            if bossFight:
+                screen.blit(imgDialogueBoxBoss,(1770 - imgDialogueBoxBoss.get_width() , 0))
+
         for line in textDialogueSurface[textDialoguePhase].split('\n'):
-            line = get_font(20).render(line, True, "#b68f40")
+            line = get_font(20).render(line, True, "#7a5d21")
             textDialogueRect = line.get_rect(center=(x, y))
             screen.blit(line, textDialogueRect)
             y += line.get_height()
@@ -679,7 +696,7 @@ def play(player, gameManager):
             x = 1320
             y = 80
             for line in textDialogueSurfaceBoss[textDialoguePhaseBoss].split('\n'):
-                line = get_font(20).render(line, True, "#b68f40")
+                line = get_font(20).render(line, True, "#7a5d21")
                 textDialogueRectBoss = line.get_rect(center=(x, y))
                 screen.blit(line, textDialogueRectBoss)
                 y += line.get_height()
@@ -711,10 +728,14 @@ def play(player, gameManager):
         #     screen.blit(textDialogueSurfaceBoss[textDialoguePhaseBoss], textDialogueRectBoss)
         
         # Display the hero avatar
+        
+        screen.blit(imgPortraitPlayer,(0 ,displayHeight - imgPortraitPlayer.get_height()))
+
         if damageAvatarCountdown > 0:
             screen.blit(imgPlayerAvatarDamage,(0 ,displayHeight - imgPlayerAvatar.get_height()))
         else:
             screen.blit(imgPlayerAvatar,(0 ,displayHeight - imgPlayerAvatar.get_height()))
+        
 
         # Display the hearts
         for i in range (player.lives):
@@ -727,7 +748,7 @@ def play(player, gameManager):
 
         screen.blit(imgCoin,(0 ,725))
         moneyText = font.render(str(player.money), True, (255, 255, 255))
-        screen.blit(moneyText, (60, 730))
+        screen.blit(moneyText, (100, 730))
 
         # Display the ultimate timer
         
@@ -740,6 +761,7 @@ def play(player, gameManager):
         
         # Display the Boss avatar
         if bossFight:
+            screen.blit(imgPortraitBoss,(displayWidth - bossImgAvatar.get_width() ,0))
             screen.blit(bossImgAvatar,(displayWidth - bossImgAvatar.get_width() , 0))
         
         currentDamage = boss.health

@@ -6,21 +6,29 @@ from Functions.jsonReader import *
 
 phoenix = pygame.image.load("img/assets/buttonAmelioration/phoenix.png")
 phoenix = pygame.transform.scale(phoenix, (200, 75))
+autocanon = pygame.image.load("img/assets/buttonAmelioration/autocanon.png")
+autocanon = pygame.transform.scale(autocanon, (200, 75))
+shotgun = pygame.image.load("img/assets/buttonAmelioration/shotgun.png")
+shotgun = pygame.transform.scale(shotgun, (200, 75))
+spiral = pygame.image.load("img/assets/buttonAmelioration/spiral.png")
+spiral = pygame.transform.scale(spiral, (200, 75))
 buttonSurface = pygame.image.load("img/assets/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
+imgCoin = pygame.image.load("img/assets/coin.png")
+imgCoin = pygame.transform.scale(imgCoin, (80, 40))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
 # Upgrade Button Ship
 if get("save.json", "secondaryWeapon1") == "autocanon":
-    AUTOCANON_BUTTON = Button(buttonSurface, 800, 550, "Autocanon", True, -1, None, buttonSurface, "A high firerate suspended canon")
+    AUTOCANON_BUTTON = Button(autocanon, 800, 550, "", True, -1, None, buttonSurface, "A high firerate suspended canon")
 else:
-    AUTOCANON_BUTTON = Button(buttonSurface, 800, 550, "Autocanon", True, 100, None, buttonSurface, "A high firerate suspended canon")
+    AUTOCANON_BUTTON = Button(autocanon, 800, 550, "", True, 100, None, buttonSurface, "A high firerate suspended canon")
     
 if get("save.json", "secondaryWeapon2") == "shotgun":
-    SHOTGUN_BUTTON = Button(buttonSurface, 1150, 700, "Shotgun", True, -1, None, buttonSurface, "Slow firerate but wide angle")
+    SHOTGUN_BUTTON = Button(shotgun, 1150, 700, "", True, -1, None, buttonSurface, "Slow firerate but wide angle")
 else:
-    SHOTGUN_BUTTON = Button(buttonSurface, 1150, 700, "Shotgun", True, 150, None, buttonSurface, "Slow firerate but wide angle")
+    SHOTGUN_BUTTON = Button(shotgun, 1150, 700, "", True, 150, None, buttonSurface, "Slow firerate but wide angle")
     
 if get("save.json", "secondaryWeapon2") == "phoenix":
     PHOENIX_BUTTON = Button(phoenix, 1150, 550, "", True, -1, None, buttonSurface, "A strong and fast missile")
@@ -28,9 +36,9 @@ else:
     PHOENIX_BUTTON = Button(phoenix, 1150, 550, "", True, 250, None, buttonSurface, "A strong and fast missile")
     
 if get("save.json", "secondaryWeapon1") == "spiral":
-    SPIRAL_BUTTON = Button(buttonSurface, 800, 700, "Spiral", True, -1, None, buttonSurface, "Shoots bullets all arround your ship")
+    SPIRAL_BUTTON = Button(spiral, 800, 700, "", True, -1, None, buttonSurface, "Shoots bullets all arround your ship")
 else:
-    SPIRAL_BUTTON = Button(buttonSurface, 800, 700, "Spiral", True, 50, None, buttonSurface, "Shoots bullets all arround your ship")
+    SPIRAL_BUTTON = Button(spiral, 800, 700, "", True, 50, None, buttonSurface, "Shoots bullets all arround your ship")
     
 # SHOTGUN_BUTTON = Button(buttonSurface, 800, 700, "Shotgun", True, 150, None, buttonSurface, "Slow firerate but wide angle")
 # PHOENIX_BUTTON = Button(buttonSurface, 1150, 550, "Phoenix", True, 250, None, buttonSurface, "A strong and fast missile")
@@ -50,7 +58,7 @@ MENU_SLOT2_RECT = MENU_SLOT2.get_rect(center=(1150, 400))
 def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
     running = True
     while running:
-        MENU_MONEY = get_font(20).render("Money:" + str(player.money), True, "#b68f40")
+        MENU_MONEY = get_font(20).render(str(player.money), True, "#b68f40")
         SCREEN.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -59,7 +67,8 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
         SCREEN.blit(MENU_SLOT1, MENU_SLOT1_RECT)
         SCREEN.blit(MENU_SLOT2, MENU_SLOT2_RECT)
 
-        SCREEN.blit(MENU_MONEY, (50,50))
+        SCREEN.blit(imgCoin,(0 ,50))
+        SCREEN.blit(MENU_MONEY, (100,60))
         
         for button in [RESUME_BUTTON, SHOTGUN_BUTTON, PHOENIX_BUTTON, SPIRAL_BUTTON, AUTOCANON_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
@@ -101,4 +110,7 @@ def shopConsumable(SCREEN, BG, player, main_menu, gameManager, shop):
                     if AUTOCANON_BUTTON.price == -1:
                         AUTOCANON_BUTTON.price = 100
                         AUTOCANON_BUTTON.isLevelMax = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    shop(SCREEN, BG, player, main_menu, gameManager)
         pygame.display.update()
