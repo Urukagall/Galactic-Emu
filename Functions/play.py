@@ -427,6 +427,40 @@ def play(player, gameManager):
                 
                 pygame.display.flip()
                 clock.tick(60)
+        
+        if len(enemyList) == 0 and len(onScreenEnemiesList) == 0:
+            player.lives = get("save.json","lives")
+            deadRect = pygame.Surface((1920,1080)) 
+            deadRect.set_alpha(128)               
+            deadRect.fill((0,0,0))           
+            screen.blit(deadRect, (0,0))
+            deadText = get_font(100).render("YOU WIN", True, "#b68f40")
+            deadTextRect = deadText.get_rect(center=(960, 100))
+            screen.blit(deadText,deadTextRect)
+            deadText = font.render(f'You Win', True, (255, 255, 255))
+            deadTextRect = deadText.get_rect(center=(960, 500))
+            screen.blit(deadText, deadTextRect)
+            deadText = font.render(f'Score:' + str(score.score), True, (255, 255, 255))
+            deadTextRect = deadText.get_rect(center=(960, 550))
+            screen.blit(deadText, deadTextRect)
+            deadText = font.render(f'Money:' + str(player.money), True, (255, 255, 255))
+            deadTextRect = deadText.get_rect(center=(960, 600))
+            screen.blit(deadText, deadTextRect)
+            
+            while True:
+                MENU_BUTTON.changeColor(pygame.mouse.get_pos(), screen)
+                MENU_BUTTON.update(screen)
+                event = pygame.event.poll()
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if MENU_BUTTON.checkForInput(pygame.mouse.get_pos(), player):
+                        running = False
+                        isPaused = False
+                        post("save.json" ,"money",player.money)
+                        return player.money
+                
+                pygame.display.flip()
+                clock.tick(60)
                 
         
         
