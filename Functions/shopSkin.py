@@ -4,17 +4,17 @@ import sys
 from Class.button import Button
 from Functions.jsonReader import *
 
-playerBlue = pygame.image.load("img/assets/buttonAmelioration/blueSkin.png")
+playerBlue = pygame.image.load("img/ui/blueSkin.png")
 playerBlue = pygame.transform.scale(playerBlue, (200, 75))
-playerRed = pygame.image.load("img/assets/buttonAmelioration/redSkin.png")
+playerRed = pygame.image.load("img/ui/redSkin.png")
 playerRed = pygame.transform.scale(playerRed, (200, 75))
-playerPurple = pygame.image.load("img/assets/buttonAmelioration/purpleSkin.png")
+playerPurple = pygame.image.load("img/ui/purpleSkin.png")
 playerPurple = pygame.transform.scale(playerPurple, (200, 75))
-playerGreen = pygame.image.load("img/assets/buttonAmelioration/greenSkin.png")
+playerGreen = pygame.image.load("img/ui/greenSkin.png")
 playerGreen = pygame.transform.scale(playerGreen, (200, 75))
-buttonSurface = pygame.image.load("img/assets/button.png")
+buttonSurface = pygame.image.load("img/ui/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
-imgCoin = pygame.image.load("img/assets/coin.png")
+imgCoin = pygame.image.load("img/ui/coin.png")
 imgCoin = pygame.transform.scale(imgCoin, (80, 40))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
@@ -39,13 +39,9 @@ if get("save.json", "skin") == "playerGreen.png":
     SKIN4_BUTTON = Button(playerGreen, 800, 700, "", True, -1, None, buttonSurface, "A skin")
 else:
     SKIN4_BUTTON = Button(playerGreen, 800, 700, "", True, 1000, None, buttonSurface, "A skin")
-    
-# SHOTGUN_BUTTON = Button(buttonSurface, 800, 700, "Shotgun", True, 150, None, buttonSurface, "Slow firerate but wide angle")
-# PHOENIX_BUTTON = Button(buttonSurface, 1150, 550, "Phoenix", True, 250, None, buttonSurface, "A strong and fast missile")
-# SPIRAL_BUTTON = Button(buttonSurface, 1150, 700, "Spiral", True, 50, None, buttonSurface, "Shoots bullets all arround your ship")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font.ttf", size)
+    return pygame.font.Font("asset/font.ttf", size)
 
 
 MENU_TEXT = get_font(100).render("POWER-UP SHOP", True, "#b68f40")

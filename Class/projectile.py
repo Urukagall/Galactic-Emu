@@ -33,7 +33,6 @@ class Projectile():
             self.angle = angle_degrees +180
 
         '''The bullet is destroyed when exiting the screen'''
-        #del(self) doesnt actually delete the instance for some reason
         if self.x < 0 - self.size:
             del(self)
             return True
@@ -66,8 +65,6 @@ class Projectile():
             angle_radians = math.atan2(dx, dy)
             angle_degrees = math.degrees(angle_radians)
             # Faire pivoter l'image du missile de l'angle calculé
-            self.angle = angle_degrees +180
-            # rotated_image = pygame.transform.rotate(self.image, -angle_degrees - 90)
-            
+            self.angle = angle_degrees +180           
         else:
             pass

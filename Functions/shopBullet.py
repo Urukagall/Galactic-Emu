@@ -5,25 +5,25 @@ from Class.button import Button
 from Functions.jsonReader import *
 
 
-buttonSurface = pygame.image.load("img/assets/button.png")
+buttonSurface = pygame.image.load("img/ui/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
-bulletNumberUp = pygame.image.load("img/assets/buttonAmelioration/bulletCanons.png")
+bulletNumberUp = pygame.image.load("img/ui/bulletCanons.png")
 bulletNumberUp = pygame.transform.scale(bulletNumberUp, (200, 75))
-bulletSpeedUp = pygame.image.load("img/assets/buttonAmelioration/bulletSpeed.png")
+bulletSpeedUp = pygame.image.load("img/ui/bulletSpeed.png")
 bulletSpeedUp = pygame.transform.scale(bulletSpeedUp, (200, 75))
-bulletFirerateUp = pygame.image.load("img/assets/buttonAmelioration/bulletFireRate.png")
+bulletFirerateUp = pygame.image.load("img/ui/bulletFireRate.png")
 bulletFirerateUp = pygame.transform.scale(bulletFirerateUp, (200, 75))
-bulletDamage = pygame.image.load("img/assets/buttonAmelioration/bulletDamage.png")
+bulletDamage = pygame.image.load("img/ui/bulletDamage.png")
 bulletDamage = pygame.transform.scale(bulletDamage, (200, 75))
-missileNumberUp = pygame.image.load("img/assets/buttonAmelioration/missileCanons.png")
+missileNumberUp = pygame.image.load("img/ui/missileCanons.png")
 missileNumberUp = pygame.transform.scale(missileNumberUp, (200, 75))
-missileSpeedUp = pygame.image.load("img/assets/buttonAmelioration/missileSpeed.png")
+missileSpeedUp = pygame.image.load("img/ui/missileSpeed.png")
 missileSpeedUp = pygame.transform.scale(missileSpeedUp, (200, 75))
-missileFirerateUp = pygame.image.load("img/assets/buttonAmelioration/missileFireRate.png")
+missileFirerateUp = pygame.image.load("img/ui/missileFireRate.png")
 missileFirerateUp = pygame.transform.scale(missileFirerateUp, (200, 75))
-missileDamage = pygame.image.load("img/assets/buttonAmelioration/missileDamage.png")
+missileDamage = pygame.image.load("img/ui/missileDamage.png")
 missileDamage = pygame.transform.scale(missileDamage, (200, 75))
-imgCoin = pygame.image.load("img/assets/coin.png")
+imgCoin = pygame.image.load("img/ui/coin.png")
 imgCoin = pygame.transform.scale(imgCoin, (80, 40))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
@@ -41,7 +41,7 @@ CANONS_MISSILE_BUTTON = Button(missileNumberUp, 1150, 700, "", True, get("upgrad
 FIRERATE_MISSILE_BUTTON = Button(missileFirerateUp, 1400, 700, "", True, get("upgrade.json", "missileFireratePrice")[get("upgrade.json", "missileFirerateLevel")], None, buttonSurface, "Increase the firerate of the bullet")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font.ttf", size)
+    return pygame.font.Font("asset/font.ttf", size)
 
 MENU_TEXT = get_font(100).render("BULLET SHOP", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))

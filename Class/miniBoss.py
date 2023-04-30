@@ -26,12 +26,6 @@ class miniBoss():
         
         self.projectileList = projectileList
         self.changePattern()
-        '''for BH in self.BHdata:
-            index = self.BHdata.index(BH)
-            newBH = BulletHandler(BH[1], BH[2], BH[3], self.projectileList, BH[4], BH[6])
-            self.cooldowns.append(self.timeBetweenShots[index])
-            self.BHList.append(newBH)
-            newBH.move(self.x, self.y)'''
 
     def move(self, veloX, veloY):
         self.x = self.x + veloX * self.speed
@@ -39,7 +33,7 @@ class miniBoss():
         for BH in self.BHList:
             BH.move(self.x + self.size/2, self.y + 100)
 
-    def takeDmg(self, dmg, enemyList):
+    def takeDmg(self, dmg, enemyList, player):
         self.health -= dmg
         if(self.health <= 0):
             self.projectileList.clear()
@@ -56,7 +50,7 @@ class miniBoss():
     
     def update(self, player):
         #move
-        miniBossPatern(self, 1)
+        miniBossPatern(self)
         for bulletHandler in self.BHList:
             index = self.BHList.index(bulletHandler)
             if index > 0:

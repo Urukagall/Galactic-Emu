@@ -26,12 +26,6 @@ class Boss():
         
         self.projectileList = projectileList
         self.changePattern()
-        '''for BH in self.BHdata:
-            index = self.BHdata.index(BH)
-            newBH = BulletHandler(BH[1], BH[2], BH[3], self.projectileList, BH[4], BH[6])
-            self.cooldowns.append(self.timeBetweenShots[index])
-            self.BHList.append(newBH)
-            newBH.move(self.x, self.y)'''
 
     def move(self, veloX, veloY):
         self.x = self.x + veloX * self.speed

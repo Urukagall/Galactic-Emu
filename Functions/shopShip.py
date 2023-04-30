@@ -5,17 +5,17 @@ from Class.button import Button
 from Functions.jsonReader import *
 from Functions.jsonReader import *
 
-buttonSurface = pygame.image.load("img/assets/button.png")
+buttonSurface = pygame.image.load("img/ui/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
-dash = pygame.image.load("img/assets/buttonAmelioration/dash.png")
+dash = pygame.image.load("img/ui/dash.png")
 dash = pygame.transform.scale(dash, (200, 75))
-live = pygame.image.load("img/assets/buttonAmelioration/live.png")
+live = pygame.image.load("img/ui/live.png")
 live = pygame.transform.scale(live, (200, 75))
-speed = pygame.image.load("img/assets/buttonAmelioration/speed.png")
+speed = pygame.image.load("img/ui/speed.png")
 speed = pygame.transform.scale(speed, (200, 75))
-shield = pygame.image.load("img/assets/buttonAmelioration/shield.png")
+shield = pygame.image.load("img/ui/shield.png")
 shield = pygame.transform.scale(shield, (200, 75))
-imgCoin = pygame.image.load("img/assets/coin.png")
+imgCoin = pygame.image.load("img/ui/coin.png")
 imgCoin = pygame.transform.scale(imgCoin, (80, 40))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
@@ -33,7 +33,7 @@ SPEED_BUTTON = Button(speed, 1150, 700, "", True, get("upgrade.json", "playerSpe
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font.ttf", size)
+    return pygame.font.Font("asset/font.ttf", size)
 
 MENU_TEXT = get_font(100).render("SHIP SHOP", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
@@ -59,7 +59,6 @@ def shopShip(SCREEN, BG, player, main_menu, gameManager, shop):
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
-        # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
         SCREEN.blit(imgCoin,(0 ,50))
         SCREEN.blit(MENU_MONEY, (100,60))
