@@ -10,11 +10,10 @@ from Class.enemy import Enemy
 from Class.score import Score
 from Class.button import Button
 from Class.boss import Boss
+from Class.miniBoss import miniBoss
 from Functions.saveReader import *
 
-
 from Functions.enemiesPattern import *
-# from Functions.transition import *
 
 def drawTransition(surf, y, color):
     for x in range(16):
@@ -39,7 +38,7 @@ def rotate(image, rect, angle):
         return newImage, rect
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font.ttf", size)
+    return pygame.font.Font("asset/font.ttf", size)
 
 def createEnemy(data, bulletRotation=0, bulletSpeed2=0, arrayNumber2=0,angleBetweenArrays2=0,timeBetweenShots2=0,bulletImg2=[],aimAtPlayer2=False,bulletRotation2=0,pattern = firstPattern):
     '''money = data[15]
@@ -66,13 +65,13 @@ def play(player, gameManager):
     pygame.display.set_caption("Bullet Hell")
 
     #Import background model
-    levelBackGround = pygame.image.load("img/assets/back.png").convert()
+    levelBackGround = pygame.image.load("img/bgs/back.png").convert()
     levelBackGround = pygame.transform.scale(levelBackGround, (1920, 1080))
     backGroundHeight = levelBackGround.get_height()
     backGroundWidth = levelBackGround.get_width()
 
     #Import boss' base asset
-    bossBase = pygame.image.load("img/assets/base-bg.png").convert()
+    bossBase = pygame.image.load("img/bgs/base-bg.png").convert()
     bossBase = pygame.transform.scale(bossBase, (1920, 1080))
 
 
@@ -188,13 +187,13 @@ def play(player, gameManager):
     shaking = False
     screenShake = 40
 
-    imgPortraitPlayer = pygame.image.load("img/avatar/portraitPlayer.png").convert_alpha()
+    imgPortraitPlayer = pygame.image.load("img/ui/portraitPlayer.png").convert_alpha()
     imgPortraitPlayer = pygame.transform.scale(imgPortraitPlayer, (158, 158))
-    imgPortraitBoss = pygame.image.load("img/avatar/portraitBoss.png").convert_alpha()
+    imgPortraitBoss = pygame.image.load("img/ui/portraitBoss.png").convert_alpha()
     imgPortraitBoss = pygame.transform.scale(imgPortraitBoss, (158, 158))
-    imgDialogueBox = pygame.image.load("img/avatar/dialogueBox.png").convert_alpha()
+    imgDialogueBox = pygame.image.load("img/ui/dialogueBox.png").convert_alpha()
     imgDialogueBox = pygame.transform.scale(imgDialogueBox, (960, 158))
-    imgDialogueBoxBoss = pygame.image.load("img/avatar/dialogueBoxBoss.png").convert_alpha()
+    imgDialogueBoxBoss = pygame.image.load("img/ui/dialogueBoxBoss.png").convert_alpha()
     imgDialogueBoxBoss = pygame.transform.scale(imgDialogueBoxBoss, (960, 158))
 
 
@@ -211,18 +210,12 @@ def play(player, gameManager):
     invincibleCountdown = 0
     damageAvatarCountdown = 0
     isPlaying = False
-    imgHeart = pygame.image.load("img/assets/heart.png").convert_alpha()
+    imgHeart = pygame.image.load("img/ui/heart.png").convert_alpha()
     imgHeart = pygame.transform.scale(imgHeart, (40, 40))
-    imgCoin = pygame.image.load("img/assets/coin.png").convert_alpha()
+    imgCoin = pygame.image.load("img/ui/coin.png").convert_alpha()
     imgCoin = pygame.transform.scale(imgCoin, (80, 40))
-    imgUltimate = pygame.image.load("img/assets/ultimate.png").convert_alpha()
+    imgUltimate = pygame.image.load("img/ui/ultimate.png").convert_alpha()
     imgUltimate = pygame.transform.scale(imgUltimate, (40, 40))
-
-    # darkCarreau = darken(carreauBlue,45).convert_alpha()
-    # darkBullet = darken(bulletBlue).convert_alpha()
-    # darkMissile = darken(missileBlue,60).convert_alpha()
-
-    # player = Player(10, 5, 50, 1920, 1080, 30, 60, 15, 5, projectileList, bulletBlue, missileBlue, carreauBlue)
 
     player.projectileList = projectileList
     player.redefined()
@@ -242,16 +235,16 @@ def play(player, gameManager):
     imgMiniBoss = pygame.transform.scale(imgMiniBoss, (100,100))
 
     #Create Enemy
-    "[aimAtEnemy, HP, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, ||optionals from now|| money, bulletRotation, bulletSpeed2, arrayNumber2, angleBetweenArrays2, timeBetweenShots2, bulletImg2, aimAtPlayer2, bulletRotation2, pattern"
+    "[aimAtEnemy, HP, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, ||optionals from now|| money, bulletRotation, bulletSpeed2, arrayNumber2, angleBetweenArrays2, timeBetweenShots2, bulletImg2, aimAtPlayer2, bulletRotation2, pattern]"
     miniBozo = [True, 10, 0.5, 1200, 0, 50, displayWidth, displayHeight, 100, imgMiniBozo, bulletRed, 10, 1, 0, projectileList, 3, "left", 10]
     bozo = [True, 100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left", 20]
     railgun = [True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left", 50]
     supressor = [True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left",30, 0, 10, 1, 0, 2, bigBallRed]
     spyral = [False, 300, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left",30, 3]
-    miniboss = [False, 500, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgMiniBoss, bulletGreen, 1, 4, 90, projectileList, 0.5, "left",150, 3, 1, 3, 10, 3, ballYellow]
-    enemyDelayList = [[10, 300, 1], [1870,300,0],[10,300,60],[1870,300,0],[10,300,60],[1870,300,0], [displayWidth/4, 1, 160],[3*displayWidth/4, 1, 0], [displayWidth/2, 1, 160],[displayWidth/4, 1, 160],[3*displayWidth/4, 1, 0],[3*displayWidth/4, 1, 60],[displayWidth/4, 1, 0],[displayWidth/2, 1, 160],[3*displayWidth/4, 1, 60],[displayWidth/4, 1, 0],[0,0,0]]
-    enemyList  = [createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo),createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(bozo), createEnemy(bozo), createEnemy(railgun), createEnemy(supressor), createEnemy(bozo),createEnemy(spyral),createEnemy(spyral), createEnemy(railgun), createEnemy(supressor),createEnemy(supressor)]
-    # enemyList = []
+    miniboss = miniBoss(750, 1, 0, 0, 100, 1920, 1080, 1000, imgMiniBoss, projectileList, "right")
+    enemyDelayList = [[10, 300, 2], [1870,300,0],[10,300,120],[1870,300,0],[10,300,120],[1870,300,0], [displayWidth/4, 1, 320],[3*displayWidth/4, 1, 0], [displayWidth/2, 1, 320],[displayWidth/4, 1, 320],[3*displayWidth/4, 1, 0],[3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0],[displayWidth/2, 1, 320],[3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [10, 300, 2], [1870,300,0], [10, 300, 2],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120], [0,0,120],[0,0,60], [0,0,0]]
+    enemyList  = [createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo),createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(bozo), createEnemy(bozo), createEnemy(railgun), createEnemy(bozo), createEnemy(supressor), createEnemy(bozo), createEnemy(railgun), createEnemy(bozo), createEnemy(bozo),createEnemy(spyral),createEnemy(spyral), createEnemy(railgun), createEnemy(supressor), createEnemy(spyral), createEnemy(bozo), createEnemy(bozo), createEnemy(supressor), createEnemy(railgun), createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(bozo), createEnemy(bozo), createEnemy(bozo), miniboss]
+
     onScreenEnemiesList = []
     #create boss
     bossSize = 300
@@ -261,13 +254,12 @@ def play(player, gameManager):
     bossImgAvatar = pygame.transform.scale(bossImgAvatar, (150, 150))
     boss = Boss(10000, 0.5, 0, 0, bossSize, 1920, 1080, 1000, bossImg, projectileList, "Left")
     enemyList.append(boss)
-    #onScreenEnemiesList.append(boss)
     bossFight = False
     patternBoss = 1
 
     # Create Button
 
-    buttonSurface = pygame.image.load("img/assets/button.png")
+    buttonSurface = pygame.image.load("img/ui/button.png")
     buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
     MENU_BUTTON = Button(buttonSurface, 960, 1000, "Main Menu", False, None, None, buttonSurface)
 
@@ -336,7 +328,6 @@ def play(player, gameManager):
                 break
 
     while running:
-        oldDamage = boss.health
         # run the game at a constant 60fps
         clock.tick(60)
         #Close window on Escape press
@@ -429,6 +420,7 @@ def play(player, gameManager):
                 clock.tick(60)
         
         if len(enemyList) == 0 and len(onScreenEnemiesList) == 0:
+            player.money += 500
             player.lives = get("save.json","lives")
             deadRect = pygame.Surface((1920,1080)) 
             deadRect.set_alpha(128)               
@@ -457,12 +449,10 @@ def play(player, gameManager):
                         running = False
                         isPaused = False
                         post("save.json" ,"money",player.money)
-                        return player.money
+                        return player.money   
                 
                 pygame.display.flip()
-                clock.tick(60)
-                
-        
+                clock.tick(60)     
         
         # Play music in Loop
         if bossFight:
@@ -569,7 +559,6 @@ def play(player, gameManager):
 
         for i in range (4):
             if boss.patternNum == i+2 and patternBoss != i+2:
-                print("ça rentre")
                 patternBoss = i+2
                 textDialogue = textDialoguePlayer[i+2]
                 textDialoguePhase = 0
@@ -755,13 +744,6 @@ def play(player, gameManager):
             projectileList.clear()
             invincible = True
             invincibleCountdown = 60
-
-
-        # screen.blit(textDialogueSurface[textDialoguePhase], textDialogueRect)
-        # if bossFight:
-        #     screen.blit(textDialogueSurfaceBoss[textDialoguePhaseBoss], textDialogueRectBoss)
-        
-        # Display the hero avatar
         
         screen.blit(imgPortraitPlayer,(0 ,displayHeight - imgPortraitPlayer.get_height()))
 
@@ -797,14 +779,6 @@ def play(player, gameManager):
         if bossFight:
             screen.blit(imgPortraitBoss,(displayWidth - bossImgAvatar.get_width() ,0))
             screen.blit(bossImgAvatar,(displayWidth - bossImgAvatar.get_width() , 0))
-        
-        currentDamage = boss.health
-        deltaD = oldDamage - currentDamage
-        deltaText = font.render(f'DPS : {deltaD * 60}', True, (255, 0, 0))
-        screen.blit(deltaText, (10, 150))
-
-        bossHPText = font.render(f'Boss HP: {boss.health}', True, (255, 255, 255))
-        screen.blit(bossHPText, (10, 100))
 
         if player.lives == 0:
             bulletHellSound.stop()
@@ -819,7 +793,7 @@ def play(player, gameManager):
             invincible = True
             invincibleCountdown = 5
             if transitionY <= 32:
-                drawTransition(transitionSurf, transitionY, (255,255,255))
+                drawTransition(transitionSurf, transitionY, (128,128,128))
                 new = pygame.transform.scale(transitionSurf, (displayWidth,displayHeight))
                 screen.blit(new, (0,0))
                 transitionY += 1/6

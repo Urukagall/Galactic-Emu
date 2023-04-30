@@ -1,5 +1,5 @@
 {
-    "bulletSpeedLevel": 4,
+    "bulletSpeedLevel": 0,
     "bulletSpeedUpgrade": [
         13,
         16,
@@ -13,7 +13,7 @@
         350,
         -1
     ],
-    "bulletDamageLevel": 4,
+    "bulletDamageLevel": 0,
     "bulletDamageUpgrade": [
         2,
         3,
@@ -27,7 +27,7 @@
         500,
         -1
     ],
-    "bulletCanonsLevel": 4,
+    "bulletCanonsLevel": 0,
     "bulletCanonsUpgrade": [
         2,
         3,
@@ -41,7 +41,7 @@
         600,
         -1
     ],
-    "bulletFirerateLevel": 4,
+    "bulletFirerateLevel": 0,
     "bulletFirerateUpgrade": [
         8,
         6,
@@ -55,7 +55,7 @@
         500,
         -1
     ],
-    "missileSpeedLevel": 4,
+    "missileSpeedLevel": 0,
     "missileSpeedUpgrade": [
         10,
         15,
@@ -69,7 +69,7 @@
         350,
         -1
     ],
-    "missileDamageLevel": 4,
+    "missileDamageLevel": 0,
     "missileDamageUpgrade": [
         2,
         3,
@@ -83,7 +83,7 @@
         500,
         -1
     ],
-    "missileCanonsLevel": 4,
+    "missileCanonsLevel": 0,
     "missileCanonsUpgrade": [
         2,
         3,
@@ -97,7 +97,7 @@
         600,
         -1
     ],
-    "missileFirerateLevel": 4,
+    "missileFirerateLevel": 0,
     "missileFirerateUpgrade": [
         8,
         6,
@@ -111,7 +111,7 @@
         500,
         -1
     ],
-    "playerLiveLevel": 4,
+    "playerLiveLevel": 0,
     "playerLiveUpgrade": [
         6,
         7,
@@ -125,7 +125,7 @@
         500,
         -1
     ],
-    "playerSpeedLevel": 4,
+    "playerSpeedLevel": 0,
     "playerSpeedUpgrade": [
         11,
         12,
@@ -139,7 +139,7 @@
         500,
         -1
     ],
-    "playerDashLevel": 4,
+    "playerDashLevel": 0,
     "playerDashUpgrade": [
         105,
         90,
@@ -153,7 +153,7 @@
         700,
         -1
     ],
-    "playerShieldLevel": 4,
+    "playerShieldLevel": 0,
     "playerShieldUpgrade": [
         5,
         10,

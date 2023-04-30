@@ -1,4 +1,4 @@
-#Import librairies
+#Imporwwwt librairies
 import pygame, sys
 import pygame.time
 
@@ -25,10 +25,10 @@ pygame.init()
 icon = pygame.image.load("img/emeu.jpg") 
 pygame.display.set_icon(icon)
 
-buttonSurface = pygame.image.load("img/assets/button.png")
+buttonSurface = pygame.image.load("img/ui/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
-logo = pygame.image.load("img/assets/logo.png")
+logo = pygame.image.load("img/ui/logo.png")
 logo = pygame.transform.scale(logo, (logo.get_width()/1.3, logo.get_height()/1.3))
 
 #Import missile model
@@ -59,7 +59,7 @@ imgColonel = pygame.image.load("img/avatar/colonel.png")
 SCREEN = pygame.display.set_mode((1920, 1080))
 pygame.display.set_caption("Menu")  
 
-BG = pygame.image.load("img/assets/background.png")
+BG = pygame.image.load("img/bgs/background.png")
 BG = pygame.transform.scale(BG, (1920, 1080))
 
 gameManager = GameManager()
@@ -88,7 +88,7 @@ for line in textEpilepsy.split('\n'):
 saveReader(player)
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font.ttf", size)
+    return pygame.font.Font("asset/font.ttf", size)
 
 def main_menu(alert=True):
     isPaused = True

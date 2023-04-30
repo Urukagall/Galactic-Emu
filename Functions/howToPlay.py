@@ -7,14 +7,14 @@ from Functions.shopConsumable import shopConsumable
 from Functions.shopShip import shopShip
 
 
-buttonSurface = pygame.image.load("img/assets/button.png")
+buttonSurface = pygame.image.load("img/ui/button.png")
 buttonSurface = pygame.transform.scale(buttonSurface, (buttonSurface.get_width()/1.3, buttonSurface.get_height()/1.3))
 
 RESUME_BUTTON = Button(buttonSurface, 960, 850, "Return", False, None, None, buttonSurface)
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("font.ttf", size)
+    return pygame.font.Font("asset/font.ttf", size)
 
 MENU_TEXT = get_font(100).render("HOW TO PLAY", True, "#b68f40")
 MENU_TEXT_RECT = MENU_TEXT.get_rect(center=(960, 100))
@@ -48,7 +48,6 @@ def howToPlay(SCREEN, BG, player, main_menu):
             y += text.get_height()
 
         SCREEN.blit(MENU_TEXT, MENU_TEXT_RECT)
-        # SCREEN.blit(MENU_UPGRADE, MENU_UPGRADE_RECT)
 
         for button in [RESUME_BUTTON]:
             button.changeColor(MENU_MOUSE_POS, SCREEN)
