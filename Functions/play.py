@@ -236,12 +236,12 @@ def play(player, gameManager):
 
     #Create Enemy
     "[aimAtEnemy, HP, speed, x, y, size, displayWidth, displayHeight, score, image, bulletImg, bulletSpeed, arrayNumber, angleBetweenArrays, projectileList, timeBetweenShots, facing, ||optionals from now|| money, bulletRotation, bulletSpeed2, arrayNumber2, angleBetweenArrays2, timeBetweenShots2, bulletImg2, aimAtPlayer2, bulletRotation2, pattern]"
-    miniBozo = [True, 10, 0.5, 1200, 0, 50, displayWidth, displayHeight, 100, imgMiniBozo, bulletRed, 10, 1, 0, projectileList, 3, "left", 10]
-    bozo = [True, 100, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left", 20]
-    railgun = [True, 300, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left", 50]
-    supressor = [True, 150, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left",30, 0, 10, 1, 0, 2, bigBallRed]
-    spyral = [False, 300, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left",30, 3]
-    miniboss = miniBoss(750, 1, 0, 0, 100, 1920, 1080, 1000, imgMiniBoss, projectileList, "right")
+    miniBozo = [True, 5, 0.5, 1200, 0, 50, displayWidth, displayHeight, 100, imgMiniBozo, bulletRed, 10, 1, 0, projectileList, 3, "left", 10]
+    bozo = [True, 25, 2, 1200, 0, 50, displayWidth, displayHeight, 100, imgBozo, bulletRed, 10, 1, 0, projectileList, 1, "left", 20]
+    railgun = [True, 100, 0.5, 300, 0, 50, displayWidth, displayHeight, 100, imgRailgun, bigBallYellow, 3, 5, 10, projectileList, 3, "left", 50]
+    supressor = [True, 50, 1, 500, 0, 50, displayWidth, displayHeight, 100, imgSupressor, bulletYellow, 4, 4, 30, projectileList, 1, "left",30, 0, 10, 1, 0, 2, bigBallRed]
+    spyral = [False, 100, 0.5, 500, 0, 50, displayWidth, displayHeight, 100, imgSpyral, carreauGreen, 1, 4, 30, projectileList, 1.5, "left",30, 3]
+    miniboss = miniBoss(500, 1, 0, 0, 100, 1920, 1080, 1000, imgMiniBoss, projectileList, "right")
     enemyDelayList = [[10, 300, 2], [1870,300,0],[10,300,120],[1870,300,0],[10,300,120],[1870,300,0], [displayWidth/4, 1, 320],[3*displayWidth/4, 1, 0], [displayWidth/2, 1, 320],[displayWidth/4, 1, 320],[3*displayWidth/4, 1, 0],[3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0],[displayWidth/2, 1, 320],[3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120],[displayWidth/4, 1, 0], [10, 300, 2], [1870,300,0], [10, 300, 2],[displayWidth/4, 1, 0], [3*displayWidth/4, 1, 120], [0,0,120],[0,0,60], [0,0,0]]
     enemyList  = [createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo),createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(bozo), createEnemy(bozo), createEnemy(railgun), createEnemy(bozo), createEnemy(supressor), createEnemy(bozo), createEnemy(railgun), createEnemy(bozo), createEnemy(bozo),createEnemy(spyral),createEnemy(spyral), createEnemy(railgun), createEnemy(supressor), createEnemy(spyral), createEnemy(bozo), createEnemy(bozo), createEnemy(supressor), createEnemy(railgun), createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(miniBozo), createEnemy(bozo), createEnemy(bozo), createEnemy(bozo), miniboss]
 
