@@ -2,7 +2,7 @@ import pygame, sys
 import math
 import pygame.time
 import random
-import cv2
+#import cv2
 
 from Class.projectile import Projectile
 from Class.player import Player
@@ -279,9 +279,9 @@ def play(player, gameManager):
     font = pygame.font.Font(None, 36)
     
     # Dialogue phase 1
-    textDialoguePlayer = ["\n\nGotta find the Australian base...\n\n...and destroy it.\n\n","Here I come, Death Bucket\n\nCOLONEL SANDERERS!\n\nYOU TOOK EVERYTHING FROM ME!!!\n\nYou will be fried with this base!\n\n","I think I can win this\n\nOH and what are you \ngonna do for that ?\n\n","What append, you are scared ?\n\nYou are calling me a chicken ?\nYou're gonna regret it\n\n","I'm close to the winning,\none last effort\n\n","What is that ?\n\n"]
+    textDialoguePlayer = ["\n\nGotta find the Australian base...\n\n...and destroy it.\n\n","Here I come, Death Bucket\n\nCOLONEL SANDERERS!\n\nYOU TOOK EVERYTHING FROM ME!!!\n\nYou will be fried with this base!\n\n","I think I can win this\n\nOH and what are you \ngonna do about that ?\n\n","What happened, are you scared ?\n\nYou're calling me a chicken ?\nYou're gonna regret it\n\n","I'm close to the win,\none last effort\n\n","What is that ?\n\n"]
     textDialoguePhase = 0
-    textDialogueBoss = ["\n\nStop right there, \nCriminal Scum!\n\nYOU STOLE THE SECRET \nRECIP- uh, PLANS!\n\nI don't even know who you are\n\nTry me, little bird\n\n", "\n\ndon't be so sure of that\n\nYou'll see it soon enough\n\n","\n\nAHAHAHAH. Little chicken, \nyou are going to be frie- euh killed\n\nWe will see that\n\n","\n\nARG !!! It's just luck, \nyou'r not gonna win this fight\n\n","\n\nYou'r gonna regret what you did.\nALL GUNS OUT !!!\n\n"]
+    textDialogueBoss = ["\n\nStop right there, \nCriminal Scum!\n\nYOU STOLE THE SECRET \nRECIP- uh, PLANS!\n\nI don't even know who you are\n\nTry me, little bird\n\n", "\n\nDon't be so sure of that\n\nYou'll see it soon enough\n\n","\n\nAHAHAHAH. Little chicken, \nyou are going to be frie- euh killed\n\nWe will see that\n\n","\n\nARG !!! It's just luck, \nYou won't win this fight\n\n","\n\nYou're gonna regret what you did.\nALL GUNS OUT !!!\n\n"]
     textDialoguePhaseBoss = 0
     textDialogueSurface = []
     textDialogueSurfaceBoss = []
@@ -299,35 +299,35 @@ def play(player, gameManager):
 
     touches_pressees = []
     
-    cap = cv2.VideoCapture("video/galactic_emu_intro_pixel.mp4")
+    # cap = cv2.VideoCapture("video/galactic_emu_intro_pixel.mp4")
 
-    while True:
-        clock.tick(30)
-        event = pygame.event.poll()
-        # Lit une image de la vidéo avec OpenCV
-        ret, frame = cap.read()
+    # while True:
+    #     clock.tick(30)
+    #     event = pygame.event.poll()
+    #     # Lit une image de la vidéo avec OpenCV
+    #     ret, frame = cap.read()
         
-        # Si la lecture est terminée, sort de la boucle
-        if not ret:
-            cap.release()
-            break
+    #     # Si la lecture est terminée, sort de la boucle
+    #     if not ret:
+    #         cap.release()
+    #         break
         
-        # Convertit l'image OpenCV en surface Pygame
-        frame = cv2.flip(frame, 90)
-        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame = cv2.resize(frame, (1080, 1920))
-        frame = pygame.surfarray.make_surface(frame)
+    #     # Convertit l'image OpenCV en surface Pygame
+    #     frame = cv2.flip(frame, 90)
+    #     frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    #     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    #     frame = cv2.resize(frame, (1080, 1920))
+    #     frame = pygame.surfarray.make_surface(frame)
         
-        # Affiche la surface sur l'écran Pygame
-        screen.blit(frame, (0, 0))
-        pygame.display.flip()
+    #     # Affiche la surface sur l'écran Pygame
+    #     screen.blit(frame, (0, 0))
+    #     pygame.display.flip()
         
-        # Vérifie les événements Pygame
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                cap.release()
-                break
+    #     # Vérifie les événements Pygame
+    #     if event.type == pygame.KEYDOWN:
+    #         if event.key == pygame.K_SPACE:
+    #             cap.release()
+    #             break
 
     while running:
         # run the game at a constant 60fps

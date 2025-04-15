@@ -63,7 +63,7 @@
         250,
         -1
     ],
-    "missileDamageLevel": 0,
+    "missileDamageLevel": 1,
     "missileDamageUpgrade": [
         2,
         3,
@@ -75,7 +75,7 @@
         300,
         -1
     ],
-    "missileCanonsLevel": 0,
+    "missileCanonsLevel": 1,
     "missileCanonsUpgrade": [
         3,
         4,
@@ -87,7 +87,7 @@
         450,
         -1
     ],
-    "missileFirerateLevel": 0,
+    "missileFirerateLevel": 1,
     "missileFirerateUpgrade": [
         8,
         6,
@@ -101,7 +101,7 @@
         500,
         -1
     ],
-    "playerLiveLevel": 0,
+    "playerLiveLevel": 1,
     "playerLiveUpgrade": [
         6,
         7,

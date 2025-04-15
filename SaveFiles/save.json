@@ -1,7 +1,7 @@
 {
-    "money": 0,
+    "money": 150,
     "speed": 10,
-    "lives": 5,
+    "lives": 10,
     "cooldownDash": 120,
     "dashInvulnerability": 0,
     "bulletSpeed": 15,
